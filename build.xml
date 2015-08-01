@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+<project name="cal" default="all" basedir=".">
+  <description>
+    A dynamic calendar app converter.
+  </description>
+  <property name="title" value="Almaniac"/>
+  
+  <property name="bin" value="${basedir}/bin/"/>
+  <property name="jar" value="${basedir}/libs/"/>
+  <property name="src" value="${basedir}/src/"/>
+  <property name="build" value="${basedir}/build/"/>
+  <property name="build.cls" value="${build}/cls/"/>
+  <property name="build.doc" value="${build}/doc/"/>
+  <property name="build.jar" value="${build}/jar/"/>
+
+  <path id="classpath">
+    <fileset dir="${jar}" includes="**/*.jar"/>
+  </path>
+
+  <target name="init">
+    <tstamp/>
+    <mkdir dir="${build}"/>
+    <mkdir dir="${build.cls}"/>
+    <mkdir dir="${build.doc}"/>
+    <mkdir dir="${build.jar}"/>
+  </target>
+
+  <target name="compile-java" depends="init">
+    <javac srcdir="${src}/main"
+      destdir="${build.cls}"
+      compiler="javac1.6"
+      memoryMaximumSize="500m"
+      fork="true"
+      debug="on"
+      deprecation="on"
+      includeantruntime="false">
+      <compilerarg value="-Xlint:all,-serial"/>
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
+  <target name="compile-java-test" depends="compile-java">
+    <javac srcdir="${src}/test"
+      destdir="${build.bin}"
+      compiler="javac1.6"
+      memoryMaximumSize="500m"
+      fork="true"
+      debug="on"
+      deprecation="on"
+      includeantruntime="false">
+      <compilerarg value="-Xlint:all,-serial"/>
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile-java,copy-resources" 
+    description="build Java archive">
+    <jar jarfile="${build.jar}/almaniac.jar" basedir="${build.cls}"/>
+  </target>
+
+  <target name="copy-resources">
+    <copy todir="${build.cls}">
+      <fileset dir="${src}/main/resources"/>
+      <fileset dir="${src}/test/resources"/>
+    </copy>
+  </target>
+
+  <target name="all" depends="jar" description="build everything"/>
+
+  <target name="clean-jar" description="delete all jar builds">
+    <delete dir="${build.cls}"/>
+    <delete dir="${build.jar}"/>
+  </target>
+
+  <target name="clean" description="delete all build products">
+    <delete dir="${build}"/>
+  </target>
+
+</project>
