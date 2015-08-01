@@ -1,0 +1,31 @@
+apply plugin: 'java'
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.0'
+}
+
+defaultTasks 'jar'
+
+description = 'Almaniac'
+sourceCompatibility = 1.7
+
+sourceSets {
+  main {
+    output.resourcesDir = output.classesDir
+  }
+  test {
+    output.resourcesDir = output.classesDir
+  }
+}
+
+jar {
+  baseName 'almaniac'
+  manifest {
+    attributes 'Implementation-Title': project.description
+  }
+  from sourceSets.test.output
+}
+
+dependencies {
+  compile fileTree('libs')
+}
