@@ -1,52 +1,63 @@
+/****************************************************************************
+ * Astronomical Equations derived by Belgian Astronomer Jean Meeus.
+****************************************************************************/
 package cal.astro;
 
 import java.util.*;
 import java.lang.Math;
+import cal.date.*;
+import static cal.date.GregorianDate.*;
 
 public class Meeus {
 
-  public enum Season {
-    SPRING(0),
-    SUMMER(1),
-    AUTUMN(2),
-    WINTER(3);
-
-    private final int id;
-    Season(int id) { this.id = id; }
-    public int getValue() { return id; }
+  public static JulianDay equinox(int year, Season season) {
+    JulianDay jdeo = new JulianDay(mean(year,season));
+    double jd = jdeo.getDay();
+    double t = (jd-2451545.0)/36525.0;
+    double w = (35999.373*t)-2.47;
+    double lam = 1+0.0334*Math.cos(w)+0.0007*Math.cos(2*w);
+    double s = 0;
+    for (int i=0; i<tblC.length; ++i) {
+      s += tblC[i][0] * Math.cos(tblC[i][1]+(tblC[i][2]*t));
+    }
+    s = Math.floor(s);
+    jdeo.plusEquals((0.00001*s)/lam);
+    jdeo.roundToMidnight();
+    return jdeo;
   }
 
 /////////////////////////////////////////////////////////////////////////////
 //protected
 
-  protected static double mean(int year, Season season) {
-    double y,JDEO;
-    if (year>3000 || year<-1000) {
-
-    }
-    if (year>=1000) {
-      y = (year-2000.0)/1000.0;
-      JDEO = calculateJDEO(tblB[season.getValue()],y);
-    } else {
-      y = year/1000.0;
-      JDEO = calculateJDEO(tblA[season.getValue()],y);
-    }
-    print("Y: "+y);
-    print("JDEO: "+JDEO);
-
-    return JDEO;
-  }
-
-  protected static double calculateJDEO(double[] series, double y) {
+  protected static double calculateJdeo(double[] series, double y) {
     return (series[0] + 
            (series[1] * y) +
            (series[2] * Math.pow(y,2)) + 
            (series[3] * Math.pow(y,3)) + 
            (series[4] * Math.pow(y,4)));
   }
+
 //
 /////////////////////////////////////////////////////////////////////////////
 // private
+
+  private static double mean(int year, Season season) {
+    double y,jdeo;
+    if (year>3000 || year<-1000) {
+
+    }
+    if (year>=1000) {
+      y = (year-2000.0)/1000.0;
+      jdeo = calculateJdeo(tblB[season.getValue()],y);
+    } else {
+      y = year/1000.0;
+      jdeo = calculateJdeo(tblA[season.getValue()],y);
+    }
+//    print("Y: "+y);
+//    print("jdeo: "+jdeo);
+
+    return jdeo;
+  }
 
   /* For years -1000 to +1000 */
   private static double[][] tblA = 
