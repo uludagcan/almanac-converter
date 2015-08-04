@@ -1,14 +1,23 @@
 apply plugin: 'java'
 
-task wrapper(type: Wrapper) {
-  gradleVersion = '2.0'
-}
-
 defaultTasks 'jar'
 
 description = 'Almaniac'
-sourceCompatibility = 1.7
+version = '0.1.0'
 
+// tag::wrapper[]
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.3'
+}
+// end::wrapper[]
+
+// tag::repositories[]
+repositories {
+  mavenCentral()
+}
+// end::repositories[]
+
+// tag::sourceSets[]
 sourceSets {
   main {
     output.resourcesDir = output.classesDir
@@ -17,15 +26,23 @@ sourceSets {
     output.resourcesDir = output.classesDir
   }
 }
+// end::sourceSets[]
 
+// tag::jar[]
 jar {
   baseName 'almaniac'
   manifest {
-    attributes 'Implementation-Title': project.description
+    attributes 'Implementation-Title': project.description,
+               'Implementation-Version': version
   }
   from sourceSets.test.output
 }
+// end::jar[]
 
+// tag::dependencies[]
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 dependencies {
   compile fileTree('libs')
 }
+// end::dependencies[]
