@@ -1,6 +1,9 @@
 /****************************************************************************
  * Astronomical Equations derived by Belgian Astronomer Jean Meeus.
  * Algorithms also inspired by Fourmilab.
+ * @author Chris Engelsma
+ * @version 0.1
+ * @since 2015-08-06
 ****************************************************************************/
 package cal.astro;
 
@@ -15,6 +18,12 @@ public class Meeus {
   public static final double ASTRONOMICAL_UNIT = 149597870.0;
   public static final double TROPICAL_YEAR = 365.24219878;
 
+  /**
+   * The Julian Ephemeris day of an equinox or solstice.
+   * @param year The year.
+   * @param season The season.
+   * @return The Julian Day of the equinox.
+   */
   public static double equinox(int year, Season season) {
     double jdeo = mean(year,season);
     double t = (jdeo-2451545.0)/36525.0;
@@ -30,9 +39,10 @@ public class Meeus {
   }
 
   /**
-   * Determines the difference in seconds between dynamical time and Universal
-   * time.
+   * The difference in seconds between Dynamical Time and Universal time.
    * @param year The year.
+   * @return The difference in time in seconds between Dynamical Time and
+   * Universal Time.
    */
   public static double deltat(int year) {
     double dt, f, t;
@@ -56,6 +66,14 @@ public class Meeus {
     return dt;
   }
 
+  /**
+   * The Equation of Time.
+   * <p>
+   * The equation of time describes the discrepency between two kinds of solar
+   * time: apparent solar time and mean solar time.
+   * @param jd The Julian Day.
+   * @return The equation of time as a fraction of a day.
+   */
   public static double equationOfTime(double jd) {
     double tau = (jd-J2000)/JULIAN_MILLENIUM;
     double L0 = 280.4664567+(360007.6982779*tau) +
@@ -66,22 +84,23 @@ public class Meeus {
     L0 = fixAngle(L0);
     double alpha = sunPosition(jd)[10];
     double dPsi = nutation(jd)[0];
-    double epsilon = obliquityOfEquinox(jd)+nutation(jd)[1];
+    double epsilon = obliquityEquation(jd)+nutation(jd)[1];
     double E = L0 + (-0.0057183) + (-alpha) + (dPsi*dcos(epsilon));
     E -= 20.0*(Math.floor(E/20.0));
     E /= (24*60);
     return E;
   }
 
-  public static double calculateJdeo(double[] series, double y) {
-    return (series[0] + 
-           (series[1] * y) +
-           (series[2] * Math.pow(y,2)) + 
-           (series[3] * Math.pow(y,3)) + 
-           (series[4] * Math.pow(y,4)));
-  }
-
-  public static double obliquityOfEquinox(double jd) {
+  /**
+   * The obliquity of the ecliptic.
+   * <p>
+   * Calculates the obliquity of the ecliptic for a given Julian Day. This
+   * uses Laskar's 10th degree polynomial fit (J. Laskar, Astronomy and
+   * Astrophysics, Vol 157. page 68 [1986]).
+   * @param jd The Julian Day
+   * @return the obliquity of the ecliptic.
+   */
+  public static double obliquityEquation(double jd) {
     double eps = 0.0;
     double u,v;
     v = (jd-J2000)/(JULIAN_CENTURY*100);
@@ -95,6 +114,14 @@ public class Meeus {
     return eps;
   }
 
+  /**
+   * The Sun's position.
+   * <p>
+   * Computes a number of parameters regarding the Sun's position at a given
+   * Julian Day.
+   * @param jd A Julian Day.
+   * @return An array containing parameters of the Sun's position.
+   */
   public static double[] sunPosition(double jd) {
     double T, T2, L0, M, e, C, sunLong, sunAnomaly, sunR,
            Omega, Lambda, epsilon, epsilon0, Alpha, Delta,
@@ -113,7 +140,7 @@ public class Meeus {
     sunR = (1.000001018*(1 - (e * e))) / (1 + (e * dcos(sunAnomaly)));
     Omega = 125.04 - (1934.136 * T);
     Lambda = sunLong + (-0.00569) + (-0.00478 * dsin(Omega));
-    epsilon0 = obliquityOfEquinox(jd);
+    epsilon0 = obliquityEquation(jd);
     epsilon = epsilon0 + (0.00256 * dcos(Omega));
     Alpha = rtd(Math.atan2(dcos(epsilon0)*dsin(sunLong),dcos(sunLong)));
     Alpha = fixAngle(Alpha);
@@ -137,6 +164,11 @@ public class Meeus {
     };
   }
 
+  /**
+   * The nutation in longitude (ΔΨ) and obliquity (ΔΕ) for a
+   * given Julian Date.
+   * 
+   */
   public static double[] nutation(double jd) {
     double dPsi, dEpsilon;
     double t = (jd-2451545.0)/(36525.0);
@@ -168,11 +200,19 @@ public class Meeus {
     dPsi     = dp/(3600.0*10000.0);
     dEpsilon = de/(3600.0*10000.0);
 
-    return new double[] {dp,de};
+    return new double[] {dPsi,dEpsilon};
   }
 
 /////////////////////////////////////////////////////////////////////////////
 // private
+
+  private static double calculateJdeo(double[] series, double y) {
+    return (series[0] + 
+           (series[1] * y) +
+           (series[2] * Math.pow(y,2)) + 
+           (series[3] * Math.pow(y,3)) + 
+           (series[4] * Math.pow(y,4)));
+  }
 
   private static double fixAngle(double a) {
     return (a - 360.0 * (Math.floor(a/360.0)));

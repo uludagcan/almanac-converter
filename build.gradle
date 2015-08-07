@@ -3,7 +3,6 @@ apply plugin: 'java'
 defaultTasks 'jar'
 
 description = 'Almaniac'
-version = '0.1.0'
 
 // tag::wrapper[]
 task wrapper(type: Wrapper) {
@@ -32,8 +31,7 @@ sourceSets {
 jar {
   baseName 'almaniac'
   manifest {
-    attributes 'Implementation-Title': project.description,
-               'Implementation-Version': version
+    attributes 'Implementation-Title': project.description
   }
   from sourceSets.test.output
 }
