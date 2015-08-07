@@ -10,6 +10,15 @@ import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
 public class GregorianDate {
+
+  public int year;
+  public int day;
+  public int month;
+
+  public GregorianDate() {
+    this(Calendar.getInstance());
+  }
+
   public GregorianDate(Calendar date) {
     this(date.get(Calendar.DAY_OF_MONTH),
          date.get(Calendar.MONTH)+1,
@@ -17,16 +26,17 @@ public class GregorianDate {
   }
 
   public GregorianDate(JulianDay date) {
-    GregorianDate gd = gregorianFromJulian(date);
-    _day   = gd.getDay();
-    _month = gd.getMonth();
-    _year  = gd.getYear();
+    this(gregorianFromJulian(date));
+  }
+
+  public GregorianDate(GregorianDate date) {
+    this(date.day,date.month,date.year);
   }
 
   public GregorianDate(int day, int month, int year) {
-    _day   = day;
-    _month = month;
-    _year  = year;
+    this.day   = day;
+    this.month = month;
+    this.year  = year;
   }
 
   /**
@@ -36,7 +46,7 @@ public class GregorianDate {
    * @return the Gregorian Date.
    */
   public static GregorianDate gregorianFromJulian(JulianDay jday) {
-    int J = (int)(jday.getDay()+0.5);
+    int J = (int)(jday.day+0.5);
     int y = 4716; int j = 1401;   int m = 2;
     int n = 12;   int r = 4;      int p = 1461;
     int v = 3;    int u = 5;      int s = 153;
@@ -53,37 +63,29 @@ public class GregorianDate {
 
   public void print() {
     System.out.println("Gregorian Date: " + 
-      _monthNames[_month-1]+" "+_day+", "+_year);
+      _monthNames[month-1]+" "+day+", "+year);
   }
 
   public boolean isBefore(GregorianDate date) {
-    double year = date.getYear();
-    double month = date.getMonth();
-    double day = date.getDay();
-    return ((_year<year) ||
-            (_year==year && _month<month) ||
-            (_year==year && _month==month && _day<day));
+    double year = date.year;
+    double month = date.month;
+    double day = date.day;
+    return ((this.year<year) ||
+            (this.year==year && this.month<month) ||
+            (this.year==year && this.month==month && this.day<day));
   }
 
   public boolean isAfter(GregorianDate date) {
-    double year = date.getYear();
-    double month = date.getMonth();
-    double day = date.getDay();
-    return ((_year>year) ||
-            (_year==year && _month>month) ||
-            (_year==year && _month==month && _day>day));
+    double year = date.year;
+    double month = date.month;
+    double day = date.day;
+    return ((this.year>year) ||
+            (this.year==year && this.month>month) ||
+            (this.year==year && this.month==month && this.day>day));
   }
-
-  public int getDay()   { return _day; }
-  public int getMonth() { return _month; }
-  public int getYear()  { return _year; }
 
 /////////////////////////////////////////////////////////////////////////////
 // private
-
-  private int _year;
-  private int _day;
-  private int _month;
 
   private String[] _monthNames = DateFormatSymbols.getInstance().getMonths();
 }
