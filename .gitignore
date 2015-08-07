@@ -1,0 +1,28 @@
+# OS GENERATED FILES #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# PACKAGES #
+############
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.log
+*.zip
+*.tar
+*.rar
+
+# COMPILED SOURCE #
+###################
+*.class
+*.dll
+*.exe
+*.o
+*.so
+build/*
