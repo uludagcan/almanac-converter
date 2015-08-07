@@ -2,6 +2,30 @@ package cal.date;
 
 import cal.astro.*;
 
+/**
+ * A date in the French Republican Calendar.
+ * <p>
+ * The French Republican Calendar (FRC) was a calendar created and used
+ * during the French Revolution. It was only used in practice for 12 years 
+ * starting in late 1793 until it was abolished by Napoleon Bonaparte as an
+ * effort to reinstate the catholic church within France. This calendar was 
+ * later picked up, albeit briefly, during the Paris Commune of 1871.
+ * <p>
+ * Each year is divided into 12 months (mois), with each month being an 
+ * equal 30 days long, divided out further into 3 weeks (décades) 10 days 
+ * long. Every year begins on the autumnal equinox as observed in Paris.
+ * The slight variation in seaons required the use of 5-6 additional
+ * "Sans-culottides" days. While the calendar was adopted on October 24, 1793
+ * (3 Brumaire, An II), the official epoch was set to September 22, 1792 
+ * (1 Vendemiaire, An I) to commemorate the founding of the republic.
+ * <p>
+ * To further reduce the influence of the Church, a Rural Calendar was 
+ * introduced, naming each day of the year after various crops, minerals, 
+ * animals and work tools to reflect the changing of the seasons. 
+ * @author Chris Engelsma
+ * @version 1.0
+ * @since 2015-08-07
+ */
 public class FrenchRepublicanDate {
 
   public int an;
@@ -19,9 +43,9 @@ public class FrenchRepublicanDate {
 
   public FrenchRepublicanDate(JulianDay jd) {
     double jday = Math.floor(jd.day)+0.5;
-    JulianDay[] adr = anneeDeLaRevolution(new JulianDay(jday));
-    an = (int)(adr[0].day);
-    double equinoxe = adr[1].day;
+    double[] adr = anneeDeLaRevolution(new JulianDay(jday));
+    an = (int)adr[0];
+    double equinoxe = adr[1];
     mois = (int)(Math.floor((jd.day-equinoxe)/30)+1);
     double djour = (jd.day-equinoxe) % 30;
     decade = (int)(Math.floor(djour/10)+1);
@@ -41,9 +65,6 @@ public class FrenchRepublicanDate {
   public String getJour() {
     return _jours[mois-1][(decade-1)*10+(jour-1)];
   }
-
-//  public String[] getMonthNames() { return _mois; }
-//  public String[][] getDayNames() { return _jours; }
 
   public void print() {
     System.out.println("Année "+an+" de la République");
@@ -69,33 +90,34 @@ public class FrenchRepublicanDate {
     }
   }
 
-  private JulianDay[] anneeDeLaRevolution(JulianDay day) {
-    int guess = (new GregorianDate(day)).year-2;
-    JulianDay lastEquinox = parisEquinox(guess);
-    while (lastEquinox.isAfter(day)) {
+  private double[] anneeDeLaRevolution(JulianDay julday) {
+    int guess = (new GregorianDate(julday)).year-2;
+    double nexteq,lasteq,jd;
+    jd = julday.day;
+    lasteq = parisEquinox(guess);
+    while (lasteq>jd) {
       guess--;
-      lastEquinox = parisEquinox(guess);
+      lasteq = parisEquinox(guess);
     }
-    JulianDay nextEquinox = lastEquinox.minus(1);
-    while (!((lastEquinox.isBeforeOrOn(day)) && 
-              (day.isBefore(nextEquinox)))) {
-      lastEquinox = nextEquinox;
+    nexteq = lasteq-1;
+    while (!((lasteq <= jd) && (jd < nexteq))) {
+      lasteq = nexteq;
       guess++;
-      nextEquinox = parisEquinox(guess);
+      nexteq = parisEquinox(guess);
     }
-    JulianDay adr = lastEquinox.minus(FRENCH_REVOLUTION_EPOCH);
-    adr.divideEquals(Meeus.TROPICAL_YEAR);
-    adr.plusEquals(1);
-    return new JulianDay[] {adr, lastEquinox};
+    double adr = (lasteq - FRENCH_REVOLUTION_EPOCH.day);
+    adr /= Meeus.TROPICAL_YEAR;
+    adr += 1;
+    return new double[] {Math.round(adr), lasteq};
   }
 
-  private JulianDay parisEquinox(int year) {
-    JulianDay eqJED = new JulianDay(Meeus.equinox(year,Season.AUTUMN));
-    JulianDay eqJD = eqJED.minus(Meeus.deltat(year)/(24*60*60));
-    JulianDay eqApp = eqJD.plusEquals(Meeus.equationOfTime(eqJED.day));
-    double dtParis = (2+(20/60.0)+(15/(60*60.0)))/360.0;
-    JulianDay eqParis = eqApp.plus(dtParis);
-    eqParis.setToMidnight();
+  private double parisEquinox(int year) {
+    double eqJED = Meeus.equinox(year,Season.AUTUMN);
+    double eqJD = eqJED - Meeus.deltat(year)/(24.0*60.0*60.0);
+    double eqAPP = eqJD + Meeus.equationOfTime(eqJED);
+    double dtParis = (2.0+(20.0/60.0)+(15.0/(60.0*60.0)))/360.0;
+    double eqParis = eqAPP + dtParis;
+    eqParis = Math.floor(eqParis-0.5)+0.5;
     return eqParis;
   }
 

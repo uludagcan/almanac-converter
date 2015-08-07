@@ -1,127 +1,110 @@
-/****************************************************************************
- * A Julian Day.
- * The Julian Day is the continuous count of days since the beginning of the
- * Julian Period, a number primarily used by astronomers.
-****************************************************************************/
 package cal.date;
 
 import java.lang.Math;
 import java.util.Calendar;
 
+/****************************************************************************
+ * A Julian Day.
+ * <p>
+ * The Julian Day is the continuous count of days since the beginning of the
+ * Julian Period, a number primarily used by astronomers.
+ * @author Chris Engelsma
+ * @version 1.0
+ * @since 2015-08-07
+****************************************************************************/
 public class JulianDay {
 
   public double day;
 
+  /**
+   * A Julian Day.
+   * Day number is set using a given Julian Day.
+   * @param jd A Julian Day.
+   */
   public JulianDay(JulianDay jd) {
     this(jd.day);
   }
 
-  public JulianDay(double i) {
-    day = i;
+  /**
+   * A Julian Day.
+   * Day number is set to a given value.
+   * @param jd A Julian Day.
+   */
+  public JulianDay(double jd) {
+    day = jd;
   }
 
-  public JulianDay(int i) {
-    this((double)i);
+  /**
+   * A Julian Day.
+   * Day number is set to a given value.
+   * @param jd A Julian Day.
+   */
+  public JulianDay(int jd) {
+    this((double)jd);
   }
 
+  /**
+   * A Julian Day.
+   * Julian Day is set to the current day.
+   */
   public JulianDay() {
     this(new GregorianDate());
   }
 
+  /**
+   * A Julian Day.
+   * Day number is set using a given Gregorian Date.
+   * @param date A Gregorian Date.
+   */
   public JulianDay(GregorianDate date) {
-    day = julianFromGregorian(date);
+    day = _julianFromGregorian(date);
   }
 
+  /**
+   * Returns this Julian Day set to noon.
+   * @return This Julian Day at noon.
+   */
+  public JulianDay atNoon() {
+    return new JulianDay(Math.ceil(day-0.5));
+  }
+
+  /**
+   * Returns this Julian Day set to midnight.
+   * @return This Julian Day at midnight.
+   */
+  public JulianDay atMidnight() {
+    return new JulianDay(Math.floor(day-0.5)+0.5);
+  }
+
+  /**
+   * Sets this Julian Day to noon.
+   * @return This Julian Day.
+   */
+  public JulianDay setToNoon() {
+    day = Math.ceil(day-0.5);
+    return this;
+  }
+
+  /**
+   * Sets this Julian Day to midnight.
+   * @return This Julian Day.
+   */
   public JulianDay setToMidnight() { 
     day = Math.floor(day-0.5)+0.5; 
     return this;
   }
 
-  public JulianDay plusEquals(JulianDay val) {
-    return plusEquals(val.day);
+  /**
+   * Prints this Julian Day.
+   */
+  public void print() {
+    System.out.println("Julian Day: "+day);
   }
 
-  public JulianDay minusEquals(JulianDay val) {
-    return minusEquals(val.day);
-  }
+/////////////////////////////////////////////////////////////////////////////
+// private
 
-  public JulianDay timesEquals(JulianDay val) {
-    return timesEquals(val.day);
-  }
-
-  public JulianDay divideEquals(JulianDay val) {
-    return divideEquals(val.day);
-  }
-
-  public JulianDay plus(JulianDay val) {
-    return plus(val.day);
-  }
-
-  public JulianDay minus(JulianDay val) {
-    return minus(val.day);
-  }
-
-  public JulianDay times(JulianDay val) {
-    return times(val.day);
-  }
-
-  public JulianDay divide(JulianDay val) {
-    return divide(val.day);
-  }
-
-  public JulianDay plusEquals(double val)   { 
-    day += val; 
-    return this;
-  }
-
-  public JulianDay minusEquals(double val)  { 
-    day -= val; 
-    return this;
-  }
-
-  public JulianDay divideEquals(double val) { 
-    day /= val; 
-    return this;
-  }
-
-  public JulianDay timesEquals(double val)  { 
-    day *= val; 
-    return this;
-  }
-
-  public JulianDay plus(double right) {
-    return new JulianDay(this).plusEquals(right);
-  }
-
-  public JulianDay minus(double right) {
-    return new JulianDay(this).minusEquals(right);
-  }
-
-  public JulianDay times(double right) {
-    return new JulianDay(this).timesEquals(right);
-  }
-
-  public JulianDay divide(double right) {
-    return new JulianDay(this).divideEquals(right);
-  }
-
-  public boolean isAfter(JulianDay jd) {
-    return (this.day>jd.day);
-  }
-
-  public boolean isBefore(JulianDay jd) {
-    return (this.day<jd.day);
-  }
-
-  public boolean isAfterOrOn(JulianDay jd) {
-    return (this.day>=jd.day);
-  }
-
-  public boolean isBeforeOrOn(JulianDay jd) {
-    return (this.day<=jd.day);
-  }
-
-  public static double julianFromGregorian(GregorianDate date) {
+  private static double _julianFromGregorian(GregorianDate date) {
     int month = date.month;
     int year = date.year;
     int day = date.day;
@@ -138,7 +121,4 @@ public class JulianDay {
     return JDN;
   }
 
-  public void print() {
-    System.out.println("Julian Day: "+day);
-  }
 }

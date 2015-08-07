@@ -49,11 +49,11 @@ public class Meeus {
     int i;
 
     if ((year >= 1620) && (year <= 2000)) {
-        i = (int)(Math.floor((year - 1620) / 2));
-        f = ((year - 1620) / 2) - i;  /* Fractional part of year */
+        i = (int)(Math.floor((year - 1620) / 2.0));
+        f = ((year - 1620) / 2.0) - i;  /* Fractional part of year */
         dt = deltaTtab[i] + ((deltaTtab[i + 1] - deltaTtab[i]) * f);
     } else {
-        t = (year - 2000) / 100;
+        t = (year - 2000) / 100.0;
         if (year < 948) {
             dt = 2177 + (497 * t) + (44.1 * t * t);
         } else {
