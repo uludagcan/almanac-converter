@@ -1,11 +1,5 @@
-```
-#!html
-
-     _    _                       _            
-    / \  | |_ __ ___   __ _ _ __ (_) __ _  ___ 
-   / _ \ | | '_ ` _ \ / _` | '_ \| |/ _` |/ __|
-  / ___ \| | | | | | | (_| | | | | | (_| | (__ 
- /_/   \_\_|_| |_| |_|\__,_|_| |_|_|\__,_|\___|
+Almanac Converter ![Build state](https://travis-ci.org/chrisengelsma/almanac-converter.svg?branch=master)
+-----------------
 
 
 A calendar converter back-end.
@@ -23,6 +17,7 @@ French Republican Calendar
 --------------------------
 The French Republican Calendar (FRC) was a calendar created and implemented during the French Revolution. It was only used in practice for 12 years from late 1793 to 1806 as part of an ongoing effort by Napoleon to reinstate the catholic church within France following the Concordat of 1801. This calendar was picked up briefly during the Paris Commune of 1871. Each year is divided into 12 months, with each month being an equal 30 days long. Every year begins on the autumnal equinox as observed in Paris. The eccentricity of Earth's wobble and varying eclipctic orbit required an additional 5-6 additional "Sans-culottides" dates to account for this.
 
+```
 Supported calendar types:
 * Gregorian Calendar         [100%] DONE
 * Julian Day                 [100%] DONE
