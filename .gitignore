@@ -5,6 +5,8 @@
 ._*
 .Spotlight-V100
 .Trashes
+Thumbs.db
+ehthumbs.db
 
 # PACKAGES #
 ############
@@ -26,3 +28,12 @@
 *.o
 *.so
 build/*
+
+# OTHER ANNOYANCES #
+####################
+*.pyo
+*.pyc
+*~
+*.swp
+*.bak
+*.gradle
