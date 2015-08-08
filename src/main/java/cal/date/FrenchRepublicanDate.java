@@ -66,13 +66,19 @@ public class FrenchRepublicanDate {
     return _jours[mois-1][(decade-1)*10+(jour-1)];
   }
 
-  public void print() {
+  public void printLong() {
+    System.out.print("French Republican Date: ");
     System.out.println("Année "+an+" de la République");
     System.out.println("  Mois de "+getMois());
     System.out.print("  Décade "+getDecade()+" Jour "+jour);
     System.out.println(" - \""+getJour()+"\"");
   }
 
+  public void print() {
+    System.out.print("French Republican Date: ");
+    System.out.print(((decade-1)*10)+jour);
+    System.out.print(" "+getMois()+", L'an "+an);
+  }
 /////////////////////////////////////////////////////////////////////////////
 // private
 
