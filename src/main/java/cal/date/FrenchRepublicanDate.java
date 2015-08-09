@@ -1,6 +1,7 @@
 package cal.date;
 
 import cal.astro.*;
+import cal.util.*;
 
 /**
  * A date in the French Republican Calendar.
@@ -33,14 +34,31 @@ public class FrenchRepublicanDate {
   public int decade;
   public int jour;
 
+  /**
+   * A French Republican Date.
+   * <p>
+   * Date will be set to today's date.
+   */
   public FrenchRepublicanDate() {
     this(new JulianDay());
   }
 
+  /**
+   * A French Republican Date.
+   * <p>
+   * Date is converted from a given Gregorian Calendar date.
+   * @param date A Gregorian Calendar Date.
+   */
   public FrenchRepublicanDate(GregorianDate date) {
     this(new JulianDay(date));
   }
 
+  /**
+   * A French Republican Date.
+   * <p>
+   * Date is converted from a given Julian Day.
+   * @param jd A Julian Day.
+   */
   public FrenchRepublicanDate(JulianDay jd) {
     double jday = Math.floor(jd.day)+0.5;
     double[] adr = anneeDeLaRevolution(new JulianDay(jday));
@@ -54,31 +72,58 @@ public class FrenchRepublicanDate {
     _adjustForSansCulottides();
   }
 
+  /**
+   * Gets the month name.
+   * @return The month name.
+   */
   public String getMois() { 
     return _mois[mois-1]; 
   }
 
-  public String getDecade() {
-    return (decade>1) ? (decade==3) ? "III" : "II" : "I";
+  /**
+   * Gets the year in traditional Roman numerals.
+   * @return The year in Roman numerals.
+   */
+  public String getAn() {
+    return (RomanNumeralGenerator.toRoman(an));
   }
 
+  /**
+   * Gets the 10-day week (decade) in traditional Roman numerals.
+   * @return The decade in Roman numerals.
+   */
+  public String getDecade() {
+    return (RomanNumeralGenerator.toRoman(decade));
+  }
+
+  /**
+   * Gets the Rural calendar name of the day.
+   * @return The Rural calendar name of the day.
+   */
   public String getJour() {
     return _jours[mois-1][(decade-1)*10+(jour-1)];
   }
 
+  /**
+   * Prints this date in long form.
+   */
   public void printLong() {
     System.out.print("French Republican Date: ");
-    System.out.println("Année "+an+" de la République");
+    System.out.println("Année "+getAn()+" de la République");
     System.out.println("  Mois de "+getMois());
     System.out.print("  Décade "+getDecade()+" Jour "+jour);
     System.out.println(" - \""+getJour()+"\"");
   }
 
+  /**
+   * Prints this date in short form.
+   */
   public void print() {
     System.out.print("French Republican Date: ");
     System.out.print(((decade-1)*10)+jour);
-    System.out.print(" "+getMois()+", L'an "+an);
+    System.out.print(" "+getMois()+", L'an "+getAn());
   }
+
 /////////////////////////////////////////////////////////////////////////////
 // private
 
