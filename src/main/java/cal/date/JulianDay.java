@@ -94,8 +94,8 @@ public class JulianDay {
     return this;
   }
 
-  public JulianDay getModified() {
-  
+  public double getModified() {
+    return 0.0; // TODO
   }
   
   /**
