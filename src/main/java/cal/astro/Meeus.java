@@ -1,15 +1,15 @@
-/****************************************************************************
- * Astronomical Equations derived by Belgian Astronomer Jean Meeus.
- * Algorithms also inspired by Fourmilab.
- * @author Chris Engelsma
- * @version 0.1
- * @since 2015-08-06
-****************************************************************************/
 package cal.astro;
 
 import java.util.*;
 import java.lang.Math;
 
+/**
+ * Astronomical equations derived by Belgian Astronomer Jean Meeus.
+ * Algorithms also inspired by Fourmilab.
+ * @author Chris Engelsma
+ * @version 1.0
+ * @since 2015-08-10
+ */
 public class Meeus {
 
   public static final double J2000 = 2451545.0;
