@@ -94,6 +94,10 @@ public class JulianDay {
     return this;
   }
 
+  public JulianDay getModified() {
+  
+  }
+  
   /**
    * Prints this Julian Day.
    */
