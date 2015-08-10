@@ -9,30 +9,70 @@ import java.lang.Math;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
+/**
+ * A Gregorian Calendar Date.
+ * <p>
+ * The Gregorian Calendar is internationally the most widely used civil 
+ * calendar. It was named for Pope Gregory XIII who introduced it on 
+ * October 15, 1582. The calendar was a refinement to the Julian Calendar, 
+ * with the motivation of setting the Easter holiday to a specific date 
+ * instead of the spring equinox, which naturally drifted dates.
+ * <p>
+ * Each year is divided into 12 months, with a varied number of days per
+ * month. To account for the drift in seasons, a leap year occurs which 
+ * introduces an additional day in February. These leap years happen every
+ * year that's divisible by 4, except years that are divisible by 100 but
+ * not divisible by 400. For example: 1700, 1800 and 1900 are NOT leap
+ * years, but 2000 is a leap year.
+ * @author Chris Engelsma
+ * @version 1.0
+ * @since 2015-08-10
+ */
 public class GregorianDate {
 
   public int year;
   public int day;
   public int month;
 
+  /**
+   * Constructrs a Gregorian Date using today's date.
+   */
   public GregorianDate() {
     this(Calendar.getInstance());
   }
 
+  /**
+   * Constructs a Gregorian Date given a provided Calendar date.
+   * @param A Calendar date.
+   */
   public GregorianDate(Calendar date) {
     this(date.get(Calendar.DAY_OF_MONTH),
          date.get(Calendar.MONTH)+1,
          date.get(Calendar.YEAR));
   }
 
+  /**
+   * Constructs a Gregorian Date given a Julian Day.
+   * @param date A Julian Day.
+   */
   public GregorianDate(JulianDay date) {
     this(gregorianFromJulian(date));
   }
 
+  /**
+   * Constructs a Gregorian Date given another Gregorian Date.
+   * @param date A Gregorian Date.
+   */
   public GregorianDate(GregorianDate date) {
     this(date.day,date.month,date.year);
   }
 
+  /**
+   * Constructs a Gregorian Date from a given day, month and year.
+   * @param day The day.
+   * @param month The month.
+   * @param year The year.
+   */
   public GregorianDate(int day, int month, int year) {
     this.day   = day;
     this.month = month;
