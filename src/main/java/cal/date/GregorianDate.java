@@ -101,11 +101,19 @@ public class GregorianDate {
     return new GregorianDate(day,month,year);
   }
 
+  /**
+   * Prints this date.
+   */ 
   public void print() {
     System.out.println("Gregorian Date: " + 
       _monthNames[month-1]+" "+day+", "+year);
   }
 
+  /**
+   * Checks if this date is before another Gregorian Date.
+   * @param date A Gregorian Date.
+   * @return true, if before; false, otherwise.
+   */ 
   public boolean isBefore(GregorianDate date) {
     double year = date.year;
     double month = date.month;
@@ -115,6 +123,11 @@ public class GregorianDate {
             (this.year==year && this.month==month && this.day<day));
   }
 
+  /**
+   * Checks if this date is after another Gregorian Date.
+   * @param date A Gregorian Date.
+   * @return true, if after; false, otherwise.
+   */ 
   public boolean isAfter(GregorianDate date) {
     double year = date.year;
     double month = date.month;
