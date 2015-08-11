@@ -2,6 +2,7 @@ package cal.date;
 
 import cal.astro.*;
 import cal.util.*;
+import static cal.util.Converter.*;
 
 /**
  * A date in the French Republican Calendar.
@@ -35,18 +36,30 @@ public class FrenchRepublicanDate implements Almanac {
   public int jour;
 
   /**
-   * A French Republican Date.
-   * <p>
-   * Date will be set to today's date.
+   * Constructs a French Republican Date for today's date.
    */
   public FrenchRepublicanDate() {
     this(new JulianDay());
   }
+  
+  /**
+   * Constructs a French Republican Date with given year, month,
+   * decade and day.
+   * @param an The year.
+   * @param moise The month.
+   * @param decade The week.
+   * @param jour The day.
+   */ 
+  public FrenchRepublicanDate(int an, int mois, int decade, int jour) {
+    this.an = an;
+    this.mois = mois;
+    this.decade = decade;
+    this.jour = jour;
+  }
 
   /**
-   * A French Republican Date.
-   * <p>
-   * Date is converted from a given Gregorian Calendar date.
+   * Constructs a French Republican Date fromr a given Gregorian
+   * Calendar date.
    * @param date A Gregorian Calendar Date.
    */
   public FrenchRepublicanDate(GregorianDate date) {
@@ -54,12 +67,12 @@ public class FrenchRepublicanDate implements Almanac {
   }
 
   /**
-   * A French Republican Date.
-   * <p>
-   * Date is converted from a given Julian Day.
+   * Constructs a French Republican Date from a given Julian Day.
    * @param jd A Julian Day.
    */
   public FrenchRepublicanDate(JulianDay jd) {
+    this = Converter.convert(jd);
+    /*
     double jday = Math.floor(jd.day)+0.5;
     double[] adr = anneeDeLaRevolution(new JulianDay(jday));
     an = (int)adr[0];
@@ -70,6 +83,7 @@ public class FrenchRepublicanDate implements Almanac {
     jour = (int)((djour % 10)+1);
     if (mois>12) jour+=11;
     _adjustForSansCulottides();
+    */
   }
 
   /**
@@ -127,6 +141,7 @@ public class FrenchRepublicanDate implements Almanac {
 /////////////////////////////////////////////////////////////////////////////
 // private
 
+/*
   private void _adjustForSansCulottides() {
     if (jour>10) {
       jour -= 12;
@@ -171,6 +186,7 @@ public class FrenchRepublicanDate implements Almanac {
     eqParis = Math.floor(eqParis-0.5)+0.5;
     return eqParis;
   }
+  */
 
   private JulianDay FRENCH_REVOLUTION_EPOCH = new JulianDay(2375839.5);
 
