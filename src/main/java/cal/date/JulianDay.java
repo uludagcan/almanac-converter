@@ -18,6 +18,7 @@ import java.util.Calendar;
 public class JulianDay {
 
   public double day;
+  public static double EPOCH_MODIFIED_JULIAN_DAY = 2400000.5;
 
   /**
    * A Julian Day.
@@ -38,25 +39,31 @@ public class JulianDay {
   }
 
   /**
-   * A Julian Day.
-   * Day number is set to a given value.
+   * Constructs a Julian Day that is set to today's date.
+   */
+  public JulianDay() {
+    this(new GregorianDate());
+  }
+  
+  /**
+   * Constructs a Julian Day from a given integer.
+   * Note: Day will be set to midnight.
    * @param jd A Julian Day.
    */
   public JulianDay(int jd) {
     this((double)jd);
   }
 
-  /**
-   * A Julian Day.
-   * Julian Day is set to the current day.
-   */
-  public JulianDay() {
-    this(new GregorianDate());
-  }
 
   /**
-   * A Julian Day.
-   * Day number is set using a given Gregorian Date.
+   * Constructs a Julian Day from a Java Calendar instance.
+   * @param cal A Java Calendar instance.
+   */ 
+  public JulianDay(Calendar cal) {
+    this(new GregorianDate(cal));
+  }
+  /**
+   * Constructs a Julian Day using a provided Gregorian Date.
    * @param date A Gregorian Date.
    */
   public JulianDay(GregorianDate date) {
@@ -97,8 +104,14 @@ public class JulianDay {
     return this;
   }
 
+  /**
+   * Gets the Modified Julian Day (MJD).
+   * The Modified Julian Day is an adjusted version of the Julian
+   * Day by setting the Epoch to midnight, November 17, 1858.
+   * @return The Modified Julian Day.
+   */ 
   public double getModified() {
-    return 0.0; // TODO
+    return day-EPOCH_MODIFIED_JULIAN_DAY;
   }
   
   /**
@@ -127,5 +140,4 @@ public class JulianDay {
     double JDN = c+day+e+f-1524.5;
     return JDN;
   }
-
 }
