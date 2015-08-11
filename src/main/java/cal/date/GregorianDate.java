@@ -8,6 +8,7 @@ package cal.date;
 import java.lang.Math;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
+import java.text.DecimalFormat;
 
 /**
  * A Gregorian Calendar Date.
@@ -33,6 +34,7 @@ public class GregorianDate {
   public int year;
   public int day;
   public int month;
+  public static GregorianDate EPOCH = new GregorianDate(1582,10,15);
 
   /**
    * Constructrs a Gregorian Date using today's date.
@@ -80,6 +82,28 @@ public class GregorianDate {
   }
 
   /**
+   * Determines whether this date's year is a leap year.
+   * <p>
+   * This method determines whether the the current date exists during the
+   * Julian calendar or the Gregorian Calendar. The only difference between
+   * the two is that for the Gregorian Calendar leap years must be evenly
+   * divisible by 4, unless the year is divisible by 100 - with the exception
+   * of years evenly divisble by 400.
+   * @return true, if this is a leap year; false, otherwise.
+   */
+  public boolean isLeapYear() {
+//    GregorianDate EPOCH = new GregorianDate(1582,10,15);
+    if (year % 4 == 0) {
+      if (this.isBefore(GregorianDate.EPOCH)) return true;
+      else {
+        if (year%400==0) return true;
+        if (year%100==0) return false;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Converts Julian Days to a Gregorian Date.
    * Algorithm derived by Richards (2013).
    * @param jday The Julian Day.
@@ -102,11 +126,11 @@ public class GregorianDate {
   }
 
   /**
-   * Prints this date.
+   * Prints this date with a simple pre-defined format.
    */ 
   public void print() {
     System.out.println("Gregorian Date: " + 
-      _monthNames[month-1]+" "+day+", "+year);
+      _months[month-1]+" "+day+", "+year);
   }
 
   /**
@@ -140,5 +164,7 @@ public class GregorianDate {
 /////////////////////////////////////////////////////////////////////////////
 // private
 
-  private String[] _monthNames = DateFormatSymbols.getInstance().getMonths();
+  private String[] _months = DateFormatSymbols.getInstance().getMonths();
+  private String[] _mos    = DateFormatSymbols.getInstance().getShortMonths();
+
 }
