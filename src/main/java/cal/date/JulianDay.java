@@ -3,15 +3,18 @@ package cal.date;
 import java.lang.Math;
 import java.util.Calendar;
 
-/****************************************************************************
+/**
  * A Julian Day.
  * <p>
  * The Julian Day is the continuous count of days since the beginning of the
- * Julian Period, a number primarily used by astronomers.
+ * Julian Period used primarily by astronomers. The Julian Period is a
+ * chronological interval of 7980 years beginning in 4713 BC, and has been
+ * used since 1583 to convert between different calendars. The next Julian 
+ * Period begins in the year 3268 AD.
  * @author Chris Engelsma
  * @version 1.0
  * @since 2015-08-07
-****************************************************************************/
+ */
 public class JulianDay {
 
   public double day;
