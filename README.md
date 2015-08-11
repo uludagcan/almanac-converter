@@ -13,11 +13,15 @@ Each year is divided into 12 months, with a varied number of days per month. To 
 
 Julian Day
 ----------
-The continuous count of days since the beginning of the Julian Period, the Julian Day is primarily used by astronomers for easier calculations. The Julian Day Number (JDN) is the integer assigned to a whole solar day starting from noon Greenwich Mean Time (GMT), with day 0 assigned to noon on January 1, 4713 BC on the proleptic Julian Calendar. The Julian Day (JD) is the preceding JDN plus the fraction of the day.
+The Julian Day is the continuous count of days since the beginning of the Julian Period used primarily by astronomers. The Julian Period is a chronological interval of 7980 years beginning in 4713 BC, and has been used since 1583 to convert between different calendars. The next Julian Period begins in the year 3268 AD.
 
 French Republican Calendar
 --------------------------
-The French Republican Calendar (FRC) was a calendar created and implemented during the French Revolution. It was only used in practice for 12 years from late 1793 to 1806 as part of an ongoing effort by Napoleon to reinstate the catholic church within France following the Concordat of 1801. This calendar was picked up briefly during the Paris Commune of 1871. Each year is divided into 12 months, with each month being an equal 30 days long. Every year begins on the autumnal equinox as observed in Paris. The eccentricity of Earth's wobble and varying eclipctic orbit required an additional 5-6 additional "Sans-culottides" dates to account for this.
+The French Republican Calendar (or, erroneously, French Revolutionary Calendar) was a calendar created and used during the French Revolution. It was only used in practice for 12 years starting in late 1793 until it was abolished by Napoleon Bonaparte as an effort to reinstate the catholic church within France. This calendar was later picked up, albeit briefly, during the Paris Commune of 1871.
+
+Each year is divided into 12 months (mois), with each month being an equal 30 days long, divided out further into 3 weeks (décades) 10 days long. Every year begins on the autumnal equinox as observed in Paris. The slight variation in seaons required the use of 5-6 additional "Sans-culottides" days. While the calendar was adopted on October 24, 1793 (3 Brumaire, An II), the official epoch was set to September 22, 1792 (1 Vendemiaire, An I) to commemorate the founding of the republic.
+ 
+To further reduce the influence of the Church, a Rural Calendar was introduced, naming each day of the year after various crops, minerals, animals and work tools to reflect the changing of the seasons. 
 
 ```
 Supported calendar types:
