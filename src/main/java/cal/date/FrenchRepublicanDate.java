@@ -2,7 +2,6 @@ package cal.date;
 
 import cal.astro.*;
 import cal.util.*;
-import static cal.util.Converter.*;
 
 /**
  * A date in the French Republican Calendar.
@@ -71,8 +70,6 @@ public class FrenchRepublicanDate implements Almanac {
    * @param jd A Julian Day.
    */
   public FrenchRepublicanDate(JulianDay jd) {
-    this = Converter.convert(jd);
-    /*
     double jday = Math.floor(jd.day)+0.5;
     double[] adr = anneeDeLaRevolution(new JulianDay(jday));
     an = (int)adr[0];
@@ -83,7 +80,6 @@ public class FrenchRepublicanDate implements Almanac {
     jour = (int)((djour % 10)+1);
     if (mois>12) jour+=11;
     _adjustForSansCulottides();
-    */
   }
 
   /**
@@ -141,8 +137,7 @@ public class FrenchRepublicanDate implements Almanac {
 /////////////////////////////////////////////////////////////////////////////
 // private
 
-/*
-  private void _adjustForSansCulottides() {
+private void _adjustForSansCulottides() {
     if (jour>10) {
       jour -= 12;
       decade = 1;
@@ -186,7 +181,7 @@ public class FrenchRepublicanDate implements Almanac {
     eqParis = Math.floor(eqParis-0.5)+0.5;
     return eqParis;
   }
-  */
+
 
   private JulianDay FRENCH_REVOLUTION_EPOCH = new JulianDay(2375839.5);
 
