@@ -29,7 +29,7 @@ import java.text.DecimalFormat;
  * @version 1.0
  * @since 2015-08-10
  */
-public class GregorianDate {
+public class GregorianDate implements Almanac {
 
   public int year;
   public int day;
