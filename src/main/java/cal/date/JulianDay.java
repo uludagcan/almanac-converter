@@ -15,7 +15,7 @@ import java.util.Calendar;
  * @version 1.0
  * @since 2015-08-07
  */
-public class JulianDay {
+public class JulianDay implements Almanac {
 
   public double day;
   public static double EPOCH_MODIFIED_JULIAN_DAY = 2400000.5;
