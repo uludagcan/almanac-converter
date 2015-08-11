@@ -7,7 +7,9 @@ Converts seamlessly between a number of known calendars.
 
 Gregorian Calendar
 ------------------
-Also called the Western Calendar, or the Christian Calendar, it is the most internationally widely used civil calendar. Introduced by Pope Gregory XIII in 1582 as a refinement to the Julian Calendar, this calendar divided the year into 12 months of varying lengths of 30 and 31 days, with the second month having either 28 or 29 days every fourth year (with the exception of 1900).
+The Gregorian Calendar is internationally the most widely used civil calendar. It was named for Pope Gregory XIII who introduced it on October 15, 1582. The calendar was a refinement to the Julian Calendar, with the motivation of setting the Easter holiday to a specific date instead of the spring equinox, which naturally drifted dates.
+
+Each year is divided into 12 months, with a varied number of days per month. To account for the drift in seasons, a leap year occurs which introduces an additional day in February. These leap years happen every year that's divisible by 4, except years that are divisible by 100 but not divisible by 400. For example: 1700, 1800 and 1900 are NOT leap years, but 2000 is a leap year.
 
 Julian Day
 ----------
