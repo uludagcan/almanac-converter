@@ -1,7 +1,7 @@
 package cal.util;
 
-import cal.date;
-import cal.astro;
+import cal.date.*;
+import cal.astro.*;
 
 /**
  * A conversion facilitator between different calendars.
