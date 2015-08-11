@@ -11,9 +11,9 @@ import cal.astro.*;
  */
 public class Converter {
   public static JulianDay convert(Almanac cal) { 
-    if (cal instanceOf GregorianDate) {
+    if (cal instanceof GregorianDate) {
       return _GD2JD(cal);
-    } else if (cal instanceOf FrenchRepublicanDate) {
+    } else if (cal instanceof FrenchRepublicanDate) {
       // TODO
       return (JulianDay)cal;
     }      
@@ -26,9 +26,9 @@ public class Converter {
   }
   
   public static FrenchRepublicanDate convert(Almanac cal) {
-    if (cal instanceOf JulianDay) {
+    if (cal instanceof JulianDay) {
       return _JD2FRD((JulianDay)cal);
-    } else if (cal instanceOf GregorianDate) {
+    } else if (cal instanceof GregorianDate) {
      // return _GD2FRD((GregorianDate)cal);
     }
     return (FrenchRepublicanDate)cal;
