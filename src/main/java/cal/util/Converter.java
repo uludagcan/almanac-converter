@@ -11,6 +11,6 @@ import cal.astro.*;
  */
 public class Converter {
   public static Almanac convert(Almanac cal) { 
-    return (GregorianDate)Almanac;
+    return cal;
   }
 }
