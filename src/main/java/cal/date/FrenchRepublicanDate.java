@@ -27,7 +27,7 @@ import cal.util.*;
  * @version 1.0
  * @since 2015-08-07
  */
-public class FrenchRepublicanDate {
+public class FrenchRepublicanDate implements Almanac {
 
   public int an;
   public int mois;
