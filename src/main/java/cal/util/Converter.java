@@ -10,5 +10,7 @@ import cal.astro.*;
  * @since 2015-08-11
  */
 public class Converter {
-  public static Almanac convert(Almanac cal) { return NULL; }
+  public static Almanac convert(Almanac cal) { 
+    return (GregorianDate)Almanac;
+  }
 }
