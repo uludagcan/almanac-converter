@@ -54,13 +54,13 @@ public class Converter {
     double JDN = c+day+e+f-1524.5;
     return new JulianDay(JDN);
   }
-}
+
 
 //private static FrenchRepublicanDate _GD2FRD(GregorianDate date) {
   
 //}
 
-private static FrenchRepublicanDate _JD2FRD(JulianDay jd) {
+  private static FrenchRepublicanDate _JD2FRD(JulianDay jd) {
     double jday = Math.floor(jd.day)+0.5;
     double[] adr = anneeDeLaRevolution(new JulianDay(jday));
     double an = (int)adr[0];
@@ -85,7 +85,7 @@ private static FrenchRepublicanDate _JD2FRD(JulianDay jd) {
     }
     
     return new FrenchRepublicanDate(an,mois,decade,jour)
-}
+  }
 
   private static double[] anneeDeLaRevolution(JulianDay julday) {
     int guess = (new GregorianDate(julday)).year-2;
