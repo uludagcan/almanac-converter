@@ -29,10 +29,10 @@ import cal.util.*;
  */
 public class FrenchRepublicanDate implements Almanac {
 
-  public int an;
-  public int mois;
-  public int decade;
-  public int jour;
+  public int year;
+  public int month;
+  public int week;
+  public int day;
 
   /**
    * Constructs a French Republican Date for today's date.
@@ -43,17 +43,17 @@ public class FrenchRepublicanDate implements Almanac {
   
   /**
    * Constructs a French Republican Date with given year, month,
-   * decade and day.
-   * @param an The year.
-   * @param moise The month.
-   * @param decade The week.
-   * @param jour The day.
+   * week and day.
+   * @param year The year.
+   * @param month The month.
+   * @param week The week.
+   * @param day The day.
    */ 
-  public FrenchRepublicanDate(int an, int mois, int decade, int jour) {
-    this.an = an;
-    this.mois = mois;
-    this.decade = decade;
-    this.jour = jour;
+  public FrenchRepublicanDate(int year, int month, int week, int day) {
+    this.year = year;
+    this.month = month;
+    this.week = week;
+    this.day = day;
   }
 
   /**
@@ -72,13 +72,13 @@ public class FrenchRepublicanDate implements Almanac {
   public FrenchRepublicanDate(JulianDay jd) {
     double jday = Math.floor(jd.day)+0.5;
     double[] adr = anneeDeLaRevolution(new JulianDay(jday));
-    an = (int)adr[0];
+    year = (int)adr[0];
     double equinoxe = adr[1];
-    mois = (int)(Math.floor((jd.day-equinoxe)/30)+1);
+    month = (int)(Math.floor((jd.day-equinoxe)/30)+1);
     double djour = (jd.day-equinoxe) % 30;
-    decade = (int)(Math.floor(djour/10)+1);
-    jour = (int)((djour % 10)+1);
-    if (mois>12) jour+=11;
+    week = (int)(Math.floor(djour/10)+1);
+    day = (int)((djour % 10)+1);
+    if (month>12) day+=11;
     _adjustForSansCulottides();
   }
 
@@ -87,15 +87,15 @@ public class FrenchRepublicanDate implements Almanac {
    * @return The month name.
    */
   public String getMois() { 
-    return _mois[mois-1]; 
+    return _month[month-1]; 
   }
 
   /**
    * Gets the year in traditional Roman numerals.
    * @return The year in Roman numerals.
    */
-  public String getAn() {
-    return (RomanNumeralGenerator.toRoman(an));
+  public String getYear() {
+    return (RomanNumeralGenerator.toRoman(year));
   }
 
   /**
@@ -103,7 +103,7 @@ public class FrenchRepublicanDate implements Almanac {
    * @return The decade in Roman numerals.
    */
   public String getDecade() {
-    return (RomanNumeralGenerator.toRoman(decade));
+    return (RomanNumeralGenerator.toRoman(week));
   }
 
   /**
@@ -111,7 +111,7 @@ public class FrenchRepublicanDate implements Almanac {
    * @return The Rural calendar name of the day.
    */
   public String getJour() {
-    return _jours[mois-1][(decade-1)*10+(jour-1)];
+    return _days[month-1][(week-1)*10+(day-1)];
   }
 
   /**
@@ -119,9 +119,9 @@ public class FrenchRepublicanDate implements Almanac {
    */
   public void printLong() {
     System.out.print("French Republican Date: ");
-    System.out.println("Année "+getAn()+" de la République");
+    System.out.println("Année "+getYear()+" de la République");
     System.out.println("  Mois de "+getMois());
-    System.out.print("  Décade "+getDecade()+" Jour "+jour);
+    System.out.print("  Décade "+getDecade()+" Jour "+day);
     System.out.println(" - \""+getJour()+"\"");
   }
 
@@ -130,23 +130,23 @@ public class FrenchRepublicanDate implements Almanac {
    */
   public void print() {
     System.out.print("French Republican Date: ");
-    System.out.print(((decade-1)*10)+jour);
-    System.out.print(" "+getMois()+", L'an "+getAn());
+    System.out.print(((week-1)*10)+day);
+    System.out.print(" "+getMois()+", L'an "+getYear());
   }
 
 /////////////////////////////////////////////////////////////////////////////
 // private
 
 private void _adjustForSansCulottides() {
-    if (jour>10) {
-      jour -= 12;
-      decade = 1;
-      mois = 13;
+    if (day>10) {
+      day -= 12;
+      week = 1;
+      month = 13;
     }
-    if (mois==13) {
-      decade = 1;
-      if (jour>6) {
-        jour = 1;
+    if (month==13) {
+      week = 1;
+      if (day>6) {
+        day = 1;
       }
     }
   }
@@ -185,7 +185,7 @@ private void _adjustForSansCulottides() {
 
   private JulianDay FRENCH_REVOLUTION_EPOCH = new JulianDay(2375839.5);
 
-  private String[] _mois = 
+  private String[] _month = 
   {
     "Vendémiaire",
     "Brumaire",
@@ -202,7 +202,7 @@ private void _adjustForSansCulottides() {
     "Sans-culottides"
   };
   
-  private String[][] _jours =
+  private String[][] _days =
   {
     // Vendémiaire
     {
