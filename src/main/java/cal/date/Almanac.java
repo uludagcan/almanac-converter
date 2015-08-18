@@ -8,4 +8,5 @@ package cal.date;
  */
 public interface Almanac {
   public void print();
+  public String getDate();
 }

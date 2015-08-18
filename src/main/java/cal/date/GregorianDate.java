@@ -126,8 +126,18 @@ public class GregorianDate implements Almanac {
   }
 
   /**
+   * Gets this date.
+   * TODO Extend with DateFormat
+   */
+  @Override
+  public String getDate() {
+    return new String(_months[month-1]+" "+day+", "+year);
+  }
+
+  /**
    * Prints this date with a simple pre-defined format.
    */ 
+  @Override
   public void print() {
     System.out.println("Gregorian Date: " + 
       _months[month-1]+" "+day+", "+year);

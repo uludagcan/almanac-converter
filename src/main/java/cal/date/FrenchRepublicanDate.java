@@ -86,7 +86,7 @@ public class FrenchRepublicanDate implements Almanac {
    * Gets the month name.
    * @return The month name.
    */
-  public String getMois() { 
+  public String getMonth() { 
     return _month[month-1]; 
   }
 
@@ -102,7 +102,7 @@ public class FrenchRepublicanDate implements Almanac {
    * Gets the 10-day week (decade) in traditional Roman numerals.
    * @return The decade in Roman numerals.
    */
-  public String getDecade() {
+  public String getWeek() {
     return (RomanNumeralGenerator.toRoman(week));
   }
 
@@ -110,8 +110,35 @@ public class FrenchRepublicanDate implements Almanac {
    * Gets the Rural calendar name of the day.
    * @return The Rural calendar name of the day.
    */
-  public String getJour() {
+  public String getDayName() {
     return _days[month-1][(week-1)*10+(day-1)];
+  }
+
+  /**
+   * Gets the day number.
+   * @param useDecade true, if using decades; false, otherwise.
+   * @return The day.
+   */
+  public String getDay(boolean useDecade) {
+    if (useDecade) return Integer.toString(day);
+    else return Integer.toString(((week-1)*10)+day);
+  }
+
+  /**
+   * Gets the long-form day number (assumes no use of decades).
+   * @return The day.
+   */
+  public String getDay() {
+    return getDay(false);
+  }
+
+  /**
+   * Gets this date.
+   * @return The date.
+   */
+  @Override
+  public String getDate() {
+    return new String(getDay()+" "+getMonth()+", L'an "+getYear());
   }
 
   /**
@@ -120,18 +147,19 @@ public class FrenchRepublicanDate implements Almanac {
   public void printLong() {
     System.out.print("French Republican Date: ");
     System.out.println("Année "+getYear()+" de la République");
-    System.out.println("  Mois de "+getMois());
-    System.out.print("  Décade "+getDecade()+" Jour "+day);
-    System.out.println(" - \""+getJour()+"\"");
+    System.out.println("  Mois de "+getMonth());
+    System.out.print("  Décade "+getWeek()+" Jour "+day);
+    System.out.println(" - \""+getDayName()+"\"");
   }
 
   /**
    * Prints this date in short form.
    */
+  @Override
   public void print() {
     System.out.print("French Republican Date: ");
     System.out.print(((week-1)*10)+day);
-    System.out.print(" "+getMois()+", L'an "+getYear());
+    System.out.print(" "+getMonth()+", L'an "+getYear());
   }
 
 /////////////////////////////////////////////////////////////////////////////

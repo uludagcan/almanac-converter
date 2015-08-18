@@ -111,12 +111,21 @@ public class JulianDay implements Almanac {
    * @return The Modified Julian Day.
    */ 
   public double getModified() {
-    return day-EPOCH_MODIFIED_JULIAN_DAY;
+    return this.day-EPOCH_MODIFIED_JULIAN_DAY;
+  }
+
+  /**
+   * Gets this date.
+   */ 
+  @Override
+  public String getDate() {
+    return Double.toString(this.day);
   }
   
   /**
    * Prints this Julian Day.
    */
+  @Override
   public void print() {
     System.out.println("Julian Day: "+day);
   }
