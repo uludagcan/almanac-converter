@@ -71,6 +71,13 @@ public final class JulianDay implements Almanac {
   }
 
   /**
+   * Returns this day as a double.
+   * @return this day.
+   */
+  public double getDay() {
+    return _day;
+  }
+  /**
    * Returns today's date as a string.
    * Convenience static method.
    * @return today's date.
