@@ -173,9 +173,9 @@ public final class GregorianDate implements Almanac {
 /////////////////////////////////////////////////////////////////////////////
 // private
 
-  private int year;
-  private int day;
-  private int month;
+  private int _year;
+  private int _day;
+  private int _month;
   
   private String[] _monthNames = DateFormatSymbols.getInstance().getMonths();
   private String[] _mos    = DateFormatSymbols.getInstance().getShortMonths();
