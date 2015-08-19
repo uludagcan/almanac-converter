@@ -67,7 +67,7 @@ public final class JulianDay implements Almanac {
    * @param date A Gregorian Date.
    */
   public JulianDay(GregorianDate date) {
-    _day = _julianFromGregorian(_date);
+    _day = _julianFromGregorian(date);
   }
 
   /**
