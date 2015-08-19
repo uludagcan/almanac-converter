@@ -1,9 +1,17 @@
 Almanac Converter ![Build state](https://travis-ci.org/chrisengelsma/almanac-converter.svg?branch=master)
 -----------------
 
+An easy-to-use calendar converter - able to convert between various known calendars.
 
-A calendar converter back-end.
-Converts seamlessly between a number of known calendars.
+Installation
+------------
+To install, you will need [Gradle](https://gradle.org/) or [Apache Ant](http://ant.apache.org/).
+
+1. cd to the cloned repository
+2. Run ```gradlew build``` or ```ant``` to build
+3. Impress your friends with some date conversions.
+
+See the wiki for examples.
 
 Gregorian Calendar
 ------------------
