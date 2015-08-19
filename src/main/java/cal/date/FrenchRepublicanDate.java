@@ -66,12 +66,12 @@ public final class FrenchRepublicanDate implements Almanac {
    * @param jd A Julian Day.
    */
   public FrenchRepublicanDate(JulianDay jd) {
-    double jday = Math.floor(jd.day)+0.5;
+    double jday = Math.floor(jd.getDay())+0.5;
     double[] adr = anneeDeLaRevolution(new JulianDay(jday));
     _year = (int)adr[0];
     double equinoxe = adr[1];
-    _month = (int)(Math.floor((jd.day-equinoxe)/30)+1);
-    double djour = (jd.day-equinoxe) % 30;
+    _month = (int)(Math.floor((jd.getDay()-equinoxe)/30)+1);
+    double djour = (jd.getDay()-equinoxe) % 30;
     _week = (int)(Math.floor(djour/10)+1);
     _day = (int)((djour % 10)+1);
     if (_month>12) _day+=11;
@@ -191,7 +191,7 @@ public final class FrenchRepublicanDate implements Almanac {
   private double[] anneeDeLaRevolution(JulianDay julday) {
     int guess = (new GregorianDate(julday)).getYear()-2;
     double nexteq,lasteq,jd;
-    jd = julday.day;
+    jd = julday.getDay();
     lasteq = parisEquinox(guess);
     while (lasteq>jd) {
       guess--;
@@ -203,7 +203,7 @@ public final class FrenchRepublicanDate implements Almanac {
       guess++;
       nexteq = parisEquinox(guess);
     }
-    double adr = (lasteq - FRENCH_REVOLUTION_EPOCH.day);
+    double adr = (lasteq - FRENCH_REVOLUTION_EPOCH.getDay());
     adr /= Meeus.TROPICAL_YEAR;
     adr += 1;
     return new double[] {Math.round(adr), lasteq};
