@@ -50,7 +50,7 @@ public final class GregorianDate implements Almanac {
    * @param date A Julian Day.
    */
   public GregorianDate(JulianDay date) {
-    this(gregorianFromJulian(date));
+    this(_gregorianFromJulian(date));
   }
 
   /**
@@ -104,27 +104,6 @@ public final class GregorianDate implements Almanac {
     return false;
   }
 
-  /**
-   * Converts Julian Days to a Gregorian Date.
-   * Algorithm derived by Richards (2013).
-   * @param jday The Julian Day.
-   * @return the Gregorian Date.
-   */
-  public static GregorianDate gregorianFromJulian(JulianDay jday) {
-    int J = (int)(jday.day+0.5);
-    int y = 4716; int j = 1401;   int m = 2;
-    int n = 12;   int r = 4;      int p = 1461;
-    int v = 3;    int u = 5;      int s = 153;
-    int w = 2;    int B = 274277; int C = -38;
-    int f = J+j+(((4*J+B)/146097)*3)/4+C;
-    int e = r*f+v;
-    int g = (e%p)/r;
-    int h = u*g+w;
-    int day = (h%s)/u+1;
-    int month = (h/s+m)%n+1;
-    int year = (e/p)-y+(n+m-month)/n;
-    return new GregorianDate(day,month,year);
-  }
 
   /**
    * Gets the day.
@@ -142,7 +121,7 @@ public final class GregorianDate implements Almanac {
    * Gets the day.
    * @return the day.
    */
-  public int getDay() { return _day; }
+  public int getYear() { return _year; }
   
   /**
    * 
@@ -200,5 +179,27 @@ public final class GregorianDate implements Almanac {
   
   private String[] _monthNames = DateFormatSymbols.getInstance().getMonths();
   private String[] _mos    = DateFormatSymbols.getInstance().getShortMonths();
+
+  /**
+   * Converts Julian Days to a Gregorian Date.
+   * Algorithm derived by Richards (2013).
+   * @param jday The Julian Day.
+   * @return the Gregorian Date.
+   */
+  private static GregorianDate _gregorianFromJulian(JulianDay jday) {
+    int J = (int)(jday.getDay()+0.5);
+    int y = 4716; int j = 1401;   int m = 2;
+    int n = 12;   int r = 4;      int p = 1461;
+    int v = 3;    int u = 5;      int s = 153;
+    int w = 2;    int B = 274277; int C = -38;
+    int f = J+j+(((4*J+B)/146097)*3)/4+C;
+    int e = r*f+v;
+    int g = (e%p)/r;
+    int h = u*g+w;
+    int day = (h%s)/u+1;
+    int month = (h/s+m)%n+1;
+    int year = (e/p)-y+(n+m-month)/n;
+    return new GregorianDate(day,month,year);
+  }
 
 }
