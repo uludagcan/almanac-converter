@@ -176,21 +176,21 @@ public final class FrenchRepublicanDate implements Almanac {
   private int _day;
 
   private void _adjustForSansCulottides() {
-    if (day>10) {
-      day -= 12;
-      week = 1;
-      month = 13;
+    if (_day>10) {
+      _day -= 12;
+      _week = 1;
+      _month = 13;
     }
-    if (month==13) {
-      week = 1;
-      if (day>6) {
-        day = 1;
+    if (_month==13) {
+      _week = 1;
+      if (_day>6) {
+        _day = 1;
       }
     }
   }
 
   private double[] anneeDeLaRevolution(JulianDay julday) {
-    int guess = (new GregorianDate(julday)).year-2;
+    int guess = (new GregorianDate(julday)).getYear()-2;
     double nexteq,lasteq,jd;
     jd = julday.day;
     lasteq = parisEquinox(guess);
