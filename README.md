@@ -41,3 +41,7 @@ Supported calendar types:
 * Mayan Calendar             [  0%] PLANNING
 * More...
 ```
+
+### Credits
+
+Inspired by Fourmilab's javascript-based calendar converter and astronomical equations by Jean Meeus.
