@@ -163,7 +163,7 @@ public final class FrenchRepublicanDate implements Almanac {
   @Override
   public void print() {
     System.out.print("French Republican Date: ");
-    System.out.print(getDay()" "+getMonth()+", L'an "+getYear());
+    System.out.print(getDay()+" "+getMonth()+", L'an "+getYear());
   }
 
 /////////////////////////////////////////////////////////////////////////////
