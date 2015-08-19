@@ -100,7 +100,7 @@ public final class FrenchRepublicanDate implements Almanac {
    * @return The year in Roman numerals.
    */
   public String getYear() {
-    return (RomanNumeralGenerator.toRoman(year));
+    return (RomanNumeralGenerator.toRoman(_year));
   }
 
   /**
@@ -108,7 +108,7 @@ public final class FrenchRepublicanDate implements Almanac {
    * @return The decade in Roman numerals.
    */
   public String getWeek() {
-    return (RomanNumeralGenerator.toRoman(week));
+    return (RomanNumeralGenerator.toRoman(_week));
   }
 
   /**
@@ -144,7 +144,7 @@ public final class FrenchRepublicanDate implements Almanac {
     System.out.print("French Republican Date: ");
     System.out.println("Année "+getYear()+" de la République");
     System.out.println("  Mois de "+getMonth());
-    System.out.print("  Décade "+getWeek()+" Jour "+day);
+    System.out.print("  Décade "+getWeek()+" Jour "+getDay(true));
     System.out.println(" - \""+getDayName()+"\"");
   }
 
@@ -163,8 +163,7 @@ public final class FrenchRepublicanDate implements Almanac {
   @Override
   public void print() {
     System.out.print("French Republican Date: ");
-    System.out.print(((week-1)*10)+day);
-    System.out.print(" "+getMonth()+", L'an "+getYear());
+    System.out.print(getDay()" "+getMonth()+", L'an "+getYear());
   }
 
 /////////////////////////////////////////////////////////////////////////////
