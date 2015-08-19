@@ -27,13 +27,8 @@ import cal.util.*;
  * @version 1.0
  * @since 2015-08-07
  */
-public class FrenchRepublicanDate implements Almanac {
+public final class FrenchRepublicanDate implements Almanac {
   public static final String CALENDAR_NAME = "French Republican Calendar";
-
-  public int year;
-  public int month;
-  public int week;
-  public int day;
 
   /**
    * Constructs a French Republican Date for today's date.
@@ -51,10 +46,10 @@ public class FrenchRepublicanDate implements Almanac {
    * @param day The day.
    */ 
   public FrenchRepublicanDate(int year, int month, int week, int day) {
-    this.year = year;
-    this.month = month;
-    this.week = week;
-    this.day = day;
+    _year = year;
+    _month = month;
+    _week = week;
+    _day = day;
   }
 
   /**
@@ -73,13 +68,13 @@ public class FrenchRepublicanDate implements Almanac {
   public FrenchRepublicanDate(JulianDay jd) {
     double jday = Math.floor(jd.day)+0.5;
     double[] adr = anneeDeLaRevolution(new JulianDay(jday));
-    year = (int)adr[0];
+    _year = (int)adr[0];
     double equinoxe = adr[1];
-    month = (int)(Math.floor((jd.day-equinoxe)/30)+1);
+    _month = (int)(Math.floor((jd.day-equinoxe)/30)+1);
     double djour = (jd.day-equinoxe) % 30;
-    week = (int)(Math.floor(djour/10)+1);
-    day = (int)((djour % 10)+1);
-    if (month>12) day+=11;
+    _week = (int)(Math.floor(djour/10)+1);
+    _day = (int)((djour % 10)+1);
+    if (_month>12) _day+=11;
     _adjustForSansCulottides();
   }
 
@@ -97,7 +92,7 @@ public class FrenchRepublicanDate implements Almanac {
    * @return The month name.
    */
   public String getMonth() { 
-    return _month[month-1]; 
+    return _monthNames[_month-1]; 
   }
 
   /**
@@ -121,7 +116,7 @@ public class FrenchRepublicanDate implements Almanac {
    * @return The Rural calendar name of the day.
    */
   public String getDayName() {
-    return _days[month-1][(week-1)*10+(day-1)];
+    return _dayNames[_month-1][(_week-1)*10+(_day-1)];
   }
 
   /**
@@ -130,8 +125,8 @@ public class FrenchRepublicanDate implements Almanac {
    * @return The day.
    */
   public String getDay(boolean useDecade) {
-    if (useDecade) return Integer.toString(day);
-    else return Integer.toString(((week-1)*10)+day);
+    if (useDecade) return Integer.toString(_day);
+    else return Integer.toString(((_week-1)*10)+_day);
   }
 
   /**
@@ -175,7 +170,12 @@ public class FrenchRepublicanDate implements Almanac {
 /////////////////////////////////////////////////////////////////////////////
 // private
 
-private void _adjustForSansCulottides() {
+  private int _year;
+  private int _month;
+  private int _week;
+  private int _day;
+
+  private void _adjustForSansCulottides() {
     if (day>10) {
       day -= 12;
       week = 1;
@@ -223,7 +223,7 @@ private void _adjustForSansCulottides() {
 
   private JulianDay FRENCH_REVOLUTION_EPOCH = new JulianDay(2375839.5);
 
-  private String[] _month = 
+  private String[] _monthNames = 
   {
     "Vendémiaire",
     "Brumaire",
@@ -240,7 +240,7 @@ private void _adjustForSansCulottides() {
     "Sans-culottides"
   };
   
-  private String[][] _days =
+  private String[][] _dayNames =
   {
     // Vendémiaire
     {
