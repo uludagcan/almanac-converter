@@ -1,8 +1,3 @@
-/****************************************************************************
- * A date in the Gregorian Calendar.
- * Internationally the most widely used civil calendar, the Gregorian 
- * Calendar was introduced by Pope Gregory XIII in 1582.
-****************************************************************************/
 package cal.date;
 
 import java.lang.Math;
@@ -30,6 +25,7 @@ import java.text.DecimalFormat;
  * @since 2015-08-10
  */
 public class GregorianDate implements Almanac {
+  public static final String CALENDAR_NAME = "Gregorian Calendar";
 
   public int year;
   public int day;
@@ -79,6 +75,15 @@ public class GregorianDate implements Almanac {
     this.day   = day;
     this.month = month;
     this.year  = year;
+  }
+
+  /**
+   * Returns today's date as a string.
+   * Convenience static method.
+   * @return today's date.
+   */
+  public static String asToday() {
+    return (new GregorianDate()).getDate();
   }
 
   /**

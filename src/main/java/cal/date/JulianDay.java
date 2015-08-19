@@ -16,6 +16,7 @@ import java.util.Calendar;
  * @since 2015-08-07
  */
 public class JulianDay implements Almanac {
+  public static final String CALENDAR_NAME = "Julian Day";
 
   public double day;
   public static double EPOCH_MODIFIED_JULIAN_DAY = 2400000.5;
@@ -54,7 +55,6 @@ public class JulianDay implements Almanac {
     this((double)jd);
   }
 
-
   /**
    * Constructs a Julian Day from a Java Calendar instance.
    * @param cal A Java Calendar instance.
@@ -68,6 +68,15 @@ public class JulianDay implements Almanac {
    */
   public JulianDay(GregorianDate date) {
     day = _julianFromGregorian(date);
+  }
+
+  /**
+   * Returns today's date as a string.
+   * Convenience static method.
+   * @return today's date.
+   */
+  public static String asToday() {
+    return (new JulianDay()).getDate();
   }
 
   /**

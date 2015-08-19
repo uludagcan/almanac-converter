@@ -28,6 +28,7 @@ import cal.util.*;
  * @since 2015-08-07
  */
 public class FrenchRepublicanDate implements Almanac {
+  public static final String CALENDAR_NAME = "French Republican Calendar";
 
   public int year;
   public int month;
@@ -83,6 +84,15 @@ public class FrenchRepublicanDate implements Almanac {
   }
 
   /**
+   * Returns today's date as a string.
+   * Convenience static method.
+   * @return today's date.
+   */
+  public static String asToday() {
+    return (new FrenchRepublicanDate()).getDate();
+  }
+
+  /**
    * Gets the month name.
    * @return The month name.
    */
@@ -133,15 +143,6 @@ public class FrenchRepublicanDate implements Almanac {
   }
 
   /**
-   * Gets this date.
-   * @return The date.
-   */
-  @Override
-  public String getDate() {
-    return new String(getDay()+" "+getMonth()+", L'an "+getYear());
-  }
-
-  /**
    * Prints this date in long form.
    */
   public void printLong() {
@@ -150,6 +151,15 @@ public class FrenchRepublicanDate implements Almanac {
     System.out.println("  Mois de "+getMonth());
     System.out.print("  Décade "+getWeek()+" Jour "+day);
     System.out.println(" - \""+getDayName()+"\"");
+  }
+
+  /**
+   * Gets this date.
+   * @return The date.
+   */
+  @Override
+  public String getDate() {
+    return new String(getDay()+" "+getMonth()+", L'an "+getYear());
   }
 
   /**

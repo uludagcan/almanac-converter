@@ -1,12 +1,13 @@
 package cal.date;
 
 /**
- * A generic almanac interface.
+ * An almanac interface.
  * @author Chris Engelsma
  * @version 1.0
  * @since 2015-08-11
  */
 public interface Almanac {
+  public static final String CALENDAR_NAME = "";
   public void print();
   public String getDate();
 }

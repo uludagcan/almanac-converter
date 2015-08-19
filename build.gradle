@@ -2,7 +2,7 @@ apply plugin: 'java'
 
 defaultTasks 'jar'
 
-description = 'Almaniac'
+description = 'Almanac-Converter'
 
 // tag::wrapper[]
 task wrapper(type: Wrapper) {
@@ -29,7 +29,8 @@ sourceSets {
 
 // tag::jar[]
 jar {
-  baseName 'almaniac'
+  baseName 'almanac-converter'
+  duplicatesStrategy = 'exclude'
   manifest {
     attributes 'Implementation-Title': project.description
   }
