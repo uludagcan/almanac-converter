@@ -15,10 +15,10 @@ import java.util.Calendar;
  * @version 1.0
  * @since 2015-08-07
  */
-public class JulianDay implements Almanac {
+public final class JulianDay implements Almanac {
   public static final String CALENDAR_NAME = "Julian Day";
 
-  public double day;
+
   public static double EPOCH_MODIFIED_JULIAN_DAY = 2400000.5;
 
   /**
@@ -36,7 +36,7 @@ public class JulianDay implements Almanac {
    * @param jd A Julian Day.
    */
   public JulianDay(double jd) {
-    day = jd;
+    _day = jd;
   }
 
   /**
@@ -67,7 +67,7 @@ public class JulianDay implements Almanac {
    * @param date A Gregorian Date.
    */
   public JulianDay(GregorianDate date) {
-    day = _julianFromGregorian(date);
+    _day = _julianFromGregorian(_date);
   }
 
   /**
@@ -84,7 +84,7 @@ public class JulianDay implements Almanac {
    * @return This Julian Day at noon.
    */
   public JulianDay atNoon() {
-    return new JulianDay(Math.ceil(day-0.5));
+    return new JulianDay(Math.ceil(_day-0.5));
   }
 
   /**
@@ -92,7 +92,7 @@ public class JulianDay implements Almanac {
    * @return This Julian Day at midnight.
    */
   public JulianDay atMidnight() {
-    return new JulianDay(Math.floor(day-0.5)+0.5);
+    return new JulianDay(Math.floor(_day-0.5)+0.5);
   }
 
   /**
@@ -100,7 +100,7 @@ public class JulianDay implements Almanac {
    * @return This Julian Day.
    */
   public JulianDay setToNoon() {
-    day = Math.ceil(day-0.5);
+    _day = Math.ceil(_day-0.5);
     return this;
   }
 
@@ -109,7 +109,7 @@ public class JulianDay implements Almanac {
    * @return This Julian Day.
    */
   public JulianDay setToMidnight() { 
-    day = Math.floor(day-0.5)+0.5; 
+    _day = Math.floor(_day-0.5)+0.5; 
     return this;
   }
 
@@ -120,7 +120,7 @@ public class JulianDay implements Almanac {
    * @return The Modified Julian Day.
    */ 
   public double getModified() {
-    return this.day-EPOCH_MODIFIED_JULIAN_DAY;
+    return _day-EPOCH_MODIFIED_JULIAN_DAY;
   }
 
   /**
@@ -128,7 +128,7 @@ public class JulianDay implements Almanac {
    */ 
   @Override
   public String getDate() {
-    return Double.toString(this.day);
+    return Double.toString(_day);
   }
   
   /**
@@ -136,16 +136,18 @@ public class JulianDay implements Almanac {
    */
   @Override
   public void print() {
-    System.out.println("Julian Day: "+day);
+    System.out.println("Julian Day: "+_day);
   }
 
 /////////////////////////////////////////////////////////////////////////////
 // private
-
+  
+  private double _day;
+  
   private static double _julianFromGregorian(GregorianDate date) {
-    int month = date.month;
-    int year = date.year;
-    int day = date.day;
+    int month = date.getMonth();
+    int year = date.getYear();
+    int day = date.getDay();
     if (month==1 || month==2) {
       year--;
       month+=12;
