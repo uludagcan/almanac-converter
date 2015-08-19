@@ -24,12 +24,8 @@ import java.text.DecimalFormat;
  * @version 1.0
  * @since 2015-08-10
  */
-public class GregorianDate implements Almanac {
+public final class GregorianDate implements Almanac {
   public static final String CALENDAR_NAME = "Gregorian Calendar";
-
-  public int year;
-  public int day;
-  public int month;
   public static GregorianDate EPOCH = new GregorianDate(1582,10,15);
 
   /**
@@ -62,7 +58,7 @@ public class GregorianDate implements Almanac {
    * @param date A Gregorian Date.
    */
   public GregorianDate(GregorianDate date) {
-    this(date.day,date.month,date.year);
+    this(date.getDay(),date.getMonth(),date.getYear());
   }
 
   /**
@@ -72,9 +68,9 @@ public class GregorianDate implements Almanac {
    * @param year The year.
    */
   public GregorianDate(int day, int month, int year) {
-    this.day   = day;
-    this.month = month;
-    this.year  = year;
+    _day   = day;
+    _month = month;
+    _year  = year;
   }
 
   /**
@@ -98,11 +94,11 @@ public class GregorianDate implements Almanac {
    */
   public boolean isLeapYear() {
 //    GregorianDate EPOCH = new GregorianDate(1582,10,15);
-    if (year % 4 == 0) {
+    if (_year % 4 == 0) {
       if (this.isBefore(GregorianDate.EPOCH)) return true;
       else {
-        if (year%400==0) return true;
-        if (year%100==0) return false;
+        if (_year%400==0) return true;
+        if (_year%100==0) return false;
       }
     }
     return false;
@@ -131,12 +127,31 @@ public class GregorianDate implements Almanac {
   }
 
   /**
+   * Gets the day.
+   * @return the day.
+   */ 
+  public int getDay() { return _day; }
+   
+  /**
+    * Gets the month.
+    * @return the month.
+   */
+  public int getMonth() { return _month; }  
+  
+  /**
+   * Gets the day.
+   * @return the day.
+   */
+  public int getDay() { return _day; }
+  
+  /**
+   * 
    * Gets this date.
    * TODO Extend with DateFormat
    */
   @Override
   public String getDate() {
-    return new String(_months[month-1]+" "+day+", "+year);
+    return new String(_monthNames[_month-1]+" "+_day+", "+_year);
   }
 
   /**
@@ -145,7 +160,7 @@ public class GregorianDate implements Almanac {
   @Override
   public void print() {
     System.out.println("Gregorian Date: " + 
-      _months[month-1]+" "+day+", "+year);
+      _monthNames[_month-1]+" "+_day+", "+_year);
   }
 
   /**
@@ -154,12 +169,12 @@ public class GregorianDate implements Almanac {
    * @return true, if before; false, otherwise.
    */ 
   public boolean isBefore(GregorianDate date) {
-    double year = date.year;
-    double month = date.month;
-    double day = date.day;
-    return ((this.year<year) ||
-            (this.year==year && this.month<month) ||
-            (this.year==year && this.month==month && this.day<day));
+    double year = date.getYear();
+    double month = date.getMonth();
+    double day = date.getDay();
+    return ((_year<year) ||
+            (_year==year && _month<month) ||
+            (_year==year && _month==month && _day<day));
   }
 
   /**
@@ -168,18 +183,22 @@ public class GregorianDate implements Almanac {
    * @return true, if after; false, otherwise.
    */ 
   public boolean isAfter(GregorianDate date) {
-    double year = date.year;
-    double month = date.month;
-    double day = date.day;
-    return ((this.year>year) ||
-            (this.year==year && this.month>month) ||
-            (this.year==year && this.month==month && this.day>day));
+    double year = date.getYear();
+    double month = date.getMonth();
+    double day = date.getDay();
+    return ((_year>year) ||
+            (_year==year && _month>month) ||
+            (_year==year && _month==month && _day>day));
   }
 
 /////////////////////////////////////////////////////////////////////////////
 // private
 
-  private String[] _months = DateFormatSymbols.getInstance().getMonths();
+  private int year;
+  private int day;
+  private int month;
+  
+  private String[] _monthNames = DateFormatSymbols.getInstance().getMonths();
   private String[] _mos    = DateFormatSymbols.getInstance().getShortMonths();
 
 }
