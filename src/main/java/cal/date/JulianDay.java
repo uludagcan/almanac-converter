@@ -27,7 +27,7 @@ public final class JulianDay implements Almanac {
    * @param jd A Julian Day.
    */
   public JulianDay(JulianDay jd) {
-    this(jd.day);
+    this(jd.getDay());
   }
 
   /**
