@@ -21,6 +21,13 @@ public class MayanDate implements Almanac {
     _julianDayToMayanCount(jday);
   }
   
+  public int getKin()    { return (int)_kin;    }
+  public int getWinal()  { return (int)_winal;  }
+  public int getTun()    { return (int)_tun;    }
+  public int getKatun()  { return (int)_katun;  }
+  public int getBaktun() { return (int)_baktun; }
+  
+  
   /**
    * Gets the "Long Count" Mayan Date.
    * @return The long count mayan date.
@@ -34,11 +41,11 @@ public class MayanDate implements Almanac {
                       _kin);
   }
   
-  @Override
   /**
    * Prints the "Long Form" Mayan Calendar date.
    * @return The "Long Form" Mayan Calendar date.
    */
+  @Override
   public void print() {
     System.out.println(CALENDAR_NAME+": "+getDate());
   }
