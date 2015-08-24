@@ -47,16 +47,16 @@ public class MayanDate implements Almanac {
 // private
 
   private void _julianDayToMayanCount(JulianDay jday) {
-    float day = (jday.setToNoon()).getDay();
+    float day = (float)(jday.setToNoon()).getDay();
     float d = day - EPOCH;
-    _baktun = Math.floor(d/144000);
-    d = d % 144000;
-    _katun = Math.floor(d/7200);
-    d = d % 7200;
-    _tun = Math.floor(d / 360);
-    d = d % 360;
-    _winal = Math.floor(d / 20);
-    _kin = d % 20;
+    _baktun = (float)Math.floor(d/_lbaktun);
+    d = d % _lbaktun;
+    _katun = (float)Math.floor(d/_lkatun);
+    d = d % _lkatun;
+    _tun = (float)Math.floor(d / _ltun);
+    d = d % _ltun;
+    _winal = (float)Math.floor(d / _lwinal);
+    _kin = d % _lwinal;
   }
 
   /**
