@@ -38,6 +38,7 @@ public class MayanDate implements Almanac {
   /**
    * Prints the "Long Form" Mayan Calendar date.
    * @return The "Long Form" Mayan Calendar date.
+   */
   public void print() {
     System.out.println("Mayan Long Form: "+getDate());
   }
@@ -71,13 +72,13 @@ public class MayanDate implements Almanac {
    * 1 K'inchiltun    | 20 Kalabtun         | 1,152,000,000
    * 1 Alautun        | 20 K'inchiltun      | 23,040,000,000
    */ 
-  private int _kin,        _lkin = 1;
-  private int _winal,      _lwinal = 20;
-  private int _tun,        _ltun = 360;
-  private int _katun,      _lkatun = 7200;
-  private int _baktun,     _lbaktun = 144000;
-  private int _piktun,     _lpiktun = 2880000;
-  private int _kalabtun,   _lkalabtun = 57600000;
-  private int _kinchiltun, _lkinchiltun = 1152000000;
-  private int _alautun,    _lalautun = 23040000000;
+  private float _kin,        _lkin = 1;
+  private float _winal,      _lwinal = 20;
+  private float _tun,        _ltun = 360;
+  private float _katun,      _lkatun = 7200;
+  private float _baktun,     _lbaktun = 144000;
+  private float _piktun,     _lpiktun = 2880000;
+  private float _kalabtun,   _lkalabtun = 57600000;
+  private float _kinchiltun, _lkinchiltun = 1152000000;
+  private float _alautun,    _lalautun = 23040000000;
 }
