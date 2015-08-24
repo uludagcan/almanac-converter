@@ -23,7 +23,7 @@ public class MayanDate implements Almanac {
   
   /**
    * Gets the "Long Count" Mayan Date.
-   * @returns The long count mayan date.
+   * @return The long count mayan date.
    */
   @Override
   public String getDate() {
@@ -32,12 +32,14 @@ public class MayanDate implements Almanac {
                       _tun+"."+
                       _winal+"."+
                       _kin);
-
   }
   
   @Override
+  /**
+   * Prints the "Long Form" Mayan Calendar date.
+   * @return The "Long Form" Mayan Calendar date.
   public void print() {
-    System.out.println("Mayan Calendar: Not yet implemented");
+    System.out.println("Mayan Long Form: "+getDate());
   }
 
 /////////////////////////////////////////////////////////////////////////////
