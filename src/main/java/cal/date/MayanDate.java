@@ -40,7 +40,7 @@ public class MayanDate implements Almanac {
    * @return The "Long Form" Mayan Calendar date.
    */
   public void print() {
-    System.out.println("Mayan Long Form: "+getDate());
+    System.out.println(CALENDAR_NAME+": "+getDate());
   }
 
 /////////////////////////////////////////////////////////////////////////////
