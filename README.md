@@ -36,9 +36,9 @@ Supported calendar types:
 * Gregorian Calendar         [100%] DONE
 * Julian Day                 [100%] DONE
 * French Republican Calendar [100%] DONE
+* Mayan Calendar             [ 80%] IN PROGRESS
 * Islamic Calendar           [  0%] PLANNING
 * Hebrew Calendar            [  0%] PLANNING
-* Mayan Calendar             [  0%] PLANNING
 * More...
 ```
 
