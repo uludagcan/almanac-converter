@@ -38,6 +38,11 @@ jar {
 }
 // end::jar[]
 
+task javadocs(type: Javadoc) {
+  title = project.description
+  source = sourceSets.main.allJava
+}
+
 // tag::dependencies[]
 sourceCompatibility = 1.7
 targetCompatibility = 1.7

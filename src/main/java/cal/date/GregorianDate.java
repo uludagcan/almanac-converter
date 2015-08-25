@@ -37,7 +37,7 @@ public final class GregorianDate implements Almanac {
 
   /**
    * Constructs a Gregorian Date given a provided Calendar date.
-   * @param A Calendar date.
+   * @param date A calendar date.
    */
   public GregorianDate(Calendar date) {
     this(date.get(Calendar.DAY_OF_MONTH),

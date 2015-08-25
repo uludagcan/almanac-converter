@@ -110,7 +110,6 @@ public class MayaDate implements Almanac {
   
   /**
    * Prints the "Long Form" Maya Calendar date.
-   * @return The "Long Form" Maya Calendar date.
    */
   @Override
   public void print() {
