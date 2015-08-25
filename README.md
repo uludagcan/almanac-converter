@@ -31,6 +31,12 @@ Each year is divided into 12 months (mois), with each month being an equal 30 da
  
 To further reduce the influence of the Church, a Rural Calendar was introduced, naming each day of the year after various crops, minerals, animals and work tools to reflect the changing of the seasons. 
 
+Maya Calendar
+-------------
+The Maya calendar is not one calendar per se, but rather a system of calendars employed by pre-Columbian Mesoamerica. In many modern communities in Guatemala and Mexico, this calendar is still used today.
+
+The Maya calendar consists of several cycles (or counts) of different lengths. The 260-day calendar, or <em>Tzolk'in</em>, was combined with the 365-day calendar, or <em>Haab'</em> to form a synchronized cycle lasting for 52 Haab' called the Calendar Round. To measure periods longer than this, the Maya used the Long Count calendar.
+
 ```
 Supported calendar types:
 * Gregorian Calendar         [100%] DONE
