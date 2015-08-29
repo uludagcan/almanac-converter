@@ -69,9 +69,13 @@ public final class FrenchRepublicanDate implements Almanac {
    * @param jd a Julian Day.
    */
   public FrenchRepublicanDate(JulianDay jd) {
-    this(Converter.toFrenchRepublicanDate(jd));
+    this(toFrenchRepublicanDate(jd));
   }
 
+  /**
+   * Constructs a French Republican date from another French Republican date.
+   * @param date a French Republican date.
+   */
   public FrenchRepublicanDate(FrenchRepublicanDate date) {
     this(date.getYear(),date.getMonth(),date.getWeek(),date.getDay());
   }
@@ -151,8 +155,8 @@ public final class FrenchRepublicanDate implements Almanac {
     String out = "French Republican Date: ";
     out += "Année "+its(getYear())+" de la République\n";
     out += "  Mois de "+getMonthName() + "\n";
-    out += "  Décade "+RomanNumerals.toRoman(getWeek());
-    out += " Jour "+RomanNumerals.toRoman(getDay(true));
+    out += "  Décade "+itr(getWeek());
+    out += " Jour "+itr(getDay(true));
     out += " - \""+getDayName()+"\"";
 
     System.out.println(out);
@@ -164,10 +168,10 @@ public final class FrenchRepublicanDate implements Almanac {
    */
   @Override
   public String getDate() {
-    String out = RomanNumeral.toRoman(getDay());
+    String out = itr(getDay());
     out += " "+its(getMonth());
-    out += " "+
-    return new String(RomanNumeral.toRoman(getDay())+" "+getMonth()+", L'an "+getYear());
+    out += " "+getYear();
+    return out;
   }
 
   /**

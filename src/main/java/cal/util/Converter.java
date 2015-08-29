@@ -10,6 +10,12 @@ import cal.astro.*;
  * @since 2015-08-27
  */
 public class Converter {
+
+  /**
+   * Converts an Almanac to a Julian day.
+   * @param a an Almanac.
+   * @return the Julian day.
+   */
   public static JulianDay toJulianDay(Almanac a) {
     JulianDay b = new JulianDay();
     if (a instanceof JulianDay) {
@@ -25,6 +31,11 @@ public class Converter {
     return b;
   }
 
+  /**
+   * Converts an Almanac to a Gregorian date.
+   * @param a an Almanac.
+   * @return the Gregorian date.
+   */
   public static GregorianDate toGregorianDate(Almanac a) {
     if (a instanceof GregorianDate)
       return (GregorianDate)a;
@@ -32,6 +43,11 @@ public class Converter {
       return _jd2g(toJulianDay(a));
   }
 
+  /**
+   * Converts an Almanac to a French Republican date.
+   * @param a an Almanac.
+   * @return the French Republican date.
+   */
   public static FrenchRepublicanDate toFrenchRepublicanDate(Almanac a) {
     if (a instanceof FrenchRepublicanDate)
       return (FrenchRepublicanDate)a;
@@ -39,6 +55,11 @@ public class Converter {
       return _jd2frc(toJulianDay(a));
   }
 
+  /**
+   * Converts an Almanac to a Maya date.
+   * @param a an Almanac.
+   * @return the Maya date.
+   */
   public static MayaDate toMayaDate(Almanac a) {
     if (a instanceof MayaDate) 
       return (MayaDate)a;

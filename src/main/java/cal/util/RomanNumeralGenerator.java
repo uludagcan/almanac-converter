@@ -94,7 +94,7 @@ public class RomanNumeralGenerator {
    * @return an Arabic number.
    */
   public static int rti(String roman) {
-    return RomanNumeral
+    return toArabic(roman);
   }
 
 /////////////////////////////////////////////////////////////////////////////
