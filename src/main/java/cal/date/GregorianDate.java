@@ -26,7 +26,7 @@ import java.text.DecimalFormat;
  */
 public final class GregorianDate implements Almanac {
   public static final String CALENDAR_NAME = "Gregorian Calendar";
-  public static GregorianDate EPOCH = new GregorianDate(1582,10,15);
+  public static final JulianDay EPOCH = new JulianDay(2299160.5);
 
   /**
    * Constructrs a Gregorian Date using today's date.
@@ -93,9 +93,9 @@ public final class GregorianDate implements Almanac {
    * @return true, if this is a leap year; false, otherwise.
    */
   public boolean isLeapYear() {
-//    GregorianDate EPOCH = new GregorianDate(1582,10,15);
+    GregorianDate date = new GregorianDate(EPOCH);
     if (_year % 4 == 0) {
-      if (this.isBefore(GregorianDate.EPOCH)) return true;
+      if (this.isBefore(date)) return true;
       else {
         if (_year%400==0) return true;
         if (_year%100==0) return false;
@@ -187,7 +187,7 @@ public final class GregorianDate implements Almanac {
    * @return the Gregorian Date.
    */
   private static GregorianDate _gregorianFromJulian(JulianDay jday) {
-    int J = (int)(jday.getDay()+0.5);
+    int J = (int)(jday.getValue()+0.5);
     int y = 4716; int j = 1401;   int m = 2;
     int n = 12;   int r = 4;      int p = 1461;
     int v = 3;    int u = 5;      int s = 153;

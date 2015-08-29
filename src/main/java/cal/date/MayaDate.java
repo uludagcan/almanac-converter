@@ -41,7 +41,7 @@ import cal.astro.*;
  */ 
 public class MayaDate implements Almanac {
   public static final String CALENDAR_NAME = "Maya Calendar";
-  public static final float EPOCH = 584282.5f;
+  public static final JulianDay EPOCH = new JulianDay(584282.5);
   
   /**
    * Constructs a date in the Maya calendar.
@@ -57,6 +57,14 @@ public class MayaDate implements Almanac {
    */
   public MayaDate(JulianDay jday) {
     _julianDayToMayaCount(jday);
+  }
+
+  public MayaDate(int baktun, int katun, int tun, int uinal, int kin) {
+    _baktun = baktun;
+    _katun = katun;
+    _tun = tun;
+    _uinal = uinal;
+    _kin = kin;
   }
   
   /**
@@ -109,7 +117,7 @@ public class MayaDate implements Almanac {
   }
   
   /**
-   * Prints the "Long Form" Maya Calendar date.
+   * Prints the "Long Count" Maya Calendar date.
    */
   @Override
   public void print() {
@@ -120,8 +128,8 @@ public class MayaDate implements Almanac {
 // private
 
   private void _julianDayToMayaCount(JulianDay jday) {
-    float day = (float)(jday.atMidnight()).getDay();
-    float d = day - EPOCH;
+    double day = (jday.atMidnight()).getValue();
+    double d = day - EPOCH.getValue();
     _baktun = (int)Math.floor(d/_lbaktun);
     d = d % _lbaktun;
     _katun = (int)Math.floor(d/_lkatun);
@@ -142,14 +150,16 @@ public class MayaDate implements Almanac {
   private int _kinchiltun;
   private int _alautun;
 
-  private float _luinal      = 20f;
-  private float _ltun        = 360f;
-  private float _lkatun      = 7200f;
-  private float _lbaktun     = 144000f;
-  private float _lpiktun     = 2880000f;
-  private float _lkalabtun   = 57600000f;
-  private float _lkinchiltun = 1152000000f;
-  private float _lalautun    = 23040000000f;
+
+  /* Constants for Maya Calendar */
+  private double _luinal      = 20.0;
+  private double _ltun        = 360.0;
+  private double _lkatun      = 7200.0;
+  private double _lbaktun     = 144000.0;
+  private double _lpiktun     = 2880000.0;
+  private double _lkalabtun   = 57600000.0;
+  private double _lkinchiltun = 1152000000.0;
+  private double _lalautun    = 23040000000.0;
 
   private String[] _haabMonths = {
     "Pop",

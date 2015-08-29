@@ -1,7 +1,9 @@
 package cal.date;
 
 import cal.astro.*;
-import cal.util.*;
+import static cal.util.RomanNumeralGenerator.*;
+import static cal.util.Converter.*;
+import static cal.util.Util.*;
 
 /**
  * A date in the French Republican Calendar.
@@ -29,6 +31,7 @@ import cal.util.*;
  */
 public final class FrenchRepublicanDate implements Almanac {
   public static final String CALENDAR_NAME = "French Republican Calendar";
+  public static final JulianDay EPOCH = new JulianDay(2375839.5);
 
   /**
    * Constructs a French Republican Date for today's date.
@@ -40,10 +43,10 @@ public final class FrenchRepublicanDate implements Almanac {
   /**
    * Constructs a French Republican Date with given year, month,
    * week and day.
-   * @param year The year.
-   * @param month The month.
-   * @param week The week.
-   * @param day The day.
+   * @param year the year.
+   * @param month the month.
+   * @param week the week.
+   * @param day the day.
    */ 
   public FrenchRepublicanDate(int year, int month, int week, int day) {
     _year = year;
@@ -55,7 +58,7 @@ public final class FrenchRepublicanDate implements Almanac {
   /**
    * Constructs a French Republican Date fromr a given Gregorian
    * Calendar date.
-   * @param date A Gregorian Calendar Date.
+   * @param date a Gregorian Calendar Date.
    */
   public FrenchRepublicanDate(GregorianDate date) {
     this(new JulianDay(date));
@@ -63,19 +66,14 @@ public final class FrenchRepublicanDate implements Almanac {
 
   /**
    * Constructs a French Republican Date from a given Julian Day.
-   * @param jd A Julian Day.
+   * @param jd a Julian Day.
    */
   public FrenchRepublicanDate(JulianDay jd) {
-    double jday = Math.floor(jd.getDay())+0.5;
-    double[] adr = anneeDeLaRevolution(new JulianDay(jday));
-    _year = (int)adr[0];
-    double equinoxe = adr[1];
-    _month = (int)(Math.floor((jd.getDay()-equinoxe)/30)+1);
-    double djour = (jd.getDay()-equinoxe) % 30;
-    _week = (int)(Math.floor(djour/10)+1);
-    _day = (int)((djour % 10)+1);
-    if (_month>12) _day+=11;
-    _adjustForSansCulottides();
+    this(Converter.toFrenchRepublicanDate(jd));
+  }
+
+  public FrenchRepublicanDate(FrenchRepublicanDate date) {
+    this(date.getYear(),date.getMonth(),date.getWeek(),date.getDay());
   }
 
   /**
@@ -88,73 +86,88 @@ public final class FrenchRepublicanDate implements Almanac {
   }
 
   /**
-   * Gets the month name.
-   * @return The month name.
+   * Gets the month.
+   * @return the month.
    */
-  public String getMonth() { 
-    return _monthNames[_month-1]; 
+  public int getMonth() {
+    return _month;
   }
 
   /**
-   * Gets the year in traditional Roman numerals.
-   * @return The year in Roman numerals.
+   * Gets the year.
+   * @return the year.
    */
-  public String getYear() {
-    return (RomanNumeralGenerator.toRoman(_year));
+  public int getYear() {
+    return _year;
   }
 
   /**
-   * Gets the 10-day week (decade) in traditional Roman numerals.
-   * @return The decade in Roman numerals.
+   * Gets the 10-day week (décade).
+   * @return the décade.
    */
-  public String getWeek() {
-    return (RomanNumeralGenerator.toRoman(_week));
+  public int getWeek() {
+    return _week;
   }
 
   /**
-   * Gets the Rural calendar name of the day.
-   * @return The Rural calendar name of the day.
+   * Gets the long-form day number (assumes no use of decades).
+   * @return the day.
    */
-  public String getDayName() {
-    return _dayNames[_month-1][(_week-1)*10+(_day-1)];
+  public int getDay() {
+    return getDay(false);
   }
 
   /**
    * Gets the day number.
    * @param useDecade true, if using decades; false, otherwise.
-   * @return The day.
+   * @return the day.
    */
-  public String getDay(boolean useDecade) {
-    if (useDecade) return Integer.toString(_day);
-    else return Integer.toString(((_week-1)*10)+_day);
+  public int getDay(boolean useDecade) {
+    if (useDecade) return _day;
+    else return ((_week-1)*10)+_day;
   }
 
   /**
-   * Gets the long-form day number (assumes no use of decades).
-   * @return The day.
+   * Gets the month name.
+   * @return the month name.
    */
-  public String getDay() {
-    return getDay(false);
+  public String getMonthName() { 
+    return _monthNames[_month-1]; 
   }
+
+  /**
+   * Gets the Rural calendar name of the day.
+   * @return the Rural calendar name of the day.
+   */
+  public String getDayName() {
+    return _dayNames[_month-1][(_week-1)*10+(_day-1)];
+  }
+
 
   /**
    * Prints this date in long form.
    */
   public void printLong() {
-    System.out.print("French Republican Date: ");
-    System.out.println("Année "+getYear()+" de la République");
-    System.out.println("  Mois de "+getMonth());
-    System.out.print("  Décade "+getWeek()+" Jour "+getDay(true));
-    System.out.println(" - \""+getDayName()+"\"");
+    String out = "French Republican Date: ";
+    out += "Année "+its(getYear())+" de la République\n";
+    out += "  Mois de "+getMonthName() + "\n";
+    out += "  Décade "+RomanNumerals.toRoman(getWeek());
+    out += " Jour "+RomanNumerals.toRoman(getDay(true));
+    out += " - \""+getDayName()+"\"";
+
+    System.out.println(out);
   }
 
   /**
    * Gets this date.
-   * @return The date.
+   * @return the date.
    */
   @Override
   public String getDate() {
-    return new String(getDay()+" "+getMonth()+", L'an "+getYear());
+    String out = RomanNumeral.toRoman(getDay());
+    out += " "+its(getMonth());
+    out += " "+
+    return new String(RomanNumeral.toRoman(getDay())+" "+getMonth()+", L'an "+getYear());
   }
 
   /**
@@ -173,54 +186,6 @@ public final class FrenchRepublicanDate implements Almanac {
   private int _month;
   private int _week;
   private int _day;
-
-  private void _adjustForSansCulottides() {
-    if (_day>10) {
-      _day -= 12;
-      _week = 1;
-      _month = 13;
-    }
-    if (_month==13) {
-      _week = 1;
-      if (_day>6) {
-        _day = 1;
-      }
-    }
-  }
-
-  private double[] anneeDeLaRevolution(JulianDay julday) {
-    int guess = (new GregorianDate(julday)).getYear()-2;
-    double nexteq,lasteq,jd;
-    jd = julday.getDay();
-    lasteq = parisEquinox(guess);
-    while (lasteq>jd) {
-      guess--;
-      lasteq = parisEquinox(guess);
-    }
-    nexteq = lasteq-1;
-    while (!((lasteq <= jd) && (jd < nexteq))) {
-      lasteq = nexteq;
-      guess++;
-      nexteq = parisEquinox(guess);
-    }
-    double adr = (lasteq - FRENCH_REVOLUTION_EPOCH.getDay());
-    adr /= Meeus.TROPICAL_YEAR;
-    adr += 1;
-    return new double[] {Math.round(adr), lasteq};
-  }
-
-  private double parisEquinox(int year) {
-    double eqJED = Meeus.equinox(year,Season.AUTUMN);
-    double eqJD = eqJED - Meeus.deltat(year)/(24.0*60.0*60.0);
-    double eqAPP = eqJD + Meeus.equationOfTime(eqJED);
-    double dtParis = (2.0+(20.0/60.0)+(15.0/(60.0*60.0)))/360.0;
-    double eqParis = eqAPP + dtParis;
-    eqParis = Math.floor(eqParis-0.5)+0.5;
-    return eqParis;
-  }
-
-
-  private JulianDay FRENCH_REVOLUTION_EPOCH = new JulianDay(2375839.5);
 
   private String[] _monthNames = 
   {

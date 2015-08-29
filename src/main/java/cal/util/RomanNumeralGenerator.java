@@ -13,6 +13,12 @@ package cal.util;
  */
 public class RomanNumeralGenerator {
 
+
+  /**
+   * Converts an Arabic number to a Roman numeral.
+   * @param an Arabic number.
+   * @return a Roman numeral.
+   */
   public static String toRoman(int arabic) {
     String roman = "";
 
@@ -39,6 +45,11 @@ public class RomanNumeralGenerator {
     return roman;
   }
 
+  /**
+   * Converts a Roman numeral to an Arabic number.
+   * @param roman a Roman numeral.
+   * @return an Arabic number.
+   */
   public static int toArabic(String roman) {
     int arabic = 0;
     int i = 0;
@@ -62,6 +73,28 @@ public class RomanNumeralGenerator {
     if (arabic > 3999)
       throw new NumberFormatException("Value must be 3999 or less");
     return arabic;
+  }
+
+  /**
+   * Converts an Arabic number to a Roman numeral.
+   * <p>
+   * Short-hand method call.
+   * @param arabic an Arabic number.
+   * @return a Roman numeral.
+   */
+  public static String itr(int arabic) {
+    return toRoman(arabic);
+  }
+
+  /**
+   * Converts a Roman numeral to an Arabic number.
+   * <p>
+   * Short-hand method call.
+   * @param roman a Roman numeral.
+   * @return an Arabic number.
+   */
+  public static int rti(String roman) {
+    return RomanNumeral
   }
 
 /////////////////////////////////////////////////////////////////////////////

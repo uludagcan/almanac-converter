@@ -17,9 +17,7 @@ import java.util.Calendar;
  */
 public final class JulianDay implements Almanac {
   public static final String CALENDAR_NAME = "Julian Day";
-
-
-  public static double EPOCH_MODIFIED_JULIAN_DAY = 2400000.5;
+  public static JulianDay EPOCH = new JulianDay(2400000.5);
 
   /**
    * A Julian Day.
@@ -27,7 +25,7 @@ public final class JulianDay implements Almanac {
    * @param jd A Julian Day.
    */
   public JulianDay(JulianDay jd) {
-    this(jd.getDay());
+    this(jd.getValue());
   }
 
   /**
@@ -74,7 +72,7 @@ public final class JulianDay implements Almanac {
    * Returns this day as a double.
    * @return this day.
    */
-  public double getDay() {
+  public double getValue() {
     return _day;
   }
   /**
@@ -127,7 +125,7 @@ public final class JulianDay implements Almanac {
    * @return The Modified Julian Day.
    */ 
   public double getModified() {
-    return _day-EPOCH_MODIFIED_JULIAN_DAY;
+    return _day-EPOCH.getValue();
   }
 
   /**
@@ -167,4 +165,5 @@ public final class JulianDay implements Almanac {
     double JDN = c+day+e+f-1524.5;
     return JDN;
   }
+
 }
