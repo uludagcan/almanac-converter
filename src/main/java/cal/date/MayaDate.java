@@ -52,13 +52,21 @@ public class MayaDate implements Almanac {
   }
   
   /**
-   * Constructs a date in the Maya calendar with a given Julian Day.
-   * @param jday A Julian Day.
+   * Constructs a Maya date.
+   * @param jday a Julian day.
    */
   public MayaDate(JulianDay jday) {
     _julianDayToMayaCount(jday);
   }
 
+  /**
+   * Constructs a Maya date.
+   * @param baktun a specified B'aktun.
+   * @param katun  a specified K'atun.
+   * @param tun    a specified Tun.
+   * @param uinal  a specified Uinal.
+   * @param kin    a specified K'in.
+   */
   public MayaDate(int baktun, int katun, int tun, int uinal, int kin) {
     _baktun = baktun;
     _katun = katun;
