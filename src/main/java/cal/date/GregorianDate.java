@@ -93,17 +93,62 @@ public final class GregorianDate implements Almanac {
    * @return true, if this is a leap year; false, otherwise.
    */
   public boolean isLeapYear() {
-    GregorianDate date = new GregorianDate(EPOCH);
-    if (_year % 4 == 0) {
-      if (this.isBefore(date)) return true;
+    return GregorianDate.isLeapYear(_year);
+  }
+
+  /**
+   * Determines whether a given year is a leap year.
+   * @param year a given year.
+   * @return true, if is a leap year; false, otherwise.
+   */
+  public static boolean isLeapYear(int year) {
+    GregorianDate epoch = new GregorianDate(EPOCH);
+    GregorianDate date = new GregorianDate(1,1,year);
+    if (year % 4 == 0) {
+      if (GregorianDate.datesAreChronological(date,epoch)) return true;
       else {
-        if (_year%400==0) return true;
-        if (_year%100==0) return false;
+        if (year%400==0) return true;
+        if (year%100==0) return false;
       }
     }
     return false;
   }
 
+  /**
+   * Gets the month name.
+   * @param month the month number [1-12].
+   * @return the name of the month.
+   */
+  public String getMonthName(int month) {
+    month = Math.max(Math.min(month,12),1) - 1;
+    return _monthNames[month];
+  }
+
+  /**
+   * Gets the month names.
+   * @return the month names.
+   */
+  public String[] getMonthNames() {
+    return _monthNames;
+  }
+
+  /**
+   * Gets the total number of days in a given month.
+   * @param month the month.
+   * @param year the year. 
+   * @return the number of days in the month.
+   */
+  public static int getTotalDaysInMonth(int month, int year) {
+    if (month==4  || month==6  || month==9  || month==11) 
+      return 30;
+
+    if (month==2) {
+      if (!GregorianDate.isLeapYear(year)) return 28;
+      else return 29;
+    }
+
+    return 31;
+  }
 
   /**
    * Gets the day.
@@ -154,6 +199,28 @@ public final class GregorianDate implements Almanac {
     return ((_year<year) ||
             (_year==year && _month<month) ||
             (_year==year && _month==month && _day<day));
+  }
+
+  /**
+   * Checks if two dates are in chronological order.
+   * @param firstDate the first date.
+   * @param secondDate the second date.
+   * @return true, if firstDate comes before secondDate; false, otherwise.
+   */
+  public static boolean datesAreChronological(
+    GregorianDate firstDate, GregorianDate secondDate) 
+  {
+    double year1  = firstDate.getYear();
+    double month1 = firstDate.getMonth();
+    double day1   = firstDate.getDay();
+
+    double year2  = secondDate.getYear();
+    double month2 = secondDate.getMonth();
+    double day2   = secondDate.getDay();
+
+    return ((year1<year2) ||
+            (year1==year2 && month1<month2) ||
+            (year1==year2 && month1==month2 && day1<day2));
   }
 
   /**
