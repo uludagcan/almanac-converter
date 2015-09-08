@@ -4,6 +4,7 @@ import java.lang.Math;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * A Gregorian Calendar Date.
@@ -169,9 +170,17 @@ public final class GregorianDate implements Almanac {
   public int getYear() { return _year; }
   
   /**
-   * 
+   * Gets this date with a specified format.
+   * @param format an output format.
+   * @return the formatted date.
+   */
+  public String getDate(String format) {
+    return parseDate(format);
+  }
+
+  /**
    * Gets this date.
-   * TODO Extend with DateFormat
+   * @return the date.
    */
   @Override
   public String getDate() {
@@ -243,9 +252,13 @@ public final class GregorianDate implements Almanac {
   private int _year;
   private int _day;
   private int _month;
-  
-  private String[] _monthNames = DateFormatSymbols.getInstance().getMonths();
-  private String[] _mos    = DateFormatSymbols.getInstance().getShortMonths();
+
+  private final SimpleDateFormat _format = new SimpleDateFormat();
+
+  private final String[] _monthNames = 
+    DateFormatSymbols.getInstance().getMonths();
+  private final String[] _mos = 
+    DateFormatSymbols.getInstance().getShortMonths();
 
   /**
    * Converts Julian Days to a Gregorian Date.
@@ -267,6 +280,12 @@ public final class GregorianDate implements Almanac {
     int month = (h/s+m)%n+1;
     int year = (e/p)-y+(n+m-month)/n;
     return new GregorianDate(day,month,year);
+  }
+
+  private String parseDate(String pattern) {
+    _format.applyPattern(pattern);
+    System.out.println(_format.toPattern());
+    return pattern;
   }
 
 }
