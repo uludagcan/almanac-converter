@@ -1,234 +1,289 @@
-package cal.util;
+package cal.date;
 
-import cal.date.*;
+import java.lang.Math;
+import java.text.DateFormatSymbols;
+import java.util.*;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 
-public class AlmanacFormat {
+import cal.util.*;
 
-  public AlmanacFormat(String pattern) {
-    _pattern = pattern;
+/**
+ * A Gregorian Calendar Date.
+ * <p>
+ * The Gregorian Calendar is internationally the most widely used civil 
+ * calendar. It was named for Pope Gregory XIII who introduced it on 
+ * October 15, 1582. The calendar was a refinement to the Julian Calendar, 
+ * with the motivation of setting the Easter holiday to a specific date 
+ * instead of the spring equinox, which naturally drifted dates.
+ * <p>
+ * Each year is divided into 12 months, with a varied number of days per
+ * month. To account for the drift in seasons, a leap year occurs which 
+ * introduces an additional day in February. These leap years happen every
+ * year that's divisible by 4, except years that are divisible by 100 but
+ * not divisible by 400. For example: 1700, 1800 and 1900 are NOT leap
+ * years, but 2000 is a leap year.
+ * @author Chris Engelsma
+ * @version 1.0
+ * @since 2015-08-10
+ */
+public final class GregorianDate implements Almanac {
+  public static final String CALENDAR_NAME = "Gregorian Calendar";
+  public static final JulianDay EPOCH = new JulianDay(2299160.5);
+
+  /**
+   * Constructrs a Gregorian Date using today's date.
+   */
+  public GregorianDate() {
+    this(Calendar.getInstance());
   }
 
-  public String format(Almanac almanac) {
-    StringBuffer buffer = new StringBuffer();
-    String date = parseDate(almanac,buffer).toString();
-    return date;
+  /**
+   * Constructs a Gregorian Date given a provided Calendar date.
+   * @param date A calendar date.
+   */
+  public GregorianDate(Calendar date) {
+    this(date.get(Calendar.DAY_OF_MONTH),
+         date.get(Calendar.MONTH)+1,
+         date.get(Calendar.YEAR));
+  }
+
+  /**
+   * Constructs a Gregorian Date given a Julian Day.
+   * @param date A Julian Day.
+   */
+  public GregorianDate(JulianDay date) {
+    this(_gregorianFromJulian(date));
+  }
+
+  /**
+   * Constructs a Gregorian Date given another Gregorian Date.
+   * @param date A Gregorian Date.
+   */
+  public GregorianDate(GregorianDate date) {
+    this(date.getDay(),date.getMonth(),date.getYear());
+  }
+
+  /**
+   * Constructs a Gregorian Date from a given day, month and year.
+   * @param day The day.
+   * @param month The month.
+   * @param year The year.
+   */
+  public GregorianDate(int day, int month, int year) {
+    _day   = day;
+    _month = month;
+    _year  = year;
+  }
+
+  /**
+   * Returns today's date as a string.
+   * Convenience static method.
+   * @return today's date.
+   */
+  public static String asToday() {
+    return (new GregorianDate()).getDate();
+  }
+
+  /**
+   * Determines whether this date's year is a leap year.
+   * <p>
+   * This method determines whether the the current date exists during the
+   * Julian calendar or the Gregorian Calendar. The only difference between
+   * the two is that for the Gregorian Calendar leap years must be evenly
+   * divisible by 4, unless the year is divisible by 100 - with the exception
+   * of years evenly divisble by 400.
+   * @return true, if this is a leap year; false, otherwise.
+   */
+  public boolean isLeapYear() {
+    return GregorianDate.isLeapYear(_year);
+  }
+
+  /**
+   * Determines whether a given year is a leap year.
+   * @param year a given year.
+   * @return true, if is a leap year; false, otherwise.
+   */
+  public static boolean isLeapYear(int year) {
+    GregorianDate epoch = new GregorianDate(EPOCH);
+    GregorianDate date = new GregorianDate(1,1,year);
+    if (year % 4 == 0) {
+      if (GregorianDate.datesAreChronological(date,epoch)) return true;
+      else {
+        if (year%400==0) return true;
+        if (year%100==0) return false;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Gets the month name.
+   * @param month the month number [1-12].
+   * @return the name of the month.
+   */
+  public String getMonthName(int month) {
+    month = Math.max(Math.min(month,12),1) - 1;
+    return _monthNames[month];
+  }
+
+  /**
+   * Gets the month names.
+   * @return the month names.
+   */
+  public String[] getMonthNames() {
+    return _monthNames;
+  }
+
+  /**
+   * Gets the total number of days in a given month.
+   * @param month the month.
+   * @param year the year. 
+   * @return the number of days in the month.
+   */
+  public static int getTotalDaysInMonth(int month, int year) {
+    if (month==4  || month==6  || month==9  || month==11) 
+      return 30;
+
+    if (month==2) {
+      if (!GregorianDate.isLeapYear(year)) return 28;
+      else return 29;
+    }
+
+    return 31;
+  }
+
+  /**
+   * Gets the day.
+   * @return the day.
+   */ 
+  public int getDay() { return _day; }
+   
+  /**
+    * Gets the month.
+    * @return the month.
+   */
+  public int getMonth() { return _month; }  
+  
+  /**
+   * Gets the day.
+   * @return the day.
+   */
+  public int getYear() { return _year; }
+  
+  /**
+   * Gets this date with a specified format.
+   * @param format an output format.
+   * @return the formatted date.
+   */
+  public String getDate(String format) {
+    return getDate(new AlmanacFormat(format));
+  }
+
+  public String getDate(AlmanacFormat format) {
+    return format.format(this);
+  }
+
+  /**
+   * Gets this date.
+   * @return the date.
+   */
+  @Override
+  public String getDate() {
+    return getDate("M-dd-yyyy");
+  }
+
+  /**
+   * Prints this date with a simple pre-defined format.
+   */ 
+  @Override
+  public void print() {
+    System.out.println("Gregorian Date: " + 
+      _monthNames[_month-1]+" "+_day+", "+_year);
+  }
+
+  /**
+   * Checks if this date is before another Gregorian Date.
+   * @param date A Gregorian Date.
+   * @return true, if before; false, otherwise.
+   */ 
+  public boolean isBefore(GregorianDate date) {
+    double year = date.getYear();
+    double month = date.getMonth();
+    double day = date.getDay();
+    return ((_year<year) ||
+            (_year==year && _month<month) ||
+            (_year==year && _month==month && _day<day));
+  }
+
+  /**
+   * Checks if two dates are in chronological order.
+   * @param firstDate the first date.
+   * @param secondDate the second date.
+   * @return true, if firstDate comes before secondDate; false, otherwise.
+   */
+  public static boolean datesAreChronological(
+    GregorianDate firstDate, GregorianDate secondDate) 
+  {
+    double year1  = firstDate.getYear();
+    double month1 = firstDate.getMonth();
+    double day1   = firstDate.getDay();
+
+    double year2  = secondDate.getYear();
+    double month2 = secondDate.getMonth();
+    double day2   = secondDate.getDay();
+
+    return ((year1<year2) ||
+            (year1==year2 && month1<month2) ||
+            (year1==year2 && month1==month2 && day1<day2));
+  }
+
+  /**
+   * Checks if this date is after another Gregorian Date.
+   * @param date A Gregorian Date.
+   * @return true, if after; false, otherwise.
+   */ 
+  public boolean isAfter(GregorianDate date) {
+    double year = date.getYear();
+    double month = date.getMonth();
+    double day = date.getDay();
+    return ((_year>year) ||
+            (_year==year && _month>month) ||
+            (_year==year && _month==month && _day>day));
   }
 
 /////////////////////////////////////////////////////////////////////////////
 // private
 
-  private String _pattern = "";
-  private static final String _patternChars = "GyMdkHmsSEDFwWahKzZ";
-  private final static int _TAG_QUOTE_ASCII_CHAR = 100;
-  private final static int _TAG_QUOTE_CHAR = 101;
-  private char[] _charPattern = null;
+  private int _year;
+  private int _day;
+  private int _month;
 
-  private StringBuffer parseDate(Almanac almanac, StringBuffer buffer) {
-    _charPattern = compile();
+  private final String[] _monthNames = 
+    DateFormatSymbols.getInstance().getMonths();
+  private final String[] _mos = 
+    DateFormatSymbols.getInstance().getShortMonths();
 
-    for (int i=0; i<_charPattern.length; ) {
-      int tag   = _charPattern[i] >>> 8;
-      int count = _charPattern[i++] & 0xff;
-      if (count==255) {
-        count = _charPattern[i++] << 16;
-        count |= _charPattern[i++];
-      }
-      switch(tag) {
-        case _TAG_QUOTE_ASCII_CHAR:
-          buffer.append((char)count);
-          break;
 
-        case _TAG_QUOTE_CHAR:
-          buffer.append(_charPattern,i,count);
-          i+=count;
-          break;
-
-        default:
-          subFormat(tag,count,buffer);
-          break;
-      }
-    }
-    return buffer;
-  }
-
-  private void subFormat(
-    int patternCharIndex, int count, StringBuffer buffer) 
-  {
-    int max = Integer.MAX_VALUE;
-    String current = null;
-    int beginOffset = buffer.length();
-    switch (patternCharIndex) {
-      case 1: // 'G' - Era
-        current = "";
-        break;
-      case 1: // 'y' - Year
-        if (count>=4) buffer.append("Long year");
-        else          buffer.append("Short year");
-        break;
-      case 2: // 'M' - Month
-        if (count>=4) {
-          current = "Long Month";
-        } else if (count==3) {
-          current = "Short Month";
-        } else {
-          if (count<3) current = null;
-        }
-        if (current==null) {
-          buffer.append("Month Number");
-        }
-      case 4: // 'k'- Hour of the day, 1-based
-        buffer.append("Hour of the day");
-        break;
-      case 9: // 'E' - Day of the week
-        buffer.append("Day of the week");
-        break;
-      case 14: // 'a' - AM/PM
-        buffer.append("AM/PM");
-        break;
-      case 15: // 'h' Hour: 1-based
-        buffer.append("Hour");
-        break;
-      case 17: // 'z' - Zone offset
-        buffer.append("Zone offset");
-        break;
-      case 18: // 'Z' - Zone offset ("-/+hhmm" form)
-        buffer.append("Zone offset (\"-/+hhmm\" form)");
-        break;
-      default:
-        if (current==null) {
-          buffer.append("Everything Else");
-        }
-        break;
-    }
-
-    if (current!=null) {
-      buffer.append(current);
-    }
-  }
-
-  private char[] compile() {
-    int length = _pattern.length();
-    StringBuilder builder = new StringBuilder(length*2);
-    StringBuilder tmp = null;
-    int count = 0, lastTag = -1, tag;
-    boolean inQuote = false;
-
-    for (int i=0; i<length; ++i) {
-      char c = _pattern.charAt(i);
-      if (c=='\'') {
-        if ((i+1)<length) {
-          c = _pattern.charAt(i+1);
-          if (c=='\'') {
-            i++;
-            if (count!=0) {
-              encode(lastTag,count,builder);
-              lastTag = -1;
-              count = 0;
-            }
-            if (inQuote) {
-              tmp.append(c);
-            } else {
-              builder.append((char)(_TAG_QUOTE_ASCII_CHAR << 8 | c));
-            }
-            continue;
-          }
-        }
-        if (!inQuote) {
-          if (count!=0) {
-            encode(lastTag,count,builder);
-            lastTag = -1;
-            count = 0;
-          }
-          if (tmp==null) {
-            tmp = new StringBuilder(length);
-          } else {
-            tmp.setLength(0);
-          }
-          inQuote = true;
-        } else {
-          int len = tmp.length();
-          if (len==1) {
-            char ch = tmp.charAt(0);
-            if (ch<128) {
-              builder.append((char)(_TAG_QUOTE_ASCII_CHAR << 8 | ch));
-            } else {
-              builder.append((char)(_TAG_QUOTE_CHAR << 8 | 1));
-              builder.append(ch);
-            }
-          } else {
-            encode(_TAG_QUOTE_CHAR,len,builder);
-            builder.append(tmp);
-          }
-          inQuote = false;
-        }
-        continue;
-      } 
-
-      if (inQuote) {
-        tmp.append(c);
-        continue;
-      }
-
-      if (!((c>='a' && c<='z') || (c>='A' && c<='Z'))) {
-        if (count!=0) {
-          encode(lastTag,count,builder);
-          lastTag = -1;
-          count = 0;
-        }
-        if (c<128) {
-          builder.append((char)(_TAG_QUOTE_ASCII_CHAR << 8 | c));
-        } else {
-          int j;
-          for (j=i+1; j<length; ++j) {
-            char d = _pattern.charAt(j);
-            if (d=='\'' || ((d>='a' && d<='z') || (d>='A' && d<='Z')))
-              break;
-          }
-          builder.append((char)(_TAG_QUOTE_CHAR << 8 | (j-i)));
-          for (; i<j; i++) builder.append(_pattern.charAt(i));
-          --i;
-        }
-        continue;
-      }
-
-      if ((tag = _patternChars.indexOf(c))==-1) {
-        throw new IllegalArgumentException(c+": not an acceptable format");
-      }
-
-      if (lastTag==-1 || lastTag==tag) {
-        lastTag = tag;
-        count++;
-        continue;
-      }
-
-      encode(lastTag,count,builder);
-      lastTag = tag;
-      count = 1;
-    }
-
-    if (inQuote) {
-      throw new IllegalArgumentException("Unterminated quote");
-    }
-
-    if (count!=0) {
-      encode(lastTag,count,builder);
-    }
-
-    int len = builder.length();
-    char[] r = new char[len];
-    builder.getChars(0,len,r,0);
-    return r;
-  }
-
-  private static final void encode(
-    int tag, int length, StringBuilder buffer) 
-  {
-    if (length<255) {
-      buffer.append((char)tag << 8 | length);
-    } else {
-      buffer.append((char)((tag << 8) | 0xff));
-      buffer.append((char)(length >>> 16));
-      buffer.append((char)(length & 0xffff));
-    }
+  /**
+   * Converts Julian Days to a Gregorian Date.
+   * Algorithm derived by Richards (2013).
+   * @param jday The Julian Day.
+   * @return the Gregorian Date.
+   */
+  private static GregorianDate _gregorianFromJulian(JulianDay jday) {
+    int J = (int)(jday.getValue()+0.5);
+    int y = 4716; int j = 1401;   int m = 2;
+    int n = 12;   int r = 4;      int p = 1461;
+    int v = 3;    int u = 5;      int s = 153;
+    int w = 2;    int B = 274277; int C = -38;
+    int f = J+j+(((4*J+B)/146097)*3)/4+C;
+    int e = r*f+v;
+    int g = (e%p)/r;
+    int h = u*g+w;
+    int day = (h%s)/u+1;
+    int month = (h/s+m)%n+1;
+    int year = (e/p)-y+(n+m-month)/n;
+    return new GregorianDate(day,month,year);
   }
 }
