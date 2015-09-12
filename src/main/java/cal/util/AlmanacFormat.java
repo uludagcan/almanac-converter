@@ -20,26 +20,27 @@ public class AlmanacFormat {
   private String _pattern = "";
   private static final String _patternChars = "GyMdkHmsSEDFwWahKzZ";
   private final static int _TAG_QUOTE_ASCII_CHAR = 100;
-  private final static int _TAG_QUOTE_CHAR = 101;
-  private char[] _charPattern = null;
+  private final static int _TAG_QUOTE_CHARS = 101;
+  transient private char[] compiledPattern;
 
   private StringBuffer parseDate(Almanac almanac, StringBuffer buffer) {
-    _charPattern = compile();
+    compiledPattern = compile();
+    System.out.println(new String(compiledPattern));
 
-    for (int i=0; i<_charPattern.length; ) {
-      int tag   = _charPattern[i] >>> 8;
-      int count = _charPattern[i++] & 0xff;
+    for (int i=0; i<compiledPattern.length; ) {
+      int tag   = compiledPattern[i] >>> 8;
+      int count = compiledPattern[i++] & 0xff;
       if (count==255) {
-        count = _charPattern[i++] << 16;
-        count |= _charPattern[i++];
+        count = compiledPattern[i++] << 16;
+        count |= compiledPattern[i++];
       }
       switch(tag) {
         case _TAG_QUOTE_ASCII_CHAR:
           buffer.append((char)count);
           break;
 
-        case _TAG_QUOTE_CHAR:
-          buffer.append(_charPattern,i,count);
+        case _TAG_QUOTE_CHARS:
+          buffer.append(compiledPattern,i,count);
           i+=count;
           break;
 
@@ -58,7 +59,7 @@ public class AlmanacFormat {
     String current = null;
     int beginOffset = buffer.length();
     switch (patternCharIndex) {
-      case 1: // 'G' - Era
+      case 0: // 'G' - Era
         current = "";
         break;
       case 1: // 'y' - Year
@@ -67,15 +68,13 @@ public class AlmanacFormat {
         break;
       case 2: // 'M' - Month
         if (count>=4) {
-          current = "Long Month";
+          buffer.append("Long Month");
         } else if (count==3) {
-          current = "Short Month";
+          buffer.append("Short Month");
         } else {
-          if (count<3) current = null;
+          buffer.append("Month No");
         }
-        if (current==null) {
-          buffer.append("Month Number");
-        }
+        break;
       case 4: // 'k'- Hour of the day, 1-based
         buffer.append("Hour of the day");
         break;
@@ -108,100 +107,101 @@ public class AlmanacFormat {
 
   private char[] compile() {
     int length = _pattern.length();
-    StringBuilder builder = new StringBuilder(length*2);
-    StringBuilder tmp = null;
-    int count = 0, lastTag = -1, tag;
     boolean inQuote = false;
-
-    for (int i=0; i<length; ++i) {
+    StringBuilder compiledPattern = new StringBuilder(length * 2);
+    StringBuilder tmpBuffer = null;
+    int count = 0;
+    int lastTag = -1;
+    for (int i = 0; i < length; i++) {
       char c = _pattern.charAt(i);
-      if (c=='\'') {
-        if ((i+1)<length) {
-          c = _pattern.charAt(i+1);
-          if (c=='\'') {
+
+      if (c == '\'') {
+        if ((i + 1) < length) {
+          c = _pattern.charAt(i + 1);
+          if (c == '\'') {
             i++;
-            if (count!=0) {
-              encode(lastTag,count,builder);
+            if (count != 0) {
+              encode(lastTag, count, compiledPattern);
               lastTag = -1;
               count = 0;
             }
             if (inQuote) {
-              tmp.append(c);
+              tmpBuffer.append(c);
             } else {
-              builder.append((char)(_TAG_QUOTE_ASCII_CHAR << 8 | c));
+              compiledPattern.append((char)(_TAG_QUOTE_ASCII_CHAR << 8 | c));
             }
             continue;
           }
         }
         if (!inQuote) {
-          if (count!=0) {
-            encode(lastTag,count,builder);
+          if (count != 0) {
+            encode(lastTag, count, compiledPattern);
             lastTag = -1;
             count = 0;
           }
-          if (tmp==null) {
-            tmp = new StringBuilder(length);
+          if (tmpBuffer == null) {
+            tmpBuffer = new StringBuilder(length);
           } else {
-            tmp.setLength(0);
+            tmpBuffer.setLength(0);
           }
           inQuote = true;
         } else {
-          int len = tmp.length();
-          if (len==1) {
-            char ch = tmp.charAt(0);
-            if (ch<128) {
-              builder.append((char)(_TAG_QUOTE_ASCII_CHAR << 8 | ch));
+          int len = tmpBuffer.length();
+          if (len == 1) {
+            char ch = tmpBuffer.charAt(0);
+            if (ch < 128) {
+              compiledPattern.append((char)(_TAG_QUOTE_ASCII_CHAR << 8 | ch));
             } else {
-              builder.append((char)(_TAG_QUOTE_CHAR << 8 | 1));
-              builder.append(ch);
+              compiledPattern.append((char)(_TAG_QUOTE_CHARS << 8 | 1));
+              compiledPattern.append(ch);
             }
           } else {
-            encode(_TAG_QUOTE_CHAR,len,builder);
-            builder.append(tmp);
+            encode(_TAG_QUOTE_CHARS, len, compiledPattern);
+            compiledPattern.append(tmpBuffer);
           }
           inQuote = false;
         }
         continue;
-      } 
-
+      }
       if (inQuote) {
-        tmp.append(c);
+        tmpBuffer.append(c);
         continue;
       }
-
-      if (!((c>='a' && c<='z') || (c>='A' && c<='Z'))) {
-        if (count!=0) {
-          encode(lastTag,count,builder);
+      if (!(c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')) {
+        if (count != 0) {
+          encode(lastTag, count, compiledPattern);
           lastTag = -1;
           count = 0;
         }
-        if (c<128) {
-          builder.append((char)(_TAG_QUOTE_ASCII_CHAR << 8 | c));
+        if (c < 128) {
+          compiledPattern.append((char)(_TAG_QUOTE_ASCII_CHAR << 8 | c));
         } else {
           int j;
-          for (j=i+1; j<length; ++j) {
+          for (j = i + 1; j < length; j++) {
             char d = _pattern.charAt(j);
-            if (d=='\'' || ((d>='a' && d<='z') || (d>='A' && d<='Z')))
+            if (d == '\'' || (d >= 'a' && d <= 'z' || d >= 'A' && d <= 'Z')) {
               break;
+            }
           }
-          builder.append((char)(_TAG_QUOTE_CHAR << 8 | (j-i)));
-          for (; i<j; i++) builder.append(_pattern.charAt(i));
-          --i;
+          compiledPattern.append((char)(_TAG_QUOTE_CHARS << 8 | (j - i)));
+          for (; i < j; i++) {
+            compiledPattern.append(_pattern.charAt(i));
+          }
+          i--;
         }
         continue;
       }
 
-      if ((tag = _patternChars.indexOf(c))==-1) {
-        throw new IllegalArgumentException(c+": not an acceptable format");
+      int tag;
+      if ((tag = _patternChars.indexOf(c)) == -1) {
+        throw new IllegalArgumentException("Illegal pattern character " + "'" + c + "'");
       }
-
-      if (lastTag==-1 || lastTag==tag) {
+      if (lastTag == -1 || lastTag == tag) {
         lastTag = tag;
         count++;
         continue;
       }
-
-      encode(lastTag,count,builder);
+      encode(lastTag, count, compiledPattern);
       lastTag = tag;
       count = 1;
     }
@@ -210,13 +210,14 @@ public class AlmanacFormat {
       throw new IllegalArgumentException("Unterminated quote");
     }
 
-    if (count!=0) {
-      encode(lastTag,count,builder);
+    if (count != 0) {
+      encode(lastTag, count, compiledPattern);
     }
 
-    int len = builder.length();
+          // Copy the compiled pattern to a char array
+    int len = compiledPattern.length();
     char[] r = new char[len];
-    builder.getChars(0,len,r,0);
+    compiledPattern.getChars(0, len, r, 0);
     return r;
   }
 
@@ -224,7 +225,7 @@ public class AlmanacFormat {
     int tag, int length, StringBuilder buffer) 
   {
     if (length<255) {
-      buffer.append((char)tag << 8 | length);
+      buffer.append((char)(tag << 8 | length));
     } else {
       buffer.append((char)((tag << 8) | 0xff));
       buffer.append((char)(length >>> 16));

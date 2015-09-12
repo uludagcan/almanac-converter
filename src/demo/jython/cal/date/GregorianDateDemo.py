@@ -11,7 +11,8 @@ def main(args):
 
 def demo1():
   gd = GregorianDate()
-  date = gd.getDate("'Gregorian Date:' M-DD-yyyy")
+  pattern = "MM/DD/yyyy a"
+  date = gd.getDate(pattern)
   print date
 
 
