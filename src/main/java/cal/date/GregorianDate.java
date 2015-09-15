@@ -136,21 +136,56 @@ public final class GregorianDate implements Almanac {
   }
 
   /**
-   * Gets the total number of days in a given month.
+   * Gets the total number of days in a given month and year.
    * @param month the month.
    * @param year the year. 
    * @return the number of days in the month.
    */
-  public static int getTotalDaysInMonth(int month, int year) {
+  public static int getDaysInMonth(int month, int year) {
     if (month==4  || month==6  || month==9  || month==11) 
       return 30;
-
     if (month==2) {
       if (!GregorianDate.isLeapYear(year)) return 28;
       else return 29;
     }
-
     return 31;
+  }
+
+  /**
+   * Gets the total number of days in a given month for this year.
+   * @param month the month.
+   * @return the number of days in a month of this year.
+   */
+  public int getDaysInMonth(int month) {
+    return GregorianDate.getDaysInMonth(month,getYear());
+  }
+
+  /**
+   * Gets the total number of days for this month and year.
+   * @return the number of days in this month and year.
+   */
+  public int getDaysInMonth() {
+    return GregorianDate.getDaysInMonth(getMonth(),getYear());
+  }
+
+  /**
+   * Gets an array of month-lengths for a given year.
+   * @param year a year.
+   * @return an array[12] of month-lengths for a given year.
+   */
+  public static int[] getDaysPerMonthInYear(int year) {
+    int[] days = new int[12];
+    for (int i=0; i<12; ++i) 
+      days[i] = GregorianDate.getDaysInMonth(i+1,year);
+    return days;
+  }
+
+  /**
+   * Gets an array of month-lengths for this year.
+   * @return an array[12] of month-lengths for this year.
+   */
+  public int[] getDaysPerMonthInYear() {
+    return GregorianDate.getDaysPerMonthInYear(getYear());
   }
 
   /**
