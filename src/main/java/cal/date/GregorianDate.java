@@ -107,11 +107,11 @@ public final class GregorianDate implements Almanac {
   public static boolean isLeapYear(int year) {
     GregorianDate epoch = new GregorianDate(EPOCH);
     GregorianDate date = new GregorianDate(1,1,year);
-    if (year % 4 == 0) {
+    if (Math.abs(year) % 4 == 0) {
       if (GregorianDate.datesAreChronological(date,epoch)) return true;
       else {
-        if (year%400==0) return true;
-        if (year%100==0) return false;
+        if (Math.abs(year)%400==0) return true;
+        if (Math.abs(year)%100==0) return false;
       }
     }
     return false;
@@ -293,6 +293,11 @@ public final class GregorianDate implements Almanac {
   private int _year;
   private int _day;
   private int _month;
+
+  // TODO
+  private int _hour;
+  private int _minute;
+  private int _second;
 
   private final String[] _monthNames = 
     DateFormatSymbols.getInstance().getMonths();
