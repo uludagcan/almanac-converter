@@ -8,10 +8,10 @@ package cal.util;
  * the 14th century, Roman numerals began to be replaced in most contexts by
  * Arabic numbers.
  * @author Chris Engelsma
- * @version 1.0
- * @since 2015-08-09
+ * @version 1.1
+ * @since 2015-09-22
  */
-public class RomanNumeralGenerator {
+public final class RomanNumeralGenerator {
 
 
   /**
@@ -70,8 +70,7 @@ public class RomanNumeralGenerator {
         } else arabic += number;
       }
     }
-    if (arabic > 3999)
-      throw new NumberFormatException("Value must be 3999 or less");
+    
     return arabic;
   }
 
