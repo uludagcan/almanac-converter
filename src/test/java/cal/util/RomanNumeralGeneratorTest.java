@@ -1,6 +1,6 @@
 package cal.util;
 
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertArrayEquals;
 import org.junit.Test;
 
 /**
@@ -16,7 +16,7 @@ public class RomanNumeralGeneratorTest {
           "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
          "XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX" };
     String[] results = new String[20];
-    for (int i=0; i<numbers.length; ++i) 
+    for (int i=0; i<arabic.length; ++i) 
       results[i] = RomanNumeralGenerator.toRoman(arabic[i]);
     
     assertArrayEquals("FAIL: Roman numerals should match Arabic numbers",answers,results);
@@ -30,8 +30,8 @@ public class RomanNumeralGeneratorTest {
     String[] roman = { 
           "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
          "XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX" };
-    int[] results = new ing[20];
-    for (int i=0; i<numbers.length; ++i) 
+    int[] results = new int[20];
+    for (int i=0; i<roman.length; ++i) 
       results[i] = RomanNumeralGenerator.toArabic(roman[i]);
     
     assertArrayEquals("FAIL: Roman numerals should match Arabic numbers",answers,results);
