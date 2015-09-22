@@ -6,8 +6,8 @@ import java.util.*;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+//import org.apache.commons.lang.builder.EqualsBuilder;
+//import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import cal.util.*;
 
@@ -289,7 +289,8 @@ public final class GregorianDate implements Almanac {
             (_year==year && _month>month) ||
             (_year==year && _month==month && _day>day));
   }
-  
+
+/*  
   @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof GregorianDate))
@@ -313,7 +314,7 @@ public final class GregorianDate implements Almanac {
       .append(_day)
       .toHashCode();
   }
-
+*/
 /////////////////////////////////////////////////////////////////////////////
 // private
 
