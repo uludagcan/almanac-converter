@@ -14,7 +14,7 @@ public class RomanNumeralGeneratorTest {
         11,   12,   13,   14,   15,   16,   17,   18,   19,   20 };
     String[] answers = { 
           "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
-         "XI","XII","XIII","XIV","XV","XVI","XVII",'XVIII","XIX","XX" };
+         "XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX" };
     String[] results = new String[20];
     for (int i=0; i<numbers.length; ++i) 
       results[i] = RomanNumeralGenerator.toRoman(arabic[i]);
@@ -29,7 +29,7 @@ public class RomanNumeralGeneratorTest {
         11,   12,   13,   14,   15,   16,   17,   18,   19,   20 };
     String[] roman = { 
           "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
-         "XI","XII","XIII","XIV","XV","XVI","XVII",'XVIII","XIX","XX" };
+         "XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX" };
     int[] results = new ing[20];
     for (int i=0; i<numbers.length; ++i) 
       results[i] = RomanNumeralGenerator.toArabic(roman[i]);
