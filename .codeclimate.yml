@@ -1,0 +1,7 @@
+languages:
+  Java: true
+  Python: true
+
+exclude_paths:
+- "libs/*"
+- "gradle/*"
