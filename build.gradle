@@ -10,12 +10,6 @@ task wrapper(type: Wrapper) {
 }
 // end::wrapper[]
 
-// tag::repositories[]
-repositories {
-  mavenCentral()
-}
-// end::repositories[]
-
 // tag::sourceSets[]
 sourceSets {
   main {
@@ -38,9 +32,8 @@ jar {
 }
 // end::jar[]
 
-task javadocs(type: Javadoc) {
+javadoc {
   title = project.description
-  source = sourceSets.main.allJava
 }
 
 // tag::dependencies[]
