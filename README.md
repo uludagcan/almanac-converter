@@ -19,6 +19,10 @@ To install, you will need [Gradle](https://gradle.org/) or [Apache Ant](http://a
 
 See the wiki for examples.
 
+Why Almanac-Converter?
+----------------------
+Almanac Converter expands on pre-existing robust date libraries and enables two-way conversion between various calendars. 
+
 Gregorian Calendar
 ------------------
 The Gregorian Calendar is internationally the most widely used civil calendar. It was named for Pope Gregory XIII who introduced it on October 15, 1582. The calendar was a refinement to the Julian Calendar, with the motivation of setting the Easter holiday to a specific date instead of the spring equinox, which naturally drifted dates.
