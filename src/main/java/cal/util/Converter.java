@@ -110,7 +110,7 @@ public class Converter {
     int day = (h%s)/u+1;
     int month = (h/s+m)%n+1;
     int year = (e/p)-y+(n+m-month)/n;
-    return new GregorianDate(day,month,year);
+    return new GregorianDate(year,month,day);
   }
 
   private static FrenchRepublicanDate _jd2frc(JulianDay jd) {

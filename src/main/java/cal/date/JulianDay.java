@@ -3,6 +3,14 @@ package cal.date;
 import java.lang.Math;
 import java.util.Calendar;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import org.joda.time.DateTime;
+
+import cal.util.*;
+import static cal.util.Converter.*;
+
 /**
  * A Julian Day.
  * <p>
@@ -54,27 +62,29 @@ public final class JulianDay implements Almanac {
   }
 
   /**
-   * Constructs a Julian Day from a Java Calendar instance.
+   * Constructs a Julian Day from a JDK Calendar instance.
    * @param cal A Java Calendar instance.
    */ 
   public JulianDay(Calendar cal) {
     this(new GregorianDate(cal));
   }
+
+  /**
+   * Constructs a Julian Day from a Joda DateTime.
+   * @param dt a Joda DateTime object.
+   */
+  public JulianDay(DateTime dt) {
+    this(new GregorianDate(dt));
+  }
+
   /**
    * Constructs a Julian Day using a provided Gregorian Date.
    * @param date A Gregorian Date.
    */
   public JulianDay(GregorianDate date) {
-    _day = _julianFromGregorian(date);
+    this(Converter.toJulianDay(date));
   }
 
-  /**
-   * Returns this day as a double.
-   * @return this day.
-   */
-  public double getValue() {
-    return _day;
-  }
   /**
    * Returns today's date as a string.
    * Convenience static method.
@@ -119,6 +129,15 @@ public final class JulianDay implements Almanac {
   }
 
   /**
+   * Gets this day as a double.
+   * @return this day.
+   */
+  public double getValue() {
+    return _day;
+  }
+
+
+  /**
    * Gets the Modified Julian Day (MJD).
    * The Modified Julian Day is an adjusted version of the Julian
    * Day by setting the Epoch to midnight, November 17, 1858.
@@ -135,13 +154,33 @@ public final class JulianDay implements Almanac {
   public String getDate() {
     return Double.toString(_day);
   }
-  
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof JulianDay))
+      return false;
+    if (obj == this)
+      return true;
+      
+    final JulianDay date = (JulianDay) obj;
+    return new EqualsBuilder()
+      .append(_day, date.getValue())
+      .isEquals();
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder()
+      .append(_day)
+      .toHashCode();
+  }
+
   /**
    * Prints this Julian Day.
    */
   @Override
-  public void print() {
-    System.out.println("Julian Day: "+_day);
+  public String toString() {
+    return(CALENDAR_NAME+": "+_day);
   }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -149,6 +188,7 @@ public final class JulianDay implements Almanac {
   
   private double _day;
   
+  /*
   private static double _julianFromGregorian(GregorianDate date) {
     int month = date.getMonth();
     int year = date.getYear();
@@ -165,5 +205,6 @@ public final class JulianDay implements Almanac {
     double JDN = c+day+e+f-1524.5;
     return JDN;
   }
-
+  */
 }
+

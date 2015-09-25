@@ -128,8 +128,8 @@ public class MayaDate implements Almanac {
    * Prints the "Long Count" Maya Calendar date.
    */
   @Override
-  public void print() {
-    System.out.println(CALENDAR_NAME+": "+getDate());
+  public String toString() {
+    return(CALENDAR_NAME+": "+getDate());
   }
 
 /////////////////////////////////////////////////////////////////////////////

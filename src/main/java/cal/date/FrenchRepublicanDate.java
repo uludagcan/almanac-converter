@@ -5,6 +5,11 @@ import static cal.util.RomanNumeralGenerator.*;
 import static cal.util.Converter.*;
 import static cal.util.Util.*;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import org.joda.time.DateTime;
+
 /**
  * A date in the French Republican Calendar.
  * <p>
@@ -43,16 +48,26 @@ public final class FrenchRepublicanDate implements Almanac {
   /**
    * Constructs a French Republican Date with given year, month,
    * week and day.
-   * @param year the year.
-   * @param month the month.
-   * @param week the week.
-   * @param day the day.
+   * @param year the year
+   * @param month the month
+   * @param week the week
+   * @param day the day
    */ 
   public FrenchRepublicanDate(int year, int month, int week, int day) {
     _year = year;
     _month = month;
     _week = week;
     _day = day;
+  }
+
+  /**
+   * Constructs a French Republican Date with given year, month and day.
+   * @param year the year
+   * @param month the month
+   * @param day the day
+   */
+  public FrenchRepublicanDate(int year, int month, int day) {
+    this(year,month,(day/10),(day%10));
   }
 
   /**
@@ -98,6 +113,14 @@ public final class FrenchRepublicanDate implements Almanac {
   }
 
   /**
+   * Gets the month names.
+   * @return the month names.
+   */
+  public static String[] getMonthNames() {
+    return _monthNames();
+  }
+
+  /**
    * Gets the year.
    * @return the year.
    */
@@ -133,10 +156,19 @@ public final class FrenchRepublicanDate implements Almanac {
 
   /**
    * Gets the month name.
-   * @return the month name.
+   * @return the month name
    */
   public String getMonthName() { 
-    return _monthNames[_month-1]; 
+    return getMonthName(_month);
+  }
+
+  /**
+   * Gets a month name.
+   * @param month a month number [1-12].
+   * @return a month name
+   */
+  public static String getMonthName(int month) {
+    return getMonthNames()[month-1];
   }
 
   /**
@@ -178,9 +210,11 @@ public final class FrenchRepublicanDate implements Almanac {
    * Prints this date in short form.
    */
   @Override
-  public void print() {
-    System.out.print("French Republican Date: ");
-    System.out.print(getDay()+" "+getMonth()+", L'an "+getYear());
+  public String toString() {
+    return(CALENDAR_NAME+": "+
+            getDay()+" "+
+            getMonth()+" "+
+            "L'an "+getYear());
   }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -191,7 +225,7 @@ public final class FrenchRepublicanDate implements Almanac {
   private int _week;
   private int _day;
 
-  private String[] _monthNames = 
+  final static String[] _monthNames = 
   {
     "Vendémiaire",
     "Brumaire",
@@ -208,7 +242,7 @@ public final class FrenchRepublicanDate implements Almanac {
     "Sans-culottides"
   };
   
-  private String[][] _dayNames =
+  final static String[][] _dayNames =
   {
     // Vendémiaire
     {

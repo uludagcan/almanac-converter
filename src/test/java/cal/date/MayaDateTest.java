@@ -7,10 +7,4 @@ package cal.date;
  * @since 2015-08-24
  */
 public class MayaDateTest {
-  public static void main(String[] args) {
-    JulianDay jd = new JulianDay();
-    MayaDate mayaDate = new MayaDate(jd);
-    jd.print();
-    mayaDate.print();
-  }
 }
