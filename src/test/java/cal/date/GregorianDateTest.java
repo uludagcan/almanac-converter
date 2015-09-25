@@ -1,11 +1,17 @@
 package cal.date;
 
+import java.util.Calendar;
+import org.joda.time.DateTime;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
 import org.junit.Test;
 
 /**
- * Tests {@link GregorianDate.java}.
+ * Tests {@link GregorianDate}.
+ * @author Chris Engelsma
+ * @version 1.1
+ * @since 2015-09-23
  */
 public class GregorianDateTest {
   @Test
@@ -61,5 +67,26 @@ public class GregorianDateTest {
                       result);
   }
 
+  @Test
+  public void jodaDateTimeShouldConstruct() {
+    GregorianDate date1 = new GregorianDate(new DateTime(1986,9,3,0,1));
+    GregorianDate date2 = new GregorianDate(1986,9,3);
+    assertEquals( "FAIL: Date should construct from Joda DateTime",
+                  true,
+                  date1.equals(date2));
+  }
+
+  @Test
+  public void jdkCalendarShouldConstruct() {
+    Calendar cal = Calendar.getInstance();
+    cal.set(1986,8,3);
+    GregorianDate date1 = new GregorianDate(cal);
+    date1.print();
+    GregorianDate date2 = new GregorianDate(1986,9,3); 
+    date2.print();
+    assertEquals( "FAIL: Date should construct from JDK Calendar",
+                  true,
+                  date1.equals(date2));
+  }
 
 }

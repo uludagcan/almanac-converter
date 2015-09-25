@@ -5,6 +5,9 @@ import org.junit.Test;
 
 /**
  * Tests {@link RomanNumeralGenerator}.
+ * @author Chris Engelsma
+ * @version 1.1
+ * @since 2015-09-03
  */
 public class RomanNumeralGeneratorTest {
   @Test

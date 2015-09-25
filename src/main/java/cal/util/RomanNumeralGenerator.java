@@ -16,7 +16,7 @@ public final class RomanNumeralGenerator {
 
   /**
    * Converts an Arabic number to a Roman numeral.
-   * @param an Arabic number.
+   * @param arabic Arabic number.
    * @return a Roman numeral.
    */
   public static String toRoman(int arabic) {

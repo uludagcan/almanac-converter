@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import org.joda.time.DateTime;
+
 import cal.util.*;
 
 /**
@@ -46,9 +48,9 @@ public final class GregorianDate implements Almanac {
    * @param date A calendar date.
    */
   public GregorianDate(Calendar date) {
-    this(date.get(Calendar.DAY_OF_MONTH),
+    this(date.get(Calendar.YEAR),
          date.get(Calendar.MONTH)+1,
-         date.get(Calendar.YEAR));
+         date.get(Calendar.DAY_OF_MONTH));
   }
 
   /**
@@ -64,16 +66,28 @@ public final class GregorianDate implements Almanac {
    * @param date A Gregorian Date.
    */
   public GregorianDate(GregorianDate date) {
-    this(date.getDay(),date.getMonth(),date.getYear());
+    this(date.getYear(),
+         date.getMonth(),
+         date.getDay());
+  }
+
+  /**
+   * Constructs a Gregorian Date given a Joda DateTime.
+   * @param dt a Joda DateTime.
+   */
+  public GregorianDate(DateTime dt) {
+    this(dt.getYear(),
+         dt.getMonthOfYear(),
+         dt.getDayOfMonth());
   }
 
   /**
    * Constructs a Gregorian Date from a given day, month and year.
-   * @param day The day.
-   * @param month The month.
    * @param year The year.
+   * @param month The month.
+   * @param day The day.
    */
-  public GregorianDate(int day, int month, int year) {
+  public GregorianDate(int year, int month, int day) {
     _day   = day;
     _month = month;
     _year  = year;
@@ -109,7 +123,7 @@ public final class GregorianDate implements Almanac {
    */
   public static boolean isLeapYear(int year) {
     GregorianDate epoch = new GregorianDate(EPOCH);
-    GregorianDate date = new GregorianDate(1,1,year);
+    GregorianDate date = new GregorianDate(year,1,1);
     if (Math.abs(year) % 4 == 0) {
       if (GregorianDate.datesAreChronological(date,epoch)) return true;
       else {
@@ -218,6 +232,13 @@ public final class GregorianDate implements Almanac {
     return getDate(new AlmanacFormat(format));
   }
 
+  /**
+   * Returns the date with a specified format.
+   * <p>
+   * Note: Not yet implemented.
+   * @param format an output format.
+   * @return the formatted date.
+   */
   public String getDate(AlmanacFormat format) {
     return format.format(this);
   }
@@ -351,6 +372,6 @@ public final class GregorianDate implements Almanac {
     int day = (h%s)/u+1;
     int month = (h/s+m)%n+1;
     int year = (e/p)-y+(n+m-month)/n;
-    return new GregorianDate(day,month,year);
+    return new GregorianDate(year,month,day);
   }
 }
