@@ -17,18 +17,15 @@ public class Converter {
    * @return the Julian day.
    */
   public static JulianDay toJulianDay(Almanac a) {
-    JulianDay b = new JulianDay();
-    if (a instanceof JulianDay) {
-      b = (JulianDay)a;
-    } else {
+    if (!(a instanceof JulianDay)) {
       if (a instanceof GregorianDate)
-        b = _g2jd((GregorianDate)a);
+        return _g2jd((GregorianDate)a);
       if (a instanceof FrenchRepublicanDate)
-        b = _frc2jd((FrenchRepublicanDate)a);
+        return _frc2jd((FrenchRepublicanDate)a);
       if (a instanceof MayaDate)
-        b = _m2jd((MayaDate)a);
+        return _m2jd((MayaDate)a);
     }
-    return b;
+    return (JulianDay)a;
   }
 
   /**

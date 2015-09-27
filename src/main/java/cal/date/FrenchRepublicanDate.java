@@ -217,6 +217,32 @@ public final class FrenchRepublicanDate implements Almanac {
             "L'an "+getYear());
   }
 
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof FrenchRepublicanDate))
+      return false;
+    if (obj == this)
+      return true;
+      
+    final FrenchRepublicanDate date = (FrenchRepublicanDate) obj;
+    return new EqualsBuilder()
+      .append(_year, date.getYear())
+      .append(_month, date.getMonth())
+      .append(_week, date.getWeek())
+      .append(_day, date.getDay(true))
+      .isEquals();
+  }
+  
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder()
+      .append(_year)
+      .append(_month)
+      .append(_week)
+      .append(_day)
+      .toHashCode();
+  }
+
 /////////////////////////////////////////////////////////////////////////////
 // private
 
