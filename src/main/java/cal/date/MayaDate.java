@@ -3,6 +3,9 @@ package cal.date;
 import cal.util.*;
 import cal.astro.*;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * A date in the Maya calendar.
  * <p>
@@ -128,8 +131,36 @@ public class MayaDate implements Almanac {
    * Prints the "Long Count" Maya Calendar date.
    */
   @Override
-  public void print() {
-    System.out.println(CALENDAR_NAME+": "+getDate());
+  public String toString() {
+    return(CALENDAR_NAME+": "+getDate());
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof MayaDate))
+      return false;
+    if (obj == this)
+      return true;
+      
+    final MayaDate date = (MayaDate) obj;
+    return new EqualsBuilder()
+      .append(_kin, date.getKin())
+      .append(_uinal, date.getUinal())
+      .append(_tun, date.getTun())
+      .append(_katun, date.getKatun())
+      .append(_baktun, date.getBaktun())
+      .isEquals();
+  }
+  
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder()
+      .append(_kin)
+      .append(_uinal)
+      .append(_tun)
+      .append(_katun)
+      .append(_baktun)
+      .toHashCode();
   }
 
 /////////////////////////////////////////////////////////////////////////////

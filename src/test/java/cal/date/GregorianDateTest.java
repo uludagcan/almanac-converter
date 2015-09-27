@@ -81,12 +81,16 @@ public class GregorianDateTest {
     Calendar cal = Calendar.getInstance();
     cal.set(1986,8,3);
     GregorianDate date1 = new GregorianDate(cal);
-    date1.print();
     GregorianDate date2 = new GregorianDate(1986,9,3); 
-    date2.print();
     assertEquals( "FAIL: Date should construct from JDK Calendar",
                   true,
                   date1.equals(date2));
   }
 
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void monthNameShouldBadMonthNumber() {
+    String month = GregorianDate.getMonthName(0); // No "0" month!
+  }
+
+  
 }

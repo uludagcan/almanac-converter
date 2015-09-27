@@ -12,6 +12,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.time.DateTime;
 
 import cal.util.*;
+import static cal.util.Converter.*;
 
 /**
  * A Gregorian Calendar Date.
@@ -29,8 +30,8 @@ import cal.util.*;
  * not divisible by 400. For example: 1700, 1800 and 1900 are NOT leap
  * years, but 2000 is a leap year.
  * @author Chris Engelsma
- * @version 1.0
- * @since 2015-08-10
+ * @version 1.1
+ * @since 2015-09-24
  */
 public final class GregorianDate implements Almanac {
   public static final String CALENDAR_NAME = "Gregorian Calendar";
@@ -40,7 +41,7 @@ public final class GregorianDate implements Almanac {
    * Constructrs a Gregorian Date using today's date.
    */
   public GregorianDate() {
-    this(Calendar.getInstance());
+    this(new DateTime());
   }
 
   /**
@@ -54,11 +55,11 @@ public final class GregorianDate implements Almanac {
   }
 
   /**
-   * Constructs a Gregorian Date given a Julian Day.
-   * @param date A Julian Day.
+   * Constructs a Gregorian Date from another Almanac.
+   * @param date another Almanac
    */
-  public GregorianDate(JulianDay date) {
-    this(_gregorianFromJulian(date));
+  public GregorianDate(Almanac date) {
+    this(toGregorianDate(date));
   }
 
   /**
@@ -135,21 +136,40 @@ public final class GregorianDate implements Almanac {
   }
 
   /**
+   * Gets a month name.
+   * @param month the month number [1-12].
+   * @throws IndexOutOfBoundsException
+   * @return the name of the month.
+   */  
+  public static String getMonthName(int month) 
+    throws IndexOutOfBoundsException 
+  {
+    return GregorianDate.getMonthNames()[month-1];
+  }
+
+  /**
    * Gets the month name.
    * @param month the month number [1-12].
    * @return the name of the month.
    */
-  public String getMonthName(int month) {
-    month = Math.max(Math.min(month,12),1) - 1;
-    return _monthNames[month];
+  public String getMonthName() {
+    return GregorianDate.getMonthName(_month);
   }
 
   /**
    * Gets the month names.
    * @return the month names.
    */
-  public String[] getMonthNames() {
-    return _monthNames;
+  public static String[] getMonthNames() {
+    return DateFormatSymbols.getInstance().getMonths();
+  }
+
+  /**
+   * Gets the short month names.
+   * @return the short month names.
+   */
+  public static String[] getShortMonthNames() {
+    return DateFormatSymbols.getInstance().getShortMonths();
   }
 
   /**
@@ -256,9 +276,11 @@ public final class GregorianDate implements Almanac {
    * Prints this date with a simple pre-defined format.
    */ 
   @Override
-  public void print() {
-    System.out.println("Gregorian Date: " + 
-      _monthNames[_month-1]+" "+_day+", "+_year);
+  public String toString() {
+    return(CALENDAR_NAME+": " + 
+           getMonthName()+" "+
+           getDay()+", "+
+           getYear());
   }
 
   /**
@@ -347,10 +369,8 @@ public final class GregorianDate implements Almanac {
   private int _minute;
   private int _second;
 
-  private final String[] _monthNames = 
-    DateFormatSymbols.getInstance().getMonths();
-  private final String[] _mos = 
-    DateFormatSymbols.getInstance().getShortMonths();
+  private final String[] _monthNames = getMonthNames();
+  private final String[] _mos = getShortMonthNames();
 
 
   /**
@@ -359,6 +379,7 @@ public final class GregorianDate implements Almanac {
    * @param jday The Julian Day.
    * @return the Gregorian Date.
    */
+   /*
   private static GregorianDate _gregorianFromJulian(JulianDay jday) {
     int J = (int)(jday.getValue()+0.5);
     int y = 4716; int j = 1401;   int m = 2;
@@ -374,4 +395,5 @@ public final class GregorianDate implements Almanac {
     int year = (e/p)-y+(n+m-month)/n;
     return new GregorianDate(year,month,day);
   }
+  */
 }
