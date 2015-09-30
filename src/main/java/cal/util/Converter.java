@@ -6,8 +6,7 @@ import cal.astro.*;
 /**
  * A mechanism to convert between various calendars.
  * @author Chris Engelsma
- * @version 1.0
- * @since 2015-08-27
+ * @version 2015.08.27
  */
 public class Converter {
 
