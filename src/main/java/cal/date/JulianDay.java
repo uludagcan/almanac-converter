@@ -20,8 +20,7 @@ import static cal.util.Converter.*;
  * used since 1583 to convert between different calendars. The next Julian 
  * Period begins in the year 3268 AD.
  * @author Chris Engelsma
- * @version 1.0
- * @since 2015-08-07
+ * @version 2015.08.07
  */
 public final class JulianDay implements Almanac {
   public static final String CALENDAR_NAME = "Julian Day";
