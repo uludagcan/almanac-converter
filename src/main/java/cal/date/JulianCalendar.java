@@ -332,7 +332,7 @@ public final class JulianCalendar implements Almanac {
   private int _day;
   private int _month;
   
-  private final String[] _monthNames = 
+  private static final String[] _monthNames = 
   {
     "IANVARIVS",
     "FEBRVARIVSs",
