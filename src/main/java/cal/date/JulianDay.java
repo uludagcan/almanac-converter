@@ -61,14 +61,6 @@ public final class JulianDay implements Almanac {
   }
 
   /**
-   * Constructs a Julian Day from a JDK Calendar instance.
-   * @param cal A Java Calendar instance.
-   */ 
-  public JulianDay(Calendar cal) {
-    this(new GregorianCalendar(cal));
-  }
-
-  /**
    * Constructs a Julian Day from a Joda DateTime.
    * @param dt a Joda DateTime object.
    */
