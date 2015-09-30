@@ -346,6 +346,6 @@ public final class JulianCalendar implements Almanac {
     "OCTOBER",
     "NOVEMBER",
     "DECEMBER"
-  }
+  };
 
 }
