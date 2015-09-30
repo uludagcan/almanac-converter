@@ -34,14 +34,14 @@ import org.joda.time.DateTime;
  * @version 1.0
  * @since 2015-08-07
  */
-public final class FrenchRepublicanDate implements Almanac {
+public final class FrenchRepublicanCalendar implements Almanac {
   public static final String CALENDAR_NAME = "French Republican Calendar";
   public static final JulianDay EPOCH = new JulianDay(2375839.5);
 
   /**
    * Constructs a French Republican Date for today's date.
    */
-  public FrenchRepublicanDate() {
+  public FrenchRepublicanCalendar() {
     this(new JulianDay());
   }
   
@@ -53,7 +53,7 @@ public final class FrenchRepublicanDate implements Almanac {
    * @param week the week
    * @param day the day
    */ 
-  public FrenchRepublicanDate(int year, int month, int week, int day) {
+  public FrenchRepublicanCalendar(int year, int month, int week, int day) {
     _year = year;
     _month = month;
     _week = week;
@@ -66,7 +66,7 @@ public final class FrenchRepublicanDate implements Almanac {
    * @param month the month
    * @param day the day
    */
-  public FrenchRepublicanDate(int year, int month, int day) {
+  public FrenchRepublicanCalendar(int year, int month, int day) {
     this(year,month,(day/10),(day%10));
   }
 
@@ -75,7 +75,7 @@ public final class FrenchRepublicanDate implements Almanac {
    * Calendar date.
    * @param date a Gregorian Calendar Date.
    */
-  public FrenchRepublicanDate(GregorianDate date) {
+  public FrenchRepublicanCalendar(GregorianDate date) {
     this(new JulianDay(date));
   }
 
@@ -83,15 +83,15 @@ public final class FrenchRepublicanDate implements Almanac {
    * Constructs a French Republican Date from a given Julian Day.
    * @param jd a Julian Day.
    */
-  public FrenchRepublicanDate(JulianDay jd) {
-    this(toFrenchRepublicanDate(jd));
+  public FrenchRepublicanCalendar(JulianDay jd) {
+    this(toFrenchRepublicanCalendar(jd));
   }
 
   /**
    * Constructs a French Republican date from another French Republican date.
    * @param date a French Republican date.
    */
-  public FrenchRepublicanDate(FrenchRepublicanDate date) {
+  public FrenchRepublicanCalendar(FrenchRepublicanCalendar date) {
     this(date.getYear(),date.getMonth(),date.getWeek(),date.getDay());
   }
 
@@ -101,7 +101,7 @@ public final class FrenchRepublicanDate implements Almanac {
    * @return today's date.
    */
   public static String asToday() {
-    return (new FrenchRepublicanDate()).getDate();
+    return (new FrenchRepublicanCalendar()).getDate();
   }
 
   /**
@@ -219,12 +219,12 @@ public final class FrenchRepublicanDate implements Almanac {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof FrenchRepublicanDate))
+    if (!(obj instanceof FrenchRepublicanCalendar))
       return false;
     if (obj == this)
       return true;
       
-    final FrenchRepublicanDate date = (FrenchRepublicanDate) obj;
+    final FrenchRepublicanCalendar date = (FrenchRepublicanCalendar) obj;
     return new EqualsBuilder()
       .append(_year, date.getYear())
       .append(_month, date.getMonth())
