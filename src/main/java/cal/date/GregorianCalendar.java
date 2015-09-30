@@ -29,8 +29,7 @@ import static cal.util.Converter.*;
  * not divisible by 400. For example: 1700, 1800 and 1900 are NOT leap
  * years, but 2000 is a leap year.
  * @author Chris Engelsma
- * @version 1.1
- * @since 2015-09-24
+ * @version 2015.09.24
  */
 public final class GregorianCalendar implements Almanac {
   public static final String CALENDAR_NAME = "Gregorian Calendar";
