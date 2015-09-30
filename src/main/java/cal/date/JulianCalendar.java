@@ -137,7 +137,7 @@ public final class JulianCalendar implements Almanac {
    * @return the month names.
    */
   public static String[] getMonthNames() {
-    return _monthNames();
+    return _monthNames;
   }
 
   /**
