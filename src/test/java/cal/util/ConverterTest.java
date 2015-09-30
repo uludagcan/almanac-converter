@@ -9,31 +9,31 @@ import org.junit.Test;
 
 public class ConverterTest {
   @Test
-  public void julianDayShouldConvertToGregorianDate() {
-    GregorianDate actual = 
+  public void julianDayShouldConvertToGregorianCalendar() {
+    GregorianCalendar actual = 
       Converter.toGregorianDate(new JulianDay(2446864.5));
-    GregorianDate expected = new GregorianDate(1987,3,10);
-    assertEquals( "FAIL: Julian Day -> Gregorian Date is broken",
+    GregorianCalendar expected = new GregorianCalendar(1987,3,10);
+    assertEquals( "FAIL: Julian Day -> Gregorian Calendar is broken",
                   true,
                   actual.equals(expected));
   }
 
   @Test
-  public void julianDayShouldConvertToFrenchRepublicanDate() {
-    FrenchRepublicanDate actual =
+  public void julianDayShouldConvertToFrenchRepublicanCalendar() {
+    FrenchRepublicanCalendar actual =
       Converter.toFrenchRepublicanDate(new JulianDay(2446864.5));
-    FrenchRepublicanDate expected = new FrenchRepublicanDate(195,6,2,9);
-    assertEquals( "FAIL: Julian Day -> French Republican Date is broken",
+    FrenchRepublicanCalendar expected = new FrenchRepublicanCalendar(195,6,2,9);
+    assertEquals( "FAIL: Julian Day -> French Republican Calendar is broken",
                   true,
                   actual.equals(expected));
   }
 
   @Test
-  public void julianDateShouldConvertToMayaDate() {
-    MayaDate actual = 
+  public void julianDateShouldConvertToMayaCalendar() {
+    MayaCalendar actual = 
       Converter.toMayaDate(new JulianDay(2446864.5));
-    MayaDate expected = new MayaDate(12,18,13,15,2);
-    assertEquals( "FAIL: Julian Day -> Maya Date is broken",
+    MayaCalendar expected = new MayaCalendar(12,18,13,15,2);
+    assertEquals( "FAIL: Julian Day -> Maya Calendar is broken",
                   true,
                   actual.equals(expected));
   }
