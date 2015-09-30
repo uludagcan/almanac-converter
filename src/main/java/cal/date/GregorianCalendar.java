@@ -363,7 +363,7 @@ public final class GregorianCalendar implements Almanac {
   private int _minute;
   private int _second;
   
-  private static final Tuple<String,String>[] _monthNames = 
+  private static final String[] _monthNames = 
   {
     "January",   "Jan",
     "February",  "Feb",
