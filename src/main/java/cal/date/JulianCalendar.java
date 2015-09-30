@@ -1,7 +1,6 @@
 package cal.date;
 
 import java.lang.Math;
-import java.text.DateFormatSymbols;
 import java.util.*;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -20,32 +19,22 @@ import static cal.util.Converter.*;
  * @version 1.0
  * @since 2015-09-30
  */
-public final class JulianDate implements Almanac {
+public final class JulianCalendar implements Almanac {
   public static final String CALENDAR_NAME = "Julian Calendar";
   public static final JulianDay EPOCH = new JulianDay(2299160.5);
 
   /**
    * Constructrs a Julian Date using today's date.
    */
-  public JulianDate() {
+  public JulianCalendar() {
     this(new DateTime());
-  }
-
-  /**
-   * Constructs a Julian Date given a provided Calendar date.
-   * @param date A calendar date.
-   */
-  public JulianDate(Calendar date) {
-    this(date.get(Calendar.YEAR),
-         date.get(Calendar.MONTH)+1,
-         date.get(Calendar.DAY_OF_MONTH));
   }
 
   /**
    * Constructs a Julian Date from another Almanac.
    * @param date another Almanac
    */
-  public JulianDate(Almanac date) {
+  public JulianCalendar(Almanac date) {
     //this(toGregorianDate(date));
   }
 
@@ -53,7 +42,7 @@ public final class JulianDate implements Almanac {
    * Constructs a Julian Date given another Julian Date.
    * @param date A Julian Date.
    */
-  public JulianDate(JulianDate date) {
+  public JulianCalendar(JulianCalendar date) {
     this(date.getYear(),
          date.getMonth(),
          date.getDay());
@@ -63,7 +52,7 @@ public final class JulianDate implements Almanac {
    * Constructs a Julian Date given a Joda DateTime.
    * @param dt a Joda DateTime.
    */
-  public JulianDate(DateTime dt) {
+  public JulianCalendar(DateTime dt) {
     this(dt.getYear(),
          dt.getMonthOfYear(),
          dt.getDayOfMonth());
@@ -75,7 +64,7 @@ public final class JulianDate implements Almanac {
    * @param month The month.
    * @param day The day.
    */
-  public JulianDate(int year, int month, int day) {
+  public JulianCalendar(int year, int month, int day) {
     _day   = day;
     _month = month;
     _year  = year;
@@ -87,7 +76,7 @@ public final class JulianDate implements Almanac {
    * @return today's date.
    */
   public static String asToday() {
-    return (new JulianDate()).getDate();
+    return (new JulianCalendar()).getDate();
   }
 
   /**
@@ -101,7 +90,7 @@ public final class JulianDate implements Almanac {
    * @return true, if this is a leap year; false, otherwise.
    */
   public boolean isLeapYear() {
-    return JulianDate.isLeapYear(_year);
+    return JulianCalendar.isLeapYear(_year);
   }
 
   /**
@@ -110,10 +99,10 @@ public final class JulianDate implements Almanac {
    * @return true, if is a leap year; false, otherwise.
    */
   public static boolean isLeapYear(int year) {
-    JulianDate epoch = new JulianDate(EPOCH);
-    JulianDate date = new JulianDate(year,1,1);
+    JulianCalendar epoch = new JulianCalendar(EPOCH);
+    JulianCalendar date = new JulianCalendar(year,1,1);
     if (Math.abs(year) % 4 == 0) {
-      if (JulianDate.datesAreChronological(date,epoch)) return true;
+      if (JulianCalendar.datesAreChronological(date,epoch)) return true;
       else {
         if (Math.abs(year)%400==0) return true;
         if (Math.abs(year)%100==0) return false;
@@ -131,7 +120,7 @@ public final class JulianDate implements Almanac {
   public static String getMonthName(int month) 
     throws IndexOutOfBoundsException 
   {
-    return JulianDate.getMonthNames()[month-1];
+    return JulianCalendar.getMonthNames()[month-1];
   }
 
   /**
@@ -140,7 +129,7 @@ public final class JulianDate implements Almanac {
    * @return the name of the month.
    */
   public String getMonthName() {
-    return JulianDate.getMonthName(_month);
+    return JulianCalendar.getMonthName(_month);
   }
 
   /**
@@ -148,15 +137,7 @@ public final class JulianDate implements Almanac {
    * @return the month names.
    */
   public static String[] getMonthNames() {
-    return DateFormatSymbols.getInstance().getMonths();
-  }
-
-  /**
-   * Gets the short month names.
-   * @return the short month names.
-   */
-  public static String[] getShortMonthNames() {
-    return DateFormatSymbols.getInstance().getShortMonths();
+    return _monthNames();
   }
 
   /**
@@ -169,7 +150,7 @@ public final class JulianDate implements Almanac {
     if (month==4  || month==6  || month==9  || month==11) 
       return 30;
     if (month==2) {
-      if (!JulianDate.isLeapYear(year)) return 28;
+      if (!JulianCalendar.isLeapYear(year)) return 28;
       else return 29;
     }
     return 31;
@@ -181,7 +162,7 @@ public final class JulianDate implements Almanac {
    * @return the number of days in a month of this year.
    */
   public int getDaysInMonth(int month) {
-    return JulianDate.getDaysInMonth(month,getYear());
+    return JulianCalendar.getDaysInMonth(month,getYear());
   }
 
   /**
@@ -189,7 +170,7 @@ public final class JulianDate implements Almanac {
    * @return the number of days in this month and year.
    */
   public int getDaysInMonth() {
-    return JulianDate.getDaysInMonth(getMonth(),getYear());
+    return JulianCalendar.getDaysInMonth(getMonth(),getYear());
   }
 
   /**
@@ -200,7 +181,7 @@ public final class JulianDate implements Almanac {
   public static int[] getDaysPerMonthInYear(int year) {
     int[] days = new int[12];
     for (int i=0; i<12; ++i) 
-      days[i] = JulianDate.getDaysInMonth(i+1,year);
+      days[i] = JulianCalendar.getDaysInMonth(i+1,year);
     return days;
   }
 
@@ -209,7 +190,7 @@ public final class JulianDate implements Almanac {
    * @return an array[12] of month-lengths for this year.
    */
   public int[] getDaysPerMonthInYear() {
-    return JulianDate.getDaysPerMonthInYear(getYear());
+    return JulianCalendar.getDaysPerMonthInYear(getYear());
   }
 
   /**
@@ -272,10 +253,10 @@ public final class JulianDate implements Almanac {
 
   /**
    * Checks if this date is before another Julian Date.
-   * @param date A JulianDate Date.
+   * @param date A Julian Calendar Date.
    * @return true, if before; false, otherwise.
    */ 
-  public boolean isBefore(JulianDate date) {
+  public boolean isBefore(JulianCalendar date) {
     double year = date.getYear();
     double month = date.getMonth();
     double day = date.getDay();
@@ -291,7 +272,7 @@ public final class JulianDate implements Almanac {
    * @return true, if firstDate comes before secondDate; false, otherwise.
    */
   public static boolean datesAreChronological(
-    JulianDate firstDate, JulianDate secondDate) 
+    JulianCalendar firstDate, JulianCalendar secondDate) 
   {
     double year1  = firstDate.getYear();
     double month1 = firstDate.getMonth();
@@ -311,7 +292,7 @@ public final class JulianDate implements Almanac {
    * @param date A Julian Date.
    * @return true, if after; false, otherwise.
    */ 
-  public boolean isAfter(JulianDate date) {
+  public boolean isAfter(JulianCalendar date) {
     double year = date.getYear();
     double month = date.getMonth();
     double day = date.getDay();
@@ -322,12 +303,12 @@ public final class JulianDate implements Almanac {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof JulianDate))
+    if (!(obj instanceof JulianCalendar))
       return false;
     if (obj == this)
       return true;
       
-    final JulianDate date = (JulianDate) obj;
+    final JulianCalendar date = (JulianCalendar) obj;
     return new EqualsBuilder()
       .append(_year, date.getYear())
       .append(_month, date.getMonth())
@@ -350,8 +331,21 @@ public final class JulianDate implements Almanac {
   private int _year;
   private int _day;
   private int _month;
-
-  private final String[] _monthNames = getMonthNames();
-  private final String[] _mos = getShortMonthNames();
+  
+  private final String[] _monthNames = 
+  {
+    "IANVARIVS",
+    "FEBRVARIVSs",
+    "MARTIVS",
+    "APRILLIS",
+    "MAIVS",
+    "IVNIVS",
+    "IVLIVS",
+    "AVGVSTVS",
+    "SEPTEMBER",
+    "OCTOBER",
+    "NOVEMBER",
+    "DECEMBER"
+  }
 
 }
