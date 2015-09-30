@@ -31,8 +31,7 @@ import org.joda.time.DateTime;
  * introduced, naming each day of the year after various crops, minerals, 
  * animals and work tools to reflect the changing of the seasons. 
  * @author Chris Engelsma
- * @version 1.0
- * @since 2015-08-07
+ * @version 2015.08.07
  */
 public final class FrenchRepublicanCalendar implements Almanac {
   public static final String CALENDAR_NAME = "French Republican Calendar";
