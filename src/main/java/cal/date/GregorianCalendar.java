@@ -162,7 +162,7 @@ public final class GregorianCalendar implements Almanac {
   public static String[] getShortMonthNames() {
     String[] months = new String[12];
     for (int i=0; i<12; ++i)
-      months[i] = _monthNames[2*i+1]
+      months[i] = _monthNames[2*i+1];
     return months;
   }
 
