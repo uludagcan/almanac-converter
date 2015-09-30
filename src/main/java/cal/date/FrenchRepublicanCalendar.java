@@ -74,7 +74,7 @@ public final class FrenchRepublicanCalendar implements Almanac {
    * Calendar date.
    * @param date a Gregorian Calendar Date.
    */
-  public FrenchRepublicanCalendar(GregorianDate date) {
+  public FrenchRepublicanCalendar(GregorianCalendar date) {
     this(new JulianDay(date));
   }
 
