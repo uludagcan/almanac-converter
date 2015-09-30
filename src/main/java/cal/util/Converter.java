@@ -6,8 +6,7 @@ import cal.astro.*;
 /**
  * A mechanism to convert between various calendars.
  * @author Chris Engelsma
- * @version 1.0
- * @since 2015-08-27
+ * @version 2015.08.27
  */
 public class Converter {
 
@@ -18,12 +17,12 @@ public class Converter {
    */
   public static JulianDay toJulianDay(Almanac a) {
     if (!(a instanceof JulianDay)) {
-      if (a instanceof GregorianDate)
-        return _g2jd((GregorianDate)a);
-      if (a instanceof FrenchRepublicanDate)
-        return _frc2jd((FrenchRepublicanDate)a);
-      if (a instanceof MayaDate)
-        return _m2jd((MayaDate)a);
+      if (a instanceof GregorianCalendar)
+        return _g2jd((GregorianCalendar)a);
+      if (a instanceof FrenchRepublicanCalendar)
+        return _frc2jd((FrenchRepublicanCalendar)a);
+      if (a instanceof MayaCalendar)
+        return _m2jd((MayaCalendar)a);
     }
     return (JulianDay)a;
   }
@@ -33,9 +32,9 @@ public class Converter {
    * @param a an Almanac.
    * @return the Gregorian date.
    */
-  public static GregorianDate toGregorianDate(Almanac a) {
-    if (a instanceof GregorianDate)
-      return (GregorianDate)a;
+  public static GregorianCalendar toGregorianCalendar(Almanac a) {
+    if (a instanceof GregorianCalendar)
+      return (GregorianCalendar)a;
     else 
       return _jd2g(toJulianDay(a));
   }
@@ -45,9 +44,9 @@ public class Converter {
    * @param a an Almanac.
    * @return the French Republican date.
    */
-  public static FrenchRepublicanDate toFrenchRepublicanDate(Almanac a) {
-    if (a instanceof FrenchRepublicanDate)
-      return (FrenchRepublicanDate)a;
+  public static FrenchRepublicanCalendar toFrenchRepublicanCalendar(Almanac a) {
+    if (a instanceof FrenchRepublicanCalendar)
+      return (FrenchRepublicanCalendar)a;
     else
       return _jd2frc(toJulianDay(a));
   }
@@ -57,9 +56,9 @@ public class Converter {
    * @param a an Almanac.
    * @return the Maya date.
    */
-  public static MayaDate toMayaDate(Almanac a) {
-    if (a instanceof MayaDate) 
-      return (MayaDate)a;
+  public static MayaCalendar toMayaCalendar(Almanac a) {
+    if (a instanceof MayaCalendar) 
+      return (MayaCalendar)a;
     else 
       return _jd2m(toJulianDay(a));
   }
@@ -67,7 +66,7 @@ public class Converter {
 /////////////////////////////////////////////////////////////////////////////
 // private
 
-  private static JulianDay _g2jd(GregorianDate date) {
+  private static JulianDay _g2jd(GregorianCalendar date) {
     int month = date.getMonth();
     int year = date.getYear();
     int day = date.getDay();
@@ -84,17 +83,17 @@ public class Converter {
     return new JulianDay(JDN);
   }
 
-  private static JulianDay _frc2jd(FrenchRepublicanDate date) {
+  private static JulianDay _frc2jd(FrenchRepublicanCalendar date) {
     // TODO
     return new JulianDay();
   }
 
-  private static JulianDay _m2jd(MayaDate date) {
+  private static JulianDay _m2jd(MayaCalendar date) {
     // TODO
     return new JulianDay();
   }
 
-  private static GregorianDate _jd2g(JulianDay jd) {
+  private static GregorianCalendar _jd2g(JulianDay jd) {
     int J = (int)(jd.getValue()+0.5);
     int y = 4716; int j = 1401;   int m = 2;
     int n = 12;   int r = 4;      int p = 1461;
@@ -107,10 +106,10 @@ public class Converter {
     int day = (h%s)/u+1;
     int month = (h/s+m)%n+1;
     int year = (e/p)-y+(n+m-month)/n;
-    return new GregorianDate(year,month,day);
+    return new GregorianCalendar(year,month,day);
   }
 
-  private static FrenchRepublicanDate _jd2frc(JulianDay jd) {
+  private static FrenchRepublicanCalendar _jd2frc(JulianDay jd) {
     int year, month, week, day;
     double dd = jd.getValue();
     double jday = Math.floor(dd)+0.5;
@@ -136,13 +135,13 @@ public class Converter {
       }
     }
 
-    return new FrenchRepublicanDate(year,month,week,day);
+    return new FrenchRepublicanCalendar(year,month,week,day);
   }
 
-  private static MayaDate _jd2m(JulianDay jd) {
+  private static MayaCalendar _jd2m(JulianDay jd) {
     int baktun, katun, tun, uinal, kin;
     double day = (jd.atMidnight()).getValue();
-    double d = day - MayaDate.EPOCH.getValue();
+    double d = day - MayaCalendar.EPOCH.getValue();
     baktun = (int)Math.floor(d/_lbaktun);
     d = d % _lbaktun;
     katun = (int)Math.floor(d/_lkatun);
@@ -151,11 +150,11 @@ public class Converter {
     d = d % _ltun;
     uinal = (int)Math.floor(d / _luinal);
     kin = (int)(d % _luinal);
-    return new MayaDate(baktun,katun,tun,uinal,kin);
+    return new MayaCalendar(baktun,katun,tun,uinal,kin);
   }
 
   private static double[] anneeDeLaRevolution(JulianDay julday) {
-    int guess = (new GregorianDate(julday)).getYear()-2;
+    int guess = (new GregorianCalendar(julday)).getYear()-2;
     double nexteq,lasteq,jd;
     jd = julday.getValue();
     lasteq = _parisEquinox(guess);
@@ -169,7 +168,7 @@ public class Converter {
       guess++;
       nexteq = _parisEquinox(guess);
     }
-    double adr = (lasteq - FrenchRepublicanDate.EPOCH.getValue());
+    double adr = (lasteq - FrenchRepublicanCalendar.EPOCH.getValue());
     adr /= Meeus.TROPICAL_YEAR;
     adr += 1;
     return new double[] {Math.round(adr), lasteq};

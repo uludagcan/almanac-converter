@@ -4,6 +4,6 @@
  
 package cal.date;
 
-public class IslamicDate {
+public class IslamicCalendar {
 // TODO
 }

@@ -42,7 +42,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @version 1.1
  * @since 2015.08.24
  */ 
-public class MayaDate implements Almanac {
+public class MayaCalendar implements Almanac {
   public static final String CALENDAR_NAME = "Maya Calendar";
   public static final JulianDay EPOCH = new JulianDay(584282.5);
   
@@ -50,7 +50,7 @@ public class MayaDate implements Almanac {
    * Constructs a date in the Maya calendar.
    * The calendar will default to today's date.
    */
-  public MayaDate() {
+  public MayaCalendar() {
     this(new JulianDay());
   }
   
@@ -58,7 +58,7 @@ public class MayaDate implements Almanac {
    * Constructs a Maya date.
    * @param jday a Julian day.
    */
-  public MayaDate(JulianDay jday) {
+  public MayaCalendar(JulianDay jday) {
     _julianDayToMayaCount(jday);
   }
 
@@ -70,7 +70,7 @@ public class MayaDate implements Almanac {
    * @param uinal  a specified Uinal.
    * @param kin    a specified K'in.
    */
-  public MayaDate(int baktun, int katun, int tun, int uinal, int kin) {
+  public MayaCalendar(int baktun, int katun, int tun, int uinal, int kin) {
     _baktun = baktun;
     _katun = katun;
     _tun = tun;
@@ -102,21 +102,27 @@ public class MayaDate implements Almanac {
    * A Tun is equal to 18 Uinal, which is equal to 360 days.
    * @return This Tun.
    */ 
-  public int getTun()    { return _tun;    }
+  public int getTun() { 
+    return _tun;
+  }
 
   /**
    * Gets this K'atun.
    * A K'atun is equal to 20 Tun, which is equal to 7,200 days.
    * @return This K'atun.
    */
-  public int getKatun()  { return _katun;  }
+  public int getKatun() { 
+    return _katun;
+  }
 
   /**
    * Gets this B'aktun.
    * A B'aktun is equal to 20 K'atun which is equal to 144,000 days.
    * @return This B'aktun.
    */
-  public int getBaktun() { return _baktun; }
+  public int getBaktun() {
+    return _baktun;
+  }
   
   /**
    * Gets the "Long Count" Maya Date.
@@ -137,12 +143,12 @@ public class MayaDate implements Almanac {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof MayaDate))
+    if (!(obj instanceof MayaCalendar))
       return false;
     if (obj == this)
       return true;
       
-    final MayaDate date = (MayaDate) obj;
+    final MayaCalendar date = (MayaCalendar) obj;
     return new EqualsBuilder()
       .append(_kin, date.getKin())
       .append(_uinal, date.getUinal())
