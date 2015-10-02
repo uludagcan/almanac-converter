@@ -15,10 +15,6 @@ limitations under the License.
 *****************************************************************************/
 package com.moose.cal.date;
 
-/**
- * Tests {@link com.moose.cal.date.MayaDate}
- * @author Chris Engelsma
- * @version 2015.08.24
- */
-public class MayaDateTest {
+public class IslamicCalendar {
+// TODO
 }
