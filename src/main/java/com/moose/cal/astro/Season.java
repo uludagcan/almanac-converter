@@ -13,12 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 *****************************************************************************/
-package com.moose.cal.date;
+package com.moose.cal.astro;
 
 /**
- * Tests {@link com.moose.cal.date.MayaDate}
+ * An astronomical season.
  * @author Chris Engelsma
- * @version 2015.08.24
- */
-public class MayaDateTest {
+ * @version 2015.08.10
+ */ 
+public enum Season {
+  SPRING(0),
+  SUMMER(1),
+  AUTUMN(2),
+  WINTER(3);
+
+  private final int id;
+  Season(int id) { this.id = id; }
+  public int getValue() { return id; }
 }

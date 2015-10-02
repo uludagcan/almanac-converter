@@ -1,4 +1,19 @@
-package cal.date;
+/*****************************************************************************
+Copyright 2015 Hypotemoose, LLC.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*****************************************************************************/
+package com.moose.cal.date;
 
 import java.lang.Math;
 import java.util.*;
@@ -10,61 +25,73 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import org.joda.time.DateTime;
 
-import cal.util.*;
-import static cal.util.Converter.*;
+import com.moose.cal.util.*;
+import static com.moose.cal.util.Converter.*;
 
 /**
- * A Julian Calendar Date.
+ * A Gregorian Calendar Date.
+ * <p>
+ * The Gregorian Calendar is internationally the most widely used civil 
+ * calendar. It was named for Pope Gregory XIII who introduced it on 
+ * October 15, 1582. The calendar was a refinement to the Julian Calendar, 
+ * with the motivation of setting the Easter holiday to a specific date 
+ * instead of the spring equinox, which naturally drifted dates.
+ * <p>
+ * Each year is divided into 12 months, with a varied number of days per
+ * month. To account for the drift in seasons, a leap year occurs which 
+ * introduces an additional day in February. These leap years happen every
+ * year that's divisible by 4, except years that are divisible by 100 but
+ * not divisible by 400. For example: 1700, 1800 and 1900 are NOT leap
+ * years, but 2000 is a leap year.
  * @author Chris Engelsma
- * @version 1.0
- * @since 2015-09-30
+ * @version 2015.09.24
  */
-public final class JulianCalendar implements Almanac {
-  public static final String CALENDAR_NAME = "Julian Calendar";
+public final class GregorianCalendar implements Almanac {
+  public static final String CALENDAR_NAME = "Gregorian Calendar";
   public static final JulianDay EPOCH = new JulianDay(2299160.5);
 
   /**
-   * Constructrs a Julian Date using today's date.
+   * Constructrs a Gregorian Date using today's date.
    */
-  public JulianCalendar() {
+  public GregorianCalendar() {
     this(new DateTime());
   }
 
   /**
-   * Constructs a Julian Date from another Almanac.
+   * Constructs a Gregorian Date from another Almanac.
    * @param date another Almanac
    */
-  public JulianCalendar(Almanac date) {
-    //this(toGregorianDate(date));
+  public GregorianCalendar(Almanac date) {
+    this(toGregorianCalendar(date));
   }
 
   /**
-   * Constructs a Julian Date given another Julian Date.
-   * @param date A Julian Date.
+   * Constructs a Gregorian Date given another Gregorian Date.
+   * @param date A Gregorian Date.
    */
-  public JulianCalendar(JulianCalendar date) {
+  public GregorianCalendar(GregorianCalendar date) {
     this(date.getYear(),
          date.getMonth(),
          date.getDay());
   }
 
   /**
-   * Constructs a Julian Date given a Joda DateTime.
+   * Constructs a Gregorian Date given a Joda DateTime.
    * @param dt a Joda DateTime.
    */
-  public JulianCalendar(DateTime dt) {
+  public GregorianCalendar(DateTime dt) {
     this(dt.getYear(),
          dt.getMonthOfYear(),
          dt.getDayOfMonth());
   }
 
   /**
-   * Constructs a Julian Date from a given day, month and year.
+   * Constructs a Gregorian Date from a given day, month and year.
    * @param year The year.
    * @param month The month.
    * @param day The day.
    */
-  public JulianCalendar(int year, int month, int day) {
+  public GregorianCalendar(int year, int month, int day) {
     _day   = day;
     _month = month;
     _year  = year;
@@ -76,7 +103,7 @@ public final class JulianCalendar implements Almanac {
    * @return today's date.
    */
   public static String asToday() {
-    return (new JulianCalendar()).getDate();
+    return (new GregorianCalendar()).getDate();
   }
 
   /**
@@ -90,7 +117,7 @@ public final class JulianCalendar implements Almanac {
    * @return true, if this is a leap year; false, otherwise.
    */
   public boolean isLeapYear() {
-    return JulianCalendar.isLeapYear(_year);
+    return GregorianCalendar.isLeapYear(_year);
   }
 
   /**
@@ -99,10 +126,10 @@ public final class JulianCalendar implements Almanac {
    * @return true, if is a leap year; false, otherwise.
    */
   public static boolean isLeapYear(int year) {
-    JulianCalendar epoch = new JulianCalendar(EPOCH);
-    JulianCalendar date = new JulianCalendar(year,1,1);
+    GregorianCalendar epoch = new GregorianCalendar(EPOCH);
+    GregorianCalendar date = new GregorianCalendar(year,1,1);
     if (Math.abs(year) % 4 == 0) {
-      if (JulianCalendar.datesAreChronological(date,epoch)) return true;
+      if (GregorianCalendar.datesAreChronological(date,epoch)) return true;
       else {
         if (Math.abs(year)%400==0) return true;
         if (Math.abs(year)%100==0) return false;
@@ -120,7 +147,7 @@ public final class JulianCalendar implements Almanac {
   public static String getMonthName(int month) 
     throws IndexOutOfBoundsException 
   {
-    return JulianCalendar.getMonthNames()[month-1];
+    return GregorianCalendar.getMonthNames()[month-1];
   }
 
   /**
@@ -129,7 +156,7 @@ public final class JulianCalendar implements Almanac {
    * @return the name of the month.
    */
   public String getMonthName() {
-    return JulianCalendar.getMonthName(_month);
+    return GregorianCalendar.getMonthName(_month);
   }
 
   /**
@@ -137,7 +164,21 @@ public final class JulianCalendar implements Almanac {
    * @return the month names.
    */
   public static String[] getMonthNames() {
-    return _monthNames;
+    String[] months = new String[12];
+    for (int i=0; i<12; ++i)
+      months[i] = _monthNames[2*i];
+    return months;
+  }
+
+  /**
+   * Gets the short month names.
+   * @return the short month names.
+   */
+  public static String[] getShortMonthNames() {
+    String[] months = new String[12];
+    for (int i=0; i<12; ++i)
+      months[i] = _monthNames[2*i+1];
+    return months;
   }
 
   /**
@@ -150,7 +191,7 @@ public final class JulianCalendar implements Almanac {
     if (month==4  || month==6  || month==9  || month==11) 
       return 30;
     if (month==2) {
-      if (!JulianCalendar.isLeapYear(year)) return 28;
+      if (!GregorianCalendar.isLeapYear(year)) return 28;
       else return 29;
     }
     return 31;
@@ -162,7 +203,7 @@ public final class JulianCalendar implements Almanac {
    * @return the number of days in a month of this year.
    */
   public int getDaysInMonth(int month) {
-    return JulianCalendar.getDaysInMonth(month,getYear());
+    return GregorianCalendar.getDaysInMonth(month,getYear());
   }
 
   /**
@@ -170,7 +211,7 @@ public final class JulianCalendar implements Almanac {
    * @return the number of days in this month and year.
    */
   public int getDaysInMonth() {
-    return JulianCalendar.getDaysInMonth(getMonth(),getYear());
+    return GregorianCalendar.getDaysInMonth(getMonth(),getYear());
   }
 
   /**
@@ -181,7 +222,7 @@ public final class JulianCalendar implements Almanac {
   public static int[] getDaysPerMonthInYear(int year) {
     int[] days = new int[12];
     for (int i=0; i<12; ++i) 
-      days[i] = JulianCalendar.getDaysInMonth(i+1,year);
+      days[i] = GregorianCalendar.getDaysInMonth(i+1,year);
     return days;
   }
 
@@ -190,7 +231,7 @@ public final class JulianCalendar implements Almanac {
    * @return an array[12] of month-lengths for this year.
    */
   public int[] getDaysPerMonthInYear() {
-    return JulianCalendar.getDaysPerMonthInYear(getYear());
+    return GregorianCalendar.getDaysPerMonthInYear(getYear());
   }
 
   /**
@@ -252,11 +293,11 @@ public final class JulianCalendar implements Almanac {
   }
 
   /**
-   * Checks if this date is before another Julian Date.
-   * @param date A Julian Calendar Date.
+   * Checks if this date is before another Gregorian Date.
+   * @param date A Gregorian Date.
    * @return true, if before; false, otherwise.
    */ 
-  public boolean isBefore(JulianCalendar date) {
+  public boolean isBefore(GregorianCalendar date) {
     double year = date.getYear();
     double month = date.getMonth();
     double day = date.getDay();
@@ -272,7 +313,7 @@ public final class JulianCalendar implements Almanac {
    * @return true, if firstDate comes before secondDate; false, otherwise.
    */
   public static boolean datesAreChronological(
-    JulianCalendar firstDate, JulianCalendar secondDate) 
+    GregorianCalendar firstDate, GregorianCalendar secondDate) 
   {
     double year1  = firstDate.getYear();
     double month1 = firstDate.getMonth();
@@ -288,11 +329,11 @@ public final class JulianCalendar implements Almanac {
   }
 
   /**
-   * Checks if this date is after another Julian Date.
-   * @param date A Julian Date.
+   * Checks if this date is after another Gregorian Date.
+   * @param date A Gregorian Date.
    * @return true, if after; false, otherwise.
    */ 
-  public boolean isAfter(JulianCalendar date) {
+  public boolean isAfter(GregorianCalendar date) {
     double year = date.getYear();
     double month = date.getMonth();
     double day = date.getDay();
@@ -303,12 +344,12 @@ public final class JulianCalendar implements Almanac {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof JulianCalendar))
+    if (!(obj instanceof GregorianCalendar))
       return false;
     if (obj == this)
       return true;
       
-    final JulianCalendar date = (JulianCalendar) obj;
+    final GregorianCalendar date = (GregorianCalendar) obj;
     return new EqualsBuilder()
       .append(_year, date.getYear())
       .append(_month, date.getMonth())
@@ -331,21 +372,49 @@ public final class JulianCalendar implements Almanac {
   private int _year;
   private int _day;
   private int _month;
+
+  // TODO
+  private int _hour;
+  private int _minute;
+  private int _second;
   
   private static final String[] _monthNames = 
   {
-    "IANVARIVS",
-    "FEBRVARIVSs",
-    "MARTIVS",
-    "APRILLIS",
-    "MAIVS",
-    "IVNIVS",
-    "IVLIVS",
-    "AVGVSTVS",
-    "SEPTEMBER",
-    "OCTOBER",
-    "NOVEMBER",
-    "DECEMBER"
+    "January",   "Jan",
+    "February",  "Feb",
+    "March",     "Mar",
+    "April",     "Apr",
+    "May",       "May",
+    "June",      "Jun",
+    "July",      "Jul",
+    "August",    "Aug",
+    "September", "Sept",
+    "October",   "Oct",
+    "November",  "Nov",
+    "December",  "Dec"
   };
 
+  /**
+   * Converts Julian Days to a Gregorian Date.
+   * Algorithm derived by Richards (2013).
+   * @param jday The Julian Day.
+   * @return the Gregorian Date.
+   */
+   /*
+  private static GregorianCalendar _gregorianFromJulian(JulianDay jday) {
+    int J = (int)(jday.getValue()+0.5);
+    int y = 4716; int j = 1401;   int m = 2;
+    int n = 12;   int r = 4;      int p = 1461;
+    int v = 3;    int u = 5;      int s = 153;
+    int w = 2;    int B = 274277; int C = -38;
+    int f = J+j+(((4*J+B)/146097)*3)/4+C;
+    int e = r*f+v;
+    int g = (e%p)/r;
+    int h = u*g+w;
+    int day = (h%s)/u+1;
+    int month = (h/s+m)%n+1;
+    int year = (e/p)-y+(n+m-month)/n;
+    return new GregorianCalendar(year,month,day);
+  }
+  */
 }
