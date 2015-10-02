@@ -37,11 +37,31 @@ public class ConverterTest {
                   actual.equals(expected));
   }
 
+  @Test
+  public void gregorianCalendarShouldConvertToJulianDay() {
+    JulianDay actual = 
+      Converter.toJulianDay(new GregorianCalendar(1987,3,10));
+    JulianDay expected = new JulianDay(2446864.5);
+    assertEquals( "FAIL: Gregorian Calendar -> Julian Day is broken",
+                  true,
+                  actual.equals(expected));
+  }
+
   public void julianDayShouldConvertToJulianCalendar() {
     JulianCalendar actual = 
       Converter.toJulianCalendar(new JulianDay(2446864.5));
     JulianCalendar expected = new JulianCalendar(1987,2,25);
     assertEquals( "FAIL: Julian Day -> Julian Calendar is broken",
+                  true,
+                  actual.equals(expected));
+  }
+
+  @Test
+  public void julianCalendarShouldConvertToJulianDay() {
+    JulianDay actual = 
+      Converter.toJulianDay(new JulianCalendar(1987,2,25));
+    JulianDay expected = new JulianDay(2446864.5);
+    assertEquals( "FAIL: Julian Calendar -> Julian Day is broken",
                   true,
                   actual.equals(expected));
   }
@@ -58,11 +78,31 @@ public class ConverterTest {
   }
 
   @Test
+  public void frenchRepublicanCalendarShouldConvertToJulianDay() {
+    JulianDay actual = 
+      Converter.toJulianDay(new FrenchRepublicanCalendar(195,6,2,9));
+    JulianDay expected = new JulianDay(2446864.5);
+    assertEquals( "FAIL: French Republican Calendar -> Julian Day is broken",
+                  true,
+                  actual.equals(expected));
+  }
+
+  @Test
   public void julianDateShouldConvertToMayaCalendar() {
     MayaCalendar actual = 
       Converter.toMayaCalendar(new JulianDay(2446864.5));
     MayaCalendar expected = new MayaCalendar(12,18,13,15,2);
     assertEquals( "FAIL: Julian Day -> Maya Calendar is broken",
+                  true,
+                  actual.equals(expected));
+  }
+
+  @Test
+  public void mayaCalendarShouldConvertToJulianDay() {
+    JulianDay actual = 
+      Converter.toJulianDay(new MayaCalendar(12,18,13,15,2));
+    JulianDay expected = new JulianDay(2446864.5);
+    assertEquals( "FAIL: Maya Calendar -> Julian Day is broken",
                   true,
                   actual.equals(expected));
   }
