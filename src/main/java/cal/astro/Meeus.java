@@ -8,8 +8,7 @@ import java.lang.Math;
  * Astronomical equations derived by Belgian Astronomer Jean Meeus.
  * Algorithms also inspired by Fourmilab.
  * @author Chris Engelsma
- * @version 1.1
- * @since 2015-09-23
+ * @version 2015.09.23
  */
 public class Meeus {
 

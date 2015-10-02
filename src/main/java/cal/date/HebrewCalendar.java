@@ -4,6 +4,6 @@
 
 package cal.date;
 
-public class HebrewDate {
+public class HebrewCalendar {
 //TODO
 }

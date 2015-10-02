@@ -2,6 +2,11 @@ package cal.util;
 
 import java.lang.Math;
 
+/**
+ * A collection of convenience utilities.
+ * @author Chris Engelsma
+ * @version 2015.09.30
+ */
 public final class Util {
 
   public static String its(int val) {

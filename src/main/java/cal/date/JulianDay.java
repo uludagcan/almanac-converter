@@ -20,8 +20,7 @@ import static cal.util.Converter.*;
  * used since 1583 to convert between different calendars. The next Julian 
  * Period begins in the year 3268 AD.
  * @author Chris Engelsma
- * @version 1.0
- * @since 2015-08-07
+ * @version 2015.08.07
  */
 public final class JulianDay implements Almanac {
   public static final String CALENDAR_NAME = "Julian Day";
@@ -49,7 +48,7 @@ public final class JulianDay implements Almanac {
    * Constructs a Julian Day that is set to today's date.
    */
   public JulianDay() {
-    this(new GregorianDate());
+    this(new GregorianCalendar());
   }
   
   /**
@@ -62,26 +61,18 @@ public final class JulianDay implements Almanac {
   }
 
   /**
-   * Constructs a Julian Day from a JDK Calendar instance.
-   * @param cal A Java Calendar instance.
-   */ 
-  public JulianDay(Calendar cal) {
-    this(new GregorianDate(cal));
-  }
-
-  /**
    * Constructs a Julian Day from a Joda DateTime.
    * @param dt a Joda DateTime object.
    */
   public JulianDay(DateTime dt) {
-    this(new GregorianDate(dt));
+    this(new GregorianCalendar(dt));
   }
 
   /**
    * Constructs a Julian Day using a provided Gregorian Date.
    * @param date A Gregorian Date.
    */
-  public JulianDay(GregorianDate date) {
+  public JulianDay(GregorianCalendar date) {
     this(Converter.toJulianDay(date));
   }
 
@@ -189,7 +180,7 @@ public final class JulianDay implements Almanac {
   private double _day;
   
   /*
-  private static double _julianFromGregorian(GregorianDate date) {
+  private static double _julianFromGregorian(GregorianCalendar date) {
     int month = date.getMonth();
     int year = date.getYear();
     int day = date.getDay();

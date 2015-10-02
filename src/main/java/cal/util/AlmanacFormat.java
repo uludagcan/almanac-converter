@@ -2,6 +2,11 @@ package cal.util;
 
 import cal.date.*;
 
+/**
+ * An Almanac formatter.
+ * @author Chris Engelsma
+ * @version 2015.09.30
+ */ 
 public class AlmanacFormat {
 
   public AlmanacFormat(String pattern) {
