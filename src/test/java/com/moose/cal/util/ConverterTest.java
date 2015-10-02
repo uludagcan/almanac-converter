@@ -37,11 +37,21 @@ public class ConverterTest {
                   actual.equals(expected));
   }
 
+  public void julianDayShouldConvertToJulianCalendar() {
+    JulianCalendar actual = 
+      Converter.toJulianCalendar(new JulianDay(2446864.5));
+    JulianCalendar expected = new JulianCalendar(1987,2,25);
+    assertEquals( "FAIL: Julian Day -> Julian Calendar is broken",
+                  true,
+                  actual.equals(expected));
+  }
+
   @Test
   public void julianDayShouldConvertToFrenchRepublicanCalendar() {
     FrenchRepublicanCalendar actual =
       Converter.toFrenchRepublicanCalendar(new JulianDay(2446864.5));
-    FrenchRepublicanCalendar expected = new FrenchRepublicanCalendar(195,6,2,9);
+    FrenchRepublicanCalendar expected = 
+      new FrenchRepublicanCalendar(195,6,2,9);
     assertEquals( "FAIL: Julian Day -> French Republican Calendar is broken",
                   true,
                   actual.equals(expected));

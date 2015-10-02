@@ -109,15 +109,52 @@ public final class GregorianCalendar implements Almanac {
   /**
    * Determines whether this date's year is a leap year.
    * <p>
-   * This method determines whether the the current date exists during the
-   * Julian calendar or the Gregorian Calendar. The only difference between
-   * the two is that for the Gregorian Calendar leap years must be evenly
-   * divisible by 4, unless the year is divisible by 100 - with the exception
-   * of years evenly divisble by 400.
+   * This method will assume that the leap year is proleptic, meaning it will
+   * back-project the Gregorian Calendar to before it was implemented, making
+   * it not historically accurate prior to October 15, 1582.
    * @return true, if this is a leap year; false, otherwise.
    */
   public boolean isLeapYear() {
-    return GregorianCalendar.isLeapYear(_year);
+    return GregorianCalendar.isLeapYear(_year,true);
+  }
+
+  /**
+   * Determines whether this date's year is a leap year.
+   * <p>
+   * This method requires the user to specify whether to consider a proleptic
+   * calendar or not.
+   * @param useProleptic true, if making this calendar proleptic; false,
+   * otherwise.
+   * @return true, if this is a leap year; false, otherwise.
+   */
+  public boolean isLeapYear(boolean useProleptic) {
+    return GregorianCalendar.isLeapYear(_year,useProleptic);
+  }
+
+  /**
+   * Determines whether a given year is a leap year.
+   * <p>
+   * This method optionally determines whether the current date exists 
+   * before or after the creation of the Gregorian calendar, and follows 
+   * that calendar's leap year rule. As a result, there are "missing dates" 
+   * (October 4 - 14, 1582).
+   * @param year a given year.
+   * @param useProleptic true, if using a proleptic calendar; false,
+   * otherwise.
+   * @return true, if year is a leap year; false, otherwise.
+   */
+  public static boolean isLeapYear(int year, boolean useProleptic) {
+    GregorianCalendar epoch = new GregorianCalendar(EPOCH);
+    GregorianCalendar date = new GregorianCalendar(year,1,1);
+
+    if (useProleptic && GregorianCalendar.datesAreChronological(date,epoch)) 
+      return JulianCalendar.isLeapYear(year);
+
+    if (Math.abs(year)%4==0) {
+      if (Math.abs(year)%400==0) return true;
+      if (Math.abs(year)%100==0) return false;
+    }
+    return false;
   }
 
   /**
@@ -126,16 +163,7 @@ public final class GregorianCalendar implements Almanac {
    * @return true, if is a leap year; false, otherwise.
    */
   public static boolean isLeapYear(int year) {
-    GregorianCalendar epoch = new GregorianCalendar(EPOCH);
-    GregorianCalendar date = new GregorianCalendar(year,1,1);
-    if (Math.abs(year) % 4 == 0) {
-      if (GregorianCalendar.datesAreChronological(date,epoch)) return true;
-      else {
-        if (Math.abs(year)%400==0) return true;
-        if (Math.abs(year)%100==0) return false;
-      }
-    }
-    return false;
+    return GregorianCalendar.isLeapYear(year,true);
   }
 
   /**
@@ -283,6 +311,7 @@ public final class GregorianCalendar implements Almanac {
 
   /**
    * Prints this date with a simple pre-defined format.
+   * @return this calendar as a string.
    */ 
   @Override
   public String toString() {
@@ -373,11 +402,6 @@ public final class GregorianCalendar implements Almanac {
   private int _day;
   private int _month;
 
-  // TODO
-  private int _hour;
-  private int _minute;
-  private int _second;
-  
   private static final String[] _monthNames = 
   {
     "January",   "Jan",
@@ -394,27 +418,9 @@ public final class GregorianCalendar implements Almanac {
     "December",  "Dec"
   };
 
-  /**
-   * Converts Julian Days to a Gregorian Date.
-   * Algorithm derived by Richards (2013).
-   * @param jday The Julian Day.
-   * @return the Gregorian Date.
-   */
-   /*
-  private static GregorianCalendar _gregorianFromJulian(JulianDay jday) {
-    int J = (int)(jday.getValue()+0.5);
-    int y = 4716; int j = 1401;   int m = 2;
-    int n = 12;   int r = 4;      int p = 1461;
-    int v = 3;    int u = 5;      int s = 153;
-    int w = 2;    int B = 274277; int C = -38;
-    int f = J+j+(((4*J+B)/146097)*3)/4+C;
-    int e = r*f+v;
-    int g = (e%p)/r;
-    int h = u*g+w;
-    int day = (h%s)/u+1;
-    int month = (h/s+m)%n+1;
-    int year = (e/p)-y+(n+m-month)/n;
-    return new GregorianCalendar(year,month,day);
-  }
-  */
+  private static final String[] _eras = 
+  {
+    "BC","BCE",
+    "AD","CE"
+  };
 }

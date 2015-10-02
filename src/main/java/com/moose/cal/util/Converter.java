@@ -21,7 +21,7 @@ import com.moose.cal.astro.*;
 /**
  * A mechanism to convert between various calendars.
  * @author Chris Engelsma
- * @version 2015.08.27
+ * @version 2015.10.02
  */
 public class Converter {
 
@@ -34,6 +34,8 @@ public class Converter {
     if (!(a instanceof JulianDay)) {
       if (a instanceof GregorianCalendar)
         return _g2jd((GregorianCalendar)a);
+      if (a instanceof JulianCalendar)
+        return _jul2jd((JulianCalendar)a);
       if (a instanceof FrenchRepublicanCalendar)
         return _frc2jd((FrenchRepublicanCalendar)a);
       if (a instanceof MayaCalendar)
@@ -54,6 +56,17 @@ public class Converter {
       return _jd2g(toJulianDay(a));
   }
 
+  /**
+   * Converts an Almanac to a Julian date.
+   * @param a an Almanac.
+   * @return the Julian date.
+   */
+  public static JulianCalendar toJulianCalendar(Almanac a) {
+    if (a instanceof JulianCalendar)
+      return (JulianCalendar)a;
+    else 
+      return _jd2jul(toJulianDay(a));
+  }
   /**
    * Converts an Almanac to a French Republican date.
    * @param a an Almanac.
@@ -94,18 +107,67 @@ public class Converter {
     int c = 2-a+b;
     int e = (int)(365.25*(year+4716));
     int f = (int)(30.6001*(month+1));
-    double JDN = c+day+e+f-1524.5;
-    return new JulianDay(JDN);
+    double jd = c+day+e+f-1524.5;
+    return new JulianDay(jd);
+  }
+
+  private static JulianDay _jul2jd(JulianCalendar date) {
+    int month = date.getMonth();
+    int year = date.getYear();
+    int day = date.getDay();
+
+    if (year<1) year++;
+    if (month<=2) {
+      year--;
+      month+=12;
+    }
+
+    double jd = (Math.floor(365.25*(year+4716)) +
+                Math.floor(30.6001*(month+1)) +
+                day) - 1524.5;
+
+    return new JulianDay(jd);
   }
 
   private static JulianDay _frc2jd(FrenchRepublicanCalendar date) {
-    // TODO
-    return new JulianDay();
+    int year = date.getYear();
+    int month = date.getMonth();
+    int week = date.getWeek();
+    int day = date.getDay();
+
+    double guess = date.EPOCH.getValue() + (Meeus.TROPICAL_YEAR*((year-1)-1));
+    double[] adr = new double[2];
+    adr[0] = year-1;
+    adr[1] = 0;
+
+    while (adr[0]<year) {
+      adr = anneeDeLaRevolution(new JulianDay(guess));
+      guess = adr[1]+(Meeus.TROPICAL_YEAR+2);
+    }
+    double equinox = adr[1];
+
+    double jd = equinox + 
+                (30 * (month-1)) +
+                (10 * (week-1 )) +
+                      (day-1   );
+
+    return new JulianDay(jd);
   }
 
   private static JulianDay _m2jd(MayaCalendar date) {
-    // TODO
-    return new JulianDay();
+    int baktun = date.getBaktun();
+    int katun = date.getKatun();
+    int tun = date.getTun();
+    int uinal = date.getUinal();
+    int kin = date.getKin();
+
+    double jd = date.EPOCH.getValue() + 
+             (baktun * 144000) +
+             (katun  *   7200) +
+             (tun    *    360) +
+             (uinal  *     20) +
+             kin;
+    return new JulianDay(jd);
   }
 
   private static GregorianCalendar _jd2g(JulianDay jd) {
@@ -122,6 +184,25 @@ public class Converter {
     int month = (h/s+m)%n+1;
     int year = (e/p)-y+(n+m-month)/n;
     return new GregorianCalendar(year,month,day);
+  }
+
+  private static JulianCalendar _jd2jul(JulianDay jd) {
+    double jday = jd.getValue();
+    double a = Math.floor(jday+0.5f);
+    double b = a + 1524;
+    double c = Math.floor((b - 122.10)/365.25);
+    double d = Math.floor(365.25*c);
+    double e = Math.floor((b-d)/30.6001);
+
+    int month = (int)Math.floor((e<14)?(e-1):(e-13));
+    int year = (int)Math.floor((month>2)?(c-4716):(c-4715));
+    int day = (int)(b - d - Math.floor(30.6001*e));
+
+    // Since there's no "0" year.
+    if (year<1) 
+      year--;
+
+    return new JulianCalendar(year,month,day);
   }
 
   private static FrenchRepublicanCalendar _jd2frc(JulianDay jd) {

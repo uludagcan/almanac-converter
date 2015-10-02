@@ -82,8 +82,19 @@ public class GregorianCalendarTest {
   }
 
   @Test
+  public void prolepticLeapYearsShouldDiffer() {
+    int year = 1500;
+    boolean ypro = GregorianCalendar.isLeapYear(year,true);
+    boolean npro = GregorianCalendar.isLeapYear(year,false);
+    assertEquals( "FAIL: Proleptic leap years should differ",
+                  false,
+                  ypro==npro);
+  }
+
+  @Test
   public void jodaDateTimeShouldConstruct() {
-    GregorianCalendar date1 = new GregorianCalendar(new DateTime(1986,9,3,0,1));
+    GregorianCalendar date1 = 
+      new GregorianCalendar(new DateTime(1986,9,3,0,1));
     GregorianCalendar date2 = new GregorianCalendar(1986,9,3);
     assertEquals( "FAIL: Date should construct from Joda DateTime",
                   true,

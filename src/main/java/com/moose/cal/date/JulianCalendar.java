@@ -29,10 +29,9 @@ import com.moose.cal.util.*;
 import static com.moose.cal.util.Converter.*;
 
 /**
- * A Julian Calendar Date.
+ * A date in the Julian calendar.
  * @author Chris Engelsma
- * @version 1.0
- * @since 2015-09-30
+ * @version 2015.10.02
  */
 public final class JulianCalendar implements Almanac {
   public static final String CALENDAR_NAME = "Julian Calendar";
@@ -50,7 +49,7 @@ public final class JulianCalendar implements Almanac {
    * @param date another Almanac
    */
   public JulianCalendar(Almanac date) {
-    //this(toGregorianDate(date));
+    this(toJulianCalendar(date));
   }
 
   /**
@@ -110,20 +109,14 @@ public final class JulianCalendar implements Almanac {
 
   /**
    * Determines whether a given year is a leap year.
+   * <p>
+   * A year is considered a leap year in the Julian calendar if it is
+   * divisible by four.
    * @param year a given year.
    * @return true, if is a leap year; false, otherwise.
    */
   public static boolean isLeapYear(int year) {
-    JulianCalendar epoch = new JulianCalendar(EPOCH);
-    JulianCalendar date = new JulianCalendar(year,1,1);
-    if (Math.abs(year) % 4 == 0) {
-      if (JulianCalendar.datesAreChronological(date,epoch)) return true;
-      else {
-        if (Math.abs(year)%400==0) return true;
-        if (Math.abs(year)%100==0) return false;
-      }
-    }
-    return false;
+    return (year%4==0);
   }
 
   /**
@@ -347,6 +340,7 @@ public final class JulianCalendar implements Almanac {
   private int _day;
   private int _month;
   
+  /** The month names will be kept in traditional Roman lettering */
   private static final String[] _monthNames = 
   {
     "IANVARIVS",
