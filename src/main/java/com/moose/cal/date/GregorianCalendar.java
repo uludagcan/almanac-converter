@@ -103,7 +103,7 @@ public final class GregorianCalendar implements Almanac {
    * @return today's date.
    */
   public static String asToday() {
-    return (new GregorianCalendar()).getDate();
+    return (new GregorianCalendar()).toString();
   }
 
   /**
@@ -281,35 +281,6 @@ public final class GregorianCalendar implements Almanac {
   public int getYear() { return _year; }
   
   /**
-   * Gets this date with a specified format.
-   * @param format an output format.
-   * @return the formatted date.
-   */
-  public String getDate(String format) {
-    return getDate(new AlmanacFormat(format));
-  }
-
-  /**
-   * Returns the date with a specified format.
-   * <p>
-   * Note: Not yet implemented.
-   * @param format an output format.
-   * @return the formatted date.
-   */
-  public String getDate(AlmanacFormat format) {
-    return format.format(this);
-  }
-
-  /**
-   * Gets this date.
-   * @return the date.
-   */
-  @Override
-  public String getDate() {
-    return getDate("M-dd-yyyy");
-  }
-
-  /**
    * Prints this date with a simple pre-defined format.
    * @return this calendar as a string.
    */ 
@@ -416,6 +387,17 @@ public final class GregorianCalendar implements Almanac {
     "October",   "Oct",
     "November",  "Nov",
     "December",  "Dec"
+  };
+
+  private static final String[] _dayNames =
+  {
+    "Sunday", "Sun",
+    "Monday", "Mon",
+    "Tuesday", "Tue",
+    "Wednesday", "Wed",
+    "Thursday", "Thu",
+    "Friday", "Fri",
+    "Saturday", "Sat"
   };
 
   private static final String[] _eras = 

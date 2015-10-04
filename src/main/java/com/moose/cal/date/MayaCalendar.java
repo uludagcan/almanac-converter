@@ -140,20 +140,16 @@ public class MayaCalendar implements Almanac {
   }
   
   /**
-   * Gets the "Long Count" Maya Date.
-   * @return The long count mayan date.
-   */
-  @Override
-  public String getDate() {
-    return new String(_baktun+"."+ _katun+"."+ _tun+"."+ _uinal+"."+ _kin);
-  }
-  
-  /**
    * Prints the "Long Count" Maya Calendar date.
    */
   @Override
   public String toString() {
-    return(CALENDAR_NAME+": "+getDate());
+    return(CALENDAR_NAME+": "+
+           _baktun+"."+
+           _katun+"."+
+           _tun+"."+
+           _uinal+"."+
+           _kin);
   }
 
   @Override

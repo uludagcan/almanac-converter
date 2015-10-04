@@ -90,7 +90,7 @@ public final class JulianCalendar implements Almanac {
    * @return today's date.
    */
   public static String asToday() {
-    return (new JulianCalendar()).getDate();
+    return (new JulianCalendar()).toString();
   }
 
   /**
@@ -219,35 +219,6 @@ public final class JulianCalendar implements Almanac {
    */
   public int getYear() { return _year; }
   
-  /**
-   * Gets this date with a specified format.
-   * @param format an output format.
-   * @return the formatted date.
-   */
-  public String getDate(String format) {
-    return getDate(new AlmanacFormat(format));
-  }
-
-  /**
-   * Returns the date with a specified format.
-   * <p>
-   * Note: Not yet implemented.
-   * @param format an output format.
-   * @return the formatted date.
-   */
-  public String getDate(AlmanacFormat format) {
-    return format.format(this);
-  }
-
-  /**
-   * Gets this date.
-   * @return the date.
-   */
-  @Override
-  public String getDate() {
-    return getDate("M-dd-yyyy");
-  }
-
   /**
    * Prints this date with a simple pre-defined format.
    */ 

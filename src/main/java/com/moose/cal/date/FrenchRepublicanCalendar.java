@@ -115,7 +115,7 @@ public final class FrenchRepublicanCalendar implements Almanac {
    * @return today's date.
    */
   public static String asToday() {
-    return (new FrenchRepublicanCalendar()).getDate();
+    return (new FrenchRepublicanCalendar()).toString();
   }
 
   /**
@@ -173,7 +173,7 @@ public final class FrenchRepublicanCalendar implements Almanac {
    * @return the month name
    */
   public String getMonthName() { 
-    return getMonthName(_month);
+    return getMonthName(_month-1);
   }
 
   /**
@@ -209,26 +209,14 @@ public final class FrenchRepublicanCalendar implements Almanac {
   }
 
   /**
-   * Gets this date.
-   * @return the date.
-   */
-  @Override
-  public String getDate() {
-    String out = itr(getDay());
-    out += " "+its(getMonth());
-    out += " "+getYear();
-    return out;
-  }
-
-  /**
    * Prints this date in short form.
    */
   @Override
   public String toString() {
     return(CALENDAR_NAME+": "+
-            getDay()+" "+
-            getMonth()+" "+
-            "L'an "+getYear());
+            getDay(false)+" "+
+            getMonthName()+", "+
+            "L'an "+toRoman(getYear()));
   }
 
   @Override
@@ -239,11 +227,12 @@ public final class FrenchRepublicanCalendar implements Almanac {
       return true;
       
     final FrenchRepublicanCalendar date = (FrenchRepublicanCalendar) obj;
+
     return new EqualsBuilder()
-      .append(_year, date.getYear())
-      .append(_month, date.getMonth())
-      .append(_week, date.getWeek())
-      .append(_day, date.getDay(true))
+      .append(_year,date.getYear())
+      .append(_month,date.getMonth())
+      .append(_week,date.getWeek())
+      .append(_day,date.getDay(true))
       .isEquals();
   }
   

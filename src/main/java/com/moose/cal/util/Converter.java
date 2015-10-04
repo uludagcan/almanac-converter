@@ -40,6 +40,8 @@ public class Converter {
         return _frc2jd((FrenchRepublicanCalendar)a);
       if (a instanceof MayaCalendar)
         return _m2jd((MayaCalendar)a);
+      if (a instanceof IslamicCalendar)
+        return _is2jd((IslamicCalendar)a);
     }
     return (JulianDay)a;
   }
@@ -91,8 +93,22 @@ public class Converter {
       return _jd2m(toJulianDay(a));
   }
 
+  /**
+   * Converts an Almanac to an Islamic date.
+   * @param a an Almanac.
+   * @return the Islamic date.
+   */
+  public static IslamicCalendar toIslamicCalendar(Almanac a) {
+    if (a instanceof IslamicCalendar)
+      return (IslamicCalendar)a;
+    else
+      return _jd2is(toJulianDay(a));
+  }
+
 /////////////////////////////////////////////////////////////////////////////
 // private
+
+  /* To Julian Day **********************************************************/
 
   private static JulianDay _g2jd(GregorianCalendar date) {
     int month = date.getMonth();
@@ -133,9 +149,9 @@ public class Converter {
     int year = date.getYear();
     int month = date.getMonth();
     int week = date.getWeek();
-    int day = date.getDay();
+    int day = date.getDay(true);
 
-    double guess = date.EPOCH.getValue() + (Meeus.TROPICAL_YEAR*((year-1)-1));
+    double guess = date.EPOCH.getValue()+(Meeus.TROPICAL_YEAR*((year-1)-1));
     double[] adr = new double[2];
     adr[0] = year-1;
     adr[1] = 0;
@@ -169,6 +185,20 @@ public class Converter {
              kin;
     return new JulianDay(jd);
   }
+
+  private static JulianDay _is2jd(IslamicCalendar date) {
+    int day = date.getDay();
+    int month = date.getMonth();
+    int year = date.getYear();
+    double jd = (day +
+                 Math.ceil(29.5*(month-1)) +
+                 (year-1)*354 +
+                 Math.floor((3+(11*year))/30) +
+                 IslamicCalendar.EPOCH.getValue()) - 1;
+    return new JulianDay(jd);
+  }
+
+  /* From Julian Day ********************************************************/
 
   private static GregorianCalendar _jd2g(JulianDay jd) {
     int J = (int)(jd.getValue()+0.5);
@@ -236,7 +266,7 @@ public class Converter {
 
   private static MayaCalendar _jd2m(JulianDay jd) {
     int baktun, katun, tun, uinal, kin;
-    double day = (jd.atMidnight()).getValue();
+    double day = jd.atMidnight().getValue();
     double d = day - MayaCalendar.EPOCH.getValue();
     baktun = (int)Math.floor(d/_lbaktun);
     d = d % _lbaktun;
@@ -248,6 +278,22 @@ public class Converter {
     kin = (int)(d % _luinal);
     return new MayaCalendar(baktun,katun,tun,uinal,kin);
   }
+
+  private static IslamicCalendar _jd2is(JulianDay jd) {
+    double epoch = IslamicCalendar.EPOCH.getValue();
+    double jday = jd.atMidnight().getValue();
+    int year = (int)Math.floor(((30*(jday-epoch))+10646)/10631);
+
+    double guessy = _is2jd(new IslamicCalendar(year,1,1)).getValue();
+    int month = (int)Math.min(12,Math.ceil((jday-(29+guessy))/29.5)+1);
+
+    double guessm = _is2jd(new IslamicCalendar(year,month,1)).getValue();
+    int day = (int)(jday-guessm)+1;
+
+    return new IslamicCalendar(year,month,day);
+  }
+
+  /* Other helper functions ************************************************/
 
   private static double[] anneeDeLaRevolution(JulianDay julday) {
     int guess = (new GregorianCalendar(julday)).getYear()-2;
@@ -279,6 +325,17 @@ public class Converter {
     eqParis = Math.floor(eqParis-0.5)+0.5;
     return eqParis;
   }
+
+  private static double _tehranEquinox(int year) {
+    double eqJED = Meeus.equinox(year,Season.SPRING);
+    double eqJD = eqJED - Meeus.deltat(year)/(24.0*60.0*60.0);
+    double eqApp = eqJD + Meeus.equationOfTime(eqJED);
+    double dtTehran = (52.0 + (30.0/60.0)) / 360.0;
+    double eqTehran = eqApp + dtTehran;
+    eqTehran = Math.floor(eqTehran-0.5)+0.5;
+    return eqTehran;
+  }
+
 
   /* Constants for Maya Calendar */
   private static final double _luinal      = 20.0;

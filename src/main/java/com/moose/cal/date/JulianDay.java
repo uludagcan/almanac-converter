@@ -97,7 +97,7 @@ public final class JulianDay implements Almanac {
    * @return today's date.
    */
   public static String asToday() {
-    return (new JulianDay()).getDate();
+    return (new JulianDay()).toString();
   }
 
   /**
@@ -151,14 +151,6 @@ public final class JulianDay implements Almanac {
    */ 
   public double getModified() {
     return _day-EPOCH.getValue();
-  }
-
-  /**
-   * Gets this date.
-   */ 
-  @Override
-  public String getDate() {
-    return Double.toString(_day);
   }
 
   @Override

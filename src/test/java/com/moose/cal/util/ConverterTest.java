@@ -88,7 +88,7 @@ public class ConverterTest {
   }
 
   @Test
-  public void julianDateShouldConvertToMayaCalendar() {
+  public void julianDayShouldConvertToMayaCalendar() {
     MayaCalendar actual = 
       Converter.toMayaCalendar(new JulianDay(2446864.5));
     MayaCalendar expected = new MayaCalendar(12,18,13,15,2);
@@ -103,6 +103,26 @@ public class ConverterTest {
       Converter.toJulianDay(new MayaCalendar(12,18,13,15,2));
     JulianDay expected = new JulianDay(2446864.5);
     assertEquals( "FAIL: Maya Calendar -> Julian Day is broken",
+                  true,
+                  actual.equals(expected));
+  }
+
+  @Test
+  public void julianDayShouldConvertToIslamicCalendar() {
+    IslamicCalendar actual = 
+      Converter.toIslamicCalendar(new JulianDay(2446864.5));
+    IslamicCalendar expected = new IslamicCalendar(1407,7,9);
+    assertEquals( "FAIL: Julian Day -> Islamic Calendar is broken",
+                  true,
+                  actual.equals(expected));
+  }
+
+  @Test
+  public void islamicCalendarShouldConvertToJulianDay() {
+    JulianDay actual = 
+      Converter.toJulianDay(new IslamicCalendar(1407,7,9));
+    JulianDay expected = new JulianDay(2446864.5);
+    assertEquals( "FAIL: Islamic Calendar -> Julian Day is broken",
                   true,
                   actual.equals(expected));
   }
