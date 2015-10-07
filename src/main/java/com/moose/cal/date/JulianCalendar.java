@@ -38,14 +38,14 @@ public final class JulianCalendar implements Almanac {
   public static final JulianDay EPOCH = new JulianDay(2299160.5);
 
   /**
-   * Constructrs a Julian Date using today's date.
+   * Constructs a Julian date using today's date.
    */
   public JulianCalendar() {
     this(new DateTime());
   }
 
   /**
-   * Constructs a Julian Date from another Almanac.
+   * Constructs a Julian date from another Almanac.
    * @param date another Almanac
    */
   public JulianCalendar(Almanac date) {
@@ -53,8 +53,8 @@ public final class JulianCalendar implements Almanac {
   }
 
   /**
-   * Constructs a Julian Date given another Julian Date.
-   * @param date A Julian Date.
+   * Constructs a Julian date given another Julian date.
+   * @param date A Julian date.
    */
   public JulianCalendar(JulianCalendar date) {
     this(date.getYear(),
@@ -63,7 +63,7 @@ public final class JulianCalendar implements Almanac {
   }
 
   /**
-   * Constructs a Julian Date given a Joda DateTime.
+   * Constructs a Julian date given a Joda DateTime.
    * @param dt a Joda DateTime.
    */
   public JulianCalendar(DateTime dt) {
@@ -73,7 +73,7 @@ public final class JulianCalendar implements Almanac {
   }
 
   /**
-   * Constructs a Julian Date from a given day, month and year.
+   * Constructs a Julian date from a given day, month and year.
    * @param year The year.
    * @param month The month.
    * @param day The day.
@@ -121,7 +121,7 @@ public final class JulianCalendar implements Almanac {
 
   /**
    * Gets a month name.
-   * @param month the month number [1-12].
+   * @param month the month number [1 - 12].
    * @throws IndexOutOfBoundsException
    * @return the name of the month.
    */  
@@ -231,8 +231,8 @@ public final class JulianCalendar implements Almanac {
   }
 
   /**
-   * Checks if this date is before another Julian Date.
-   * @param date A Julian Calendar Date.
+   * Checks if this date is before another Julian date.
+   * @param date A Julian calendar date.
    * @return true, if before; false, otherwise.
    */ 
   public boolean isBefore(JulianCalendar date) {
@@ -267,8 +267,8 @@ public final class JulianCalendar implements Almanac {
   }
 
   /**
-   * Checks if this date is after another Julian Date.
-   * @param date A Julian Date.
+   * Checks if this date is after another Julian date.
+   * @param date A Julian date.
    * @return true, if after; false, otherwise.
    */ 
   public boolean isAfter(JulianCalendar date) {
