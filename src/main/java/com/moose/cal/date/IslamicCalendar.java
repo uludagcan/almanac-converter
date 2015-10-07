@@ -26,44 +26,101 @@ public class IslamicCalendar implements Almanac {
   public static final String CALENDAR_NAME = "Islamic Calendar";
   public static final JulianDay EPOCH = new JulianDay(1948439.5);
 
+  /**
+   * Constructs an Islamic date using today's date.
+   */
   public IslamicCalendar() {
     this(new JulianDay());
   }
 
+  /**
+   * Constructs an Islamic date using an existing Almanac.
+   * @param a an Almanac.
+   */
   public IslamicCalendar(Almanac a) {
     this(toIslamicCalendar(a));
   }
 
+  /**
+   * Constructs an Islamic date using an existing Islamic Calendar.
+   * @param date an Islamic date.
+   */
   public IslamicCalendar(IslamicCalendar date) {
     this(date.getYear(),
          date.getMonth(),
          date.getDay());
   }
 
+  /**
+   * Constructs an Islamic date using a Joda DateTime.
+   * @param dt a Joda DateTime.
+   */
   public IslamicCalendar(DateTime dt) {
     this(toIslamicCalendar(new GregorianCalendar(dt)));
   }
 
+  /**
+   * Constructs an Islamic date using an existing year, month and day in the
+   * Islamic calendar.
+   * @param year the Islamic calendar year.
+   * @param month the Islamic calendar month.
+   * @param day the Islamic calendar day.
+   */
   public IslamicCalendar(int year, int month, int day) {
     _day = day;
     _month = month;
     _year = year;
   }
 
+  /**
+   * Gets the year.
+   * @return the year.
+   */
   public int getYear() {
     return _year;
   }
 
+  /**
+   * Gets the month.
+   * @return the month number
+   */
   public int getMonth() {
     return _month;
   }
 
+  /**
+   * Gets the day.
+   * @return the day
+   */
   public int getDay() {
     return _day;
   }
 
+  /**
+   * Gets this month's name.
+   * @return this month's name.
+   */
   public String getMonthName() {
     return _monthNames[_month-1];
+  }
+
+  /** 
+   * Gets the name of a given month.
+   * @param month the month number [1 - 12].
+   * @throws IndexOutOfBoundsException
+   */
+  public static String getMonthName(int month) 
+    throws IndexOutOfBoundsException
+  {
+    return IslamicCalendar.getMonthNames()[month-1];
+  }
+
+  /**
+   * Gets the names of the months.
+   * @return the names of the months.
+   */
+  public static String[] getMonthNames() {
+    return _monthNames;
   }
 
   @Override
