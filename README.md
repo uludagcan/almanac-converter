@@ -44,16 +44,20 @@ The Maya calendar is not one calendar per se, but rather a system of calendars e
 
 The Maya calendar consists of several cycles (or counts) of different lengths. The 260-day calendar, or <em>Tzolk'in</em>, was combined with the 365-day calendar, or <em>Haab'</em> to form a synchronized cycle lasting for 52 Haab' called the Calendar Round. To measure periods longer than this, the Maya used the Long Count calendar.
 
+![Maya Calendar](http://www.hypotemoose.com/img/app/cal/islamic1.jpg)
+The Islamic calendar, or Hijri calendar, is a lunar calendar currently used in many Muslim countries and also used by Muslims to determine the proper days on which to observing the annual fasting, to attend Hajj, and to celebrate other Islamic holidays and festivals. The calendar consists of 12 months with a year of 354 days. The lengths of the months are determined by the birth of a new lunar cycle, which historically resulted in each month being 29 or 30 days depending on the visibility of the moon. However, certain sects and groups now use a tabular Islamic calendar, in which odd-numbered months have thirty days, and even months have 29.
+
 ## Other - Julian Day
 The Julian Day is the continuous count of days since the beginning of the Julian Period used primarily by astronomers. The Julian Period is a chronological interval of 7980 years beginning in 4713 BC, and has been used since 1583 to convert between different calendars. The next Julian Period begins in the year 3268 AD.
 
 ```
 Supported calendar types:
-* Gregorian Calendar         [100%] DONE
 * Julian Day                 [100%] DONE
+* Gregorian Calendar         [100%] DONE
+* Julian Calendar            [100%] DONE
 * French Republican Calendar [100%] DONE
-* Mayan Calendar             [ 80%] IN PROGRESS
-* Islamic Calendar           [  0%] PLANNING
+* Mayan Calendar             [100%] DONE
+* Islamic Calendar           [ 80%] IN PROGRESS
 * Hebrew Calendar            [  0%] PLANNING
 * More...
 ```
