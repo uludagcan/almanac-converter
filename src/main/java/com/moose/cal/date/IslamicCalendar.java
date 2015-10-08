@@ -22,6 +22,22 @@ import org.joda.time.DateTime;
 
 import static com.moose.cal.util.Converter.*;
 
+/**
+ * An Islamic calendar date.
+ * <p>
+ * The Islamic, or Hijri calendar, is a lunar calendar currently used in 
+ * many Muslim countries and also used by Muslims to determine the proper 
+ * days on which to observing the annual fasting, to attend Hajj, and to 
+ * celebrate other Islamic holidays and festivals. The calendar consists of 
+ * 12 months with a year of 354 days. The lengths of the months are 
+ * determined by the birth of a new lunar cycle, which historically 
+ * resulted in each month being 29 or 30 days depending on the visibility 
+ * of the moon. However, certain sects and groups now use a tabular Islamic 
+ * calendar, in which odd-numbered months have thirty days, and even months 
+ * have 29.
+ * @author Chris Engelsma
+ * @version 2015.10.07
+ */
 public class IslamicCalendar implements Almanac {
   public static final String CALENDAR_NAME = "Islamic Calendar";
   public static final JulianDay EPOCH = new JulianDay(1948439.5);
@@ -123,12 +139,21 @@ public class IslamicCalendar implements Almanac {
     return _monthNames;
   }
 
+  /**
+   * Prints the date.
+   * @param the date.
+   */  
+  @Override
+  public String getDate() {
+    return new String( getMonthName()+" "+
+                       getDay()+", "+
+                       getYear());
+  }
+
   @Override
   public String toString() {
-    return(CALENDAR_NAME+": "+
-           _day+" "+
-           getMonthName()+", "+
-           _year);
+    return new String(CALENDAR_NAME+": "+getDate());
+
   }
 
   @Override

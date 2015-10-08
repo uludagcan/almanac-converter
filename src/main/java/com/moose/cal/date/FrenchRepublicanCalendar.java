@@ -208,15 +208,16 @@ public final class FrenchRepublicanCalendar implements Almanac {
     System.out.println(out);
   }
 
-  /**
-   * Prints this date in short form.
-   */
+  @Override
+  public String getDate() {
+    return new String(getDay(false)+" "+
+                      getMonthName()+", L'an"+
+                      toRoman(getYear()));
+  }
+
   @Override
   public String toString() {
-    return(CALENDAR_NAME+": "+
-            getDay(false)+" "+
-            getMonthName()+", "+
-            "L'an "+toRoman(getYear()));
+    return new String(CALENDAR_NAME+": "+getDate());
   }
 
   @Override

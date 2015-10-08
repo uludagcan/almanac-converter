@@ -26,4 +26,10 @@ public interface Almanac {
    */
   public static final JulianDay EPOCH = new JulianDay();
   public static final String CALENDAR_NAME = "";
+
+  /*
+   * Functions
+   */
+  
+  public String getDate();
 }
