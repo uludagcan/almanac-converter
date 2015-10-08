@@ -281,51 +281,12 @@ public final class GregorianCalendar implements Almanac {
   public int getYear() { return _year; }
   
   /**
-   * Prints this date with a simple pre-defined format.
-   * @return this calendar as a string.
-   */ 
-  @Override
-  public String toString() {
-    return(CALENDAR_NAME+": " + 
-           getMonthName()+" "+
-           getDay()+", "+
-           getYear());
-  }
-
-  /**
    * Checks if this date is before another Gregorian Date.
    * @param date A Gregorian Date.
    * @return true, if before; false, otherwise.
    */ 
   public boolean isBefore(GregorianCalendar date) {
-    double year = date.getYear();
-    double month = date.getMonth();
-    double day = date.getDay();
-    return ((_year<year) ||
-            (_year==year && _month<month) ||
-            (_year==year && _month==month && _day<day));
-  }
-
-  /**
-   * Checks if two dates are in chronological order.
-   * @param firstDate the first date.
-   * @param secondDate the second date.
-   * @return true, if firstDate comes before secondDate; false, otherwise.
-   */
-  public static boolean datesAreChronological(
-    GregorianCalendar firstDate, GregorianCalendar secondDate) 
-  {
-    double year1  = firstDate.getYear();
-    double month1 = firstDate.getMonth();
-    double day1   = firstDate.getDay();
-
-    double year2  = secondDate.getYear();
-    double month2 = secondDate.getMonth();
-    double day2   = secondDate.getDay();
-
-    return ((year1<year2) ||
-            (year1==year2 && month1<month2) ||
-            (year1==year2 && month1==month2 && day1<day2));
+    return GregorianCalendar.datesAreChronological(this,date);
   }
 
   /**
@@ -334,13 +295,51 @@ public final class GregorianCalendar implements Almanac {
    * @return true, if after; false, otherwise.
    */ 
   public boolean isAfter(GregorianCalendar date) {
-    double year = date.getYear();
-    double month = date.getMonth();
-    double day = date.getDay();
-    return ((_year>year) ||
-            (_year==year && _month>month) ||
-            (_year==year && _month==month && _day>day));
+    return GregorianCalendar.datesAreChronological(date,this);
   }
+
+  /**
+   * Checks if two dates are in chronological order.
+   * @param dates dates to be compared.
+   * @return true, if dates are chronological; false, otherwise.
+   */
+  public static boolean datesAreChronological(GregorianCalendar... dates) {
+    double d1,m1,y1;
+    double d2,m2,y2;
+    for (int i=0; i<dates.length-1; ++i) {
+      y1 = dates[i].getYear();
+      m1 = dates[i].getMonth();
+      d1 = dates[i].getDay();
+
+      y2 = dates[i+1].getYear();
+      m2 = dates[i+1].getMonth();
+      d2 = dates[i+1].getDay();
+
+      if ((y1<y2) ||
+          (y1==y2 && m1<m2) ||
+          (y1==y2 && m1==m2 && d1<d2)) continue;
+      else return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Gets the date.
+   * @return the date.
+   */
+  @Override
+  public String getDate() {
+    return new String( getMonthName()+" "+
+                       getDay()+", "+
+                       getYear());
+  }
+
+  @Override
+  public String toString() {
+    return new String(CALENDAR_NAME+": " +getDate()); 
+  }
+
 
   @Override
   public boolean equals(Object obj) {

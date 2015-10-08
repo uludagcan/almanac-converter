@@ -224,10 +224,8 @@ public final class JulianCalendar implements Almanac {
    */ 
   @Override
   public String toString() {
-    return(CALENDAR_NAME+": " + 
-           getMonthName()+" "+
-           getDay()+", "+
-           getYear());
+    return(CALENDAR_NAME+": " +getDate());
+
   }
 
   /**
@@ -278,6 +276,17 @@ public final class JulianCalendar implements Almanac {
     return ((_year>year) ||
             (_year==year && _month>month) ||
             (_year==year && _month==month && _day>day));
+  }
+
+  /**
+   * Prints the date.
+   * @param the date.
+   */  
+  @Override
+  public String getDate() {
+    return new String( getMonthName()+" "+
+                       getDay()+", "+
+                       getYear());
   }
 
   @Override
