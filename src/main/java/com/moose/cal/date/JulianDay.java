@@ -142,7 +142,6 @@ public final class JulianDay implements Almanac {
     return _day;
   }
 
-
   /**
    * Gets the Modified Julian Day (MJD).
    * The Modified Julian Day is an adjusted version of the Julian
@@ -151,6 +150,15 @@ public final class JulianDay implements Almanac {
    */ 
   public double getModified() {
     return _day-EPOCH.getValue();
+  }
+
+  /**
+   * Prints the date.
+   * @param the date.
+   */  
+  @Override
+  public String getDate() {
+    return Double.toString(getValue());
   }
 
   @Override
@@ -173,12 +181,9 @@ public final class JulianDay implements Almanac {
       .toHashCode();
   }
 
-  /**
-   * Prints this Julian Day.
-   */
   @Override
   public String toString() {
-    return(CALENDAR_NAME+": "+_day);
+    return(CALENDAR_NAME+": "+getDate());
   }
 
 /////////////////////////////////////////////////////////////////////////////
