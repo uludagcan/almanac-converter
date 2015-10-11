@@ -50,8 +50,8 @@ The Islamic calendar, or Hijri calendar, is a lunar calendar currently used in m
 ## Other - Julian Day
 The Julian Day is the continuous count of days since the beginning of the Julian Period used primarily by astronomers. The Julian Period is a chronological interval of 7980 years beginning in 4713 BC, and has been used since 1583 to convert between different calendars. The next Julian Period begins in the year 3268 AD.
 
+# Roadmap
 ```
-Supported calendar types:
 * Julian Day                 [100%] DONE
 * Gregorian Calendar         [100%] DONE
 * Julian Calendar            [100%] DONE
@@ -59,6 +59,13 @@ Supported calendar types:
 * Mayan Calendar             [100%] DONE
 * Islamic Calendar           [ 80%] IN PROGRESS
 * Hebrew Calendar            [  0%] PLANNING
+* Persian Calendar           [  0%] PLANNING
+* Coptic Calendar            [  0%] PLANNING
+* Chinese Calendar           [  0%] PLANNING
+* Soviet Calendar            [  0%] PLANNING
+* Indian National Calendar   [  0%] PLANNING
+* Dangun Calendar            [  0%] PLANNING
+* Juche Calendar             [  0%] PLANNING
 * More...
 ```
 
