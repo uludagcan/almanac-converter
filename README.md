@@ -1,16 +1,16 @@
 Almanac Converter 
 -----------------
-![Build state](https://travis-ci.org/chrisengelsma/almanac-converter.svg?branch=master) [![Code Climate](https://codeclimate.com/github/chrisengelsma/almanac-converter/badges/gpa.svg)](https://codeclimate.com/github/chrisengelsma/almanac-converter)
+[![Build Status](https://travis-ci.org/Hypotemoose/almanac-converter.svg?branch=master)](https://travis-ci.org/Hypotemoose/almanac-converter) [![Code Climate](https://codeclimate.com/github/chrisengelsma/almanac-converter/badges/gpa.svg)](https://codeclimate.com/github/chrisengelsma/almanac-converter)
 
 An easy-to-use Java-based calendar converter - able to convert between various known calendars.
 
-Requirements
-------------
+###Requirements
+
 * Java Development Kit (JDK) 1.7.0 +
 * Gradle 2.6+
 
-Installation
-------------
+###Installation
+
 To install, you will need [Gradle](https://gradle.org/) or [Apache Ant](http://ant.apache.org/).
 
 1. cd to the cloned repository
@@ -19,8 +19,8 @@ To install, you will need [Gradle](https://gradle.org/) or [Apache Ant](http://a
 
 See the wiki for examples.
 
-Why Almanac-Converter?
-----------------------
+###Why Almanac-Converter?
+
 Almanac Converter expands on pre-existing robust date libraries and enables two-way conversion between various calendars. 
 
 
