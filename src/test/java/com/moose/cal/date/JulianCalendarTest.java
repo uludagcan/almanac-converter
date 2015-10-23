@@ -83,8 +83,8 @@ public class JulianCalendarTest {
   @Test
   public void jodaDateTimeShouldConstruct() {
     JulianCalendar date1 = 
-      new JulianCalendar(new DateTime(1986,9,3,0,1));
-    JulianCalendar date2 = new JulianCalendar(1986,9,3);
+      new JulianCalendar(new DateTime(1987,3,10,0,1));
+    JulianCalendar date2 = new JulianCalendar(1987,2,25);
     assertEquals( "FAIL: Date should construct from Joda DateTime",
                   true,
                   date1.equals(date2));

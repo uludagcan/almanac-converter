@@ -1,5 +1,5 @@
 /*****************************************************************************
-Copyright 2015 Hypotemoose, LLC.
+Copyright 2015 Hypotemoose, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -67,9 +67,7 @@ public final class JulianCalendar implements Almanac {
    * @param dt a Joda DateTime.
    */
   public JulianCalendar(DateTime dt) {
-    this(dt.getYear(),
-         dt.getMonthOfYear(),
-         dt.getDayOfMonth());
+    this(new GregorianCalendar(dt));
   }
 
   /**
@@ -84,6 +82,14 @@ public final class JulianCalendar implements Almanac {
     _year  = year;
   }
 
+  /**
+   * Returns this calendar's name.
+   * @return this calendar's name.
+   */
+  public String getName() {
+    return CALENDAR_NAME;
+  }
+ 
   /**
    * Returns today's date as a string.
    * Convenience static method.
@@ -128,7 +134,21 @@ public final class JulianCalendar implements Almanac {
   public static String getMonthName(int month) 
     throws IndexOutOfBoundsException 
   {
-    return JulianCalendar.getMonthNames()[month-1];
+    return JulianCalendar.getMonthName(month,false);
+  }
+
+  /**
+   * Gets a month name.
+   * @param month the month number [1 - 12].
+   * @param latin true, if using the latin month name; false for English.
+   * @throws IndexOutOfBoundsException
+   * @return the name of the month.
+   */    
+   public static String getMonthName(int month, boolean latin) 
+    throws IndexOutOfBoundsException
+   {
+    int mult = (latin) ? 2 : 1;
+    return JulianCalendar.getMonthNames()[mult*(month-1)];
   }
 
   /**
@@ -145,7 +165,21 @@ public final class JulianCalendar implements Almanac {
    * @return the month names.
    */
   public static String[] getMonthNames() {
-    return _monthNames;
+    return JulianCalendar.getMonthNames(false);
+  }
+
+  /**
+   * Gets the names of the months.
+   * @param latin true, if desired month names be in latin; false, otherwise.
+   * @return the list of months.
+   */
+  public static String[] getMonthNames(boolean latin) {
+    String[] m = new String[12];
+    int lat = (latin) ? 1 : 0;
+    for (int i=0; i<12; ++i) {
+      m[i] = _monthNames[2*i+lat];
+    }
+    return m;
   }
 
   /**
@@ -323,18 +357,18 @@ public final class JulianCalendar implements Almanac {
   /** The month names will be kept in traditional Roman lettering */
   private static final String[] _monthNames = 
   {
-    "IANVARIVS",
-    "FEBRVARIVSs",
-    "MARTIVS",
-    "APRILLIS",
-    "MAIVS",
-    "IVNIVS",
-    "IVLIVS",
-    "AVGVSTVS",
-    "SEPTEMBER",
-    "OCTOBER",
-    "NOVEMBER",
-    "DECEMBER"
+    "January","IANVARIVS",
+    "February","FEBRVARIVS",
+    "March","MARTIVS",
+    "April","APRILLIS",
+    "May","MAIVS",
+    "June","IVNIVS",
+    "July","IVLIVS",
+    "August","AVGVSTVS",
+    "September","SEPTEMBER",
+    "October","OCTOBER",
+    "November","NOVEMBER",
+    "December","DECEMBER"
   };
 
 }

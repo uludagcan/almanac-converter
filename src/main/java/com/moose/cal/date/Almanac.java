@@ -1,5 +1,5 @@
 /*****************************************************************************
-Copyright 2015 Hypotemoose, LLC.
+Copyright 2015 Hypotemoose, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,4 +32,5 @@ public interface Almanac {
    */
   
   public String getDate();
+  public String getName();
 }

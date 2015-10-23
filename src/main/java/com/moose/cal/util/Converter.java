@@ -1,5 +1,5 @@
 /*****************************************************************************
-Copyright 2015 Hypotemoose, LLC.
+Copyright 2015 Hypotemoose, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -149,7 +149,7 @@ public class Converter {
     int year = date.getYear();
     int month = date.getMonth();
     int week = date.getWeek();
-    int day = date.getDay(true);
+    int day = date.getDay(false);
 
     double guess = date.EPOCH.getValue()+(Meeus.TROPICAL_YEAR*((year-1)-1));
     double[] adr = new double[2];

@@ -1,5 +1,5 @@
 /*****************************************************************************
-Copyright 2015 Hypotemoose, LLC.
+Copyright 2015 Hypotemoose, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -81,7 +81,7 @@ public final class FrenchRepublicanCalendar implements Almanac {
    * @param day the day
    */
   public FrenchRepublicanCalendar(int year, int month, int day) {
-    this(year,month,(day/10),(day%10));
+    this(year,month,(day/10)+1,(day%10));
   }
 
   /**
@@ -116,6 +116,14 @@ public final class FrenchRepublicanCalendar implements Almanac {
    */
   public static String asToday() {
     return (new FrenchRepublicanCalendar()).toString();
+  }
+
+  /**
+   * Returns this calendar's name.
+   * @return this calendar's name.
+   */
+  public String getName() {
+    return CALENDAR_NAME;
   }
 
   /**
@@ -160,12 +168,12 @@ public final class FrenchRepublicanCalendar implements Almanac {
 
   /**
    * Gets the day number.
-   * @param useDecade true, if using decades; false, otherwise.
+   * @param longForm true, if using long form (no decades); false, otherwise.
    * @return the day.
    */
-  public int getDay(boolean useDecade) {
-    if (useDecade) return _day;
-    else return ((_week-1)*10)+_day;
+  public int getDay(boolean longForm) {
+    if (longForm) return ((_week-1)*10)+_day;
+    else return _day;
   }
 
   /**
@@ -173,15 +181,18 @@ public final class FrenchRepublicanCalendar implements Almanac {
    * @return the month name
    */
   public String getMonthName() { 
-    return getMonthName(_month-1);
+    return getMonthName(_month);
   }
 
   /**
    * Gets a month name.
    * @param month a month number [1-12].
+   * @throws IndexOutOfBoundsException
    * @return a month name
    */
-  public static String getMonthName(int month) {
+  public static String getMonthName(int month) 
+    throws IndexOutOfBoundsException
+  {
     return getMonthNames()[month-1];
   }
 
@@ -190,7 +201,8 @@ public final class FrenchRepublicanCalendar implements Almanac {
    * @return the Rural calendar name of the day.
    */
   public String getDayName() {
-    return _dayNames[_month-1][(_week-1)*10+(_day-1)];
+    int iday = getDay(true);
+    return _dayNames[_month-1][iday-1];
   }
 
 
@@ -202,7 +214,7 @@ public final class FrenchRepublicanCalendar implements Almanac {
     out += "Année "+its(getYear())+" de la République\n";
     out += "  Mois de "+getMonthName() + "\n";
     out += "  Décade "+itr(getWeek());
-    out += " Jour "+itr(getDay(true));
+    out += " Jour "+itr(getDay(false));
     out += " - \""+getDayName()+"\"";
 
     System.out.println(out);
@@ -210,8 +222,8 @@ public final class FrenchRepublicanCalendar implements Almanac {
 
   @Override
   public String getDate() {
-    return new String(getDay(false)+" "+
-                      getMonthName()+", L'an"+
+    return new String(getDay(true)+" "+
+                      getMonthName()+", "+
                       toRoman(getYear()));
   }
 
@@ -233,7 +245,7 @@ public final class FrenchRepublicanCalendar implements Almanac {
       .append(_year,date.getYear())
       .append(_month,date.getMonth())
       .append(_week,date.getWeek())
-      .append(_day,date.getDay(true))
+      .append(_day,date.getDay(false))
       .isEquals();
   }
   

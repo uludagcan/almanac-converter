@@ -1,5 +1,5 @@
 /*****************************************************************************
-Copyright 2015 Hypotemoose, LLC.
+Copyright 2015 Hypotemoose, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -70,15 +70,15 @@ public class MayaCalendar implements Almanac {
   }
   
   /**
-   * Constructs a Maya date.
-   * @param jday a Julian day.
+   * Constructs a Maya calendar.
+   * @param a an Almanac.
    */
-  public MayaCalendar(JulianDay jday) {
-    _julianDayToMayaCount(jday);
+  public MayaCalendar(Almanac a) {
+    this(Converter.toMayaCalendar(a));
   }
 
   /**
-   * Constructs a Maya date.
+   * Constructs a Maya calendar.
    * @param baktun a specified B'aktun.
    * @param katun  a specified K'atun.
    * @param tun    a specified Tun.
@@ -92,7 +92,27 @@ public class MayaCalendar implements Almanac {
     _uinal = uinal;
     _kin = kin;
   }
-  
+
+  /**
+   * Constructs a Maya calendar from another Maya calendar.
+   * @param cal a Maya calendar.
+   */
+  public MayaCalendar(MayaCalendar cal) {
+    this(cal.getBaktun(),
+         cal.getKatun(),
+         cal.getTun(),
+         cal.getUinal(),
+         cal.getKin());
+  }
+
+  /**
+   * Returns this calendar's name.
+   * @return this calendar's name.
+   */
+  public String getName() {
+    return CALENDAR_NAME;
+  }
+
   /**
    * Gets this K'in.
    * The K'in is the smallest unit of Maya calendar time. It is equal to 1
@@ -188,19 +208,6 @@ public class MayaCalendar implements Almanac {
 /////////////////////////////////////////////////////////////////////////////
 // private
 
-  private void _julianDayToMayaCount(JulianDay jday) {
-    double day = (jday.atMidnight()).getValue();
-    double d = day - EPOCH.getValue();
-    _baktun = (int)Math.floor(d/_lbaktun);
-    d = d % _lbaktun;
-    _katun = (int)Math.floor(d/_lkatun);
-    d = d % _lkatun;
-    _tun = (int)Math.floor(d / _ltun);
-    d = d % _ltun;
-    _uinal = (int)Math.floor(d / _luinal);
-    _kin = (int)(d % _luinal);
-  }
-
   private int _kin;
   private int _uinal;
   private int _tun;
@@ -210,17 +217,6 @@ public class MayaCalendar implements Almanac {
   private int _kalabtun;
   private int _kinchiltun;
   private int _alautun;
-
-
-  /* Constants for Maya Calendar */
-  private double _luinal      = 20.0;
-  private double _ltun        = 360.0;
-  private double _lkatun      = 7200.0;
-  private double _lbaktun     = 144000.0;
-  private double _lpiktun     = 2880000.0;
-  private double _lkalabtun   = 57600000.0;
-  private double _lkinchiltun = 1152000000.0;
-  private double _lalautun    = 23040000000.0;
 
   private String[] _haabMonths = {
     "Pop",

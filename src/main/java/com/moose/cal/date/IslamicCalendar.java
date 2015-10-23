@@ -1,5 +1,5 @@
 /*****************************************************************************
-Copyright 2015 Hypotemoose, LLC.
+Copyright 2015 Hypotemoose, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -86,6 +86,14 @@ public class IslamicCalendar implements Almanac {
     _day = day;
     _month = month;
     _year = year;
+  }
+
+  /**
+   * Returns this calendar's name.
+   * @return this calendar's name.
+   */
+  public String getName() {
+    return CALENDAR_NAME;
   }
 
   /**

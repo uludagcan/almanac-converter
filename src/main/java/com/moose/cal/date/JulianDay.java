@@ -1,5 +1,5 @@
 /*****************************************************************************
-Copyright 2015 Hypotemoose, LLC.
+Copyright 2015 Hypotemoose, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -89,6 +89,14 @@ public final class JulianDay implements Almanac {
    */
   public JulianDay(GregorianCalendar date) {
     this(Converter.toJulianDay(date));
+  }
+
+  /**
+   * Returns this calendar's name.
+   * @return this calendar's name.
+   */
+  public String getName() {
+    return CALENDAR_NAME;
   }
 
   /**
