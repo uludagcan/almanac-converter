@@ -42,5 +42,22 @@ public class FrenchRepublicanCalendarTest {
     String month = FrenchRepublicanCalendar.getMonthName(0); // No "0" month!
   }
 
+  @Test
+  public void leapYearShouldComputeCorrectly() {
+    int n = 12;
+    boolean[] expected = new boolean[n];
+    boolean[] actual = new boolean[n];
+
+    for (int i=0; i<n; ++i) expected[i] = false;
+    expected[2] = true; expected[6] = true; expected[10] = true;
+
+    for (int i=0; i<n; ++i) 
+      actual[i] = FrenchRepublicanCalendar.isLeapYear(i+1);
+
+    assertArrayEquals("FAIL: Leap years not computing correctly",
+                      actual,
+                      expected);
+  }
+
   
 }

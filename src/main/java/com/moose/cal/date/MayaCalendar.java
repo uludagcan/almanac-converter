@@ -57,7 +57,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @version 1.1
  * @since 2015.08.24
  */ 
-public class MayaCalendar implements Almanac {
+public class MayaCalendar extends Almanac {
+
   public static final String CALENDAR_NAME = "Maya Calendar";
   public static final JulianDay EPOCH = new JulianDay(584282.5);
   
@@ -86,11 +87,16 @@ public class MayaCalendar implements Almanac {
    * @param kin    a specified K'in.
    */
   public MayaCalendar(int baktun, int katun, int tun, int uinal, int kin) {
+    super();
     _baktun = baktun;
     _katun = katun;
     _tun = tun;
     _uinal = uinal;
     _kin = kin;
+
+    this.day = kin;
+    this.month = uinal;
+    this.year = tun;
   }
 
   /**
@@ -109,6 +115,7 @@ public class MayaCalendar implements Almanac {
    * Returns this calendar's name.
    * @return this calendar's name.
    */
+  @Override
   public String getName() {
     return CALENDAR_NAME;
   }
@@ -159,6 +166,29 @@ public class MayaCalendar implements Almanac {
     return _baktun;
   }
   
+  /**
+   * Gets the number of days in a month (katun).
+   * @return the number of days in a month (katun).
+   */
+  @Override
+  public int getNumberOfDaysInMonth() { return 20; }
+
+  /**
+   * Gets the number of months (katun) in a year (tun).
+   * @return the number of months (katun) in a year (tun).
+   */
+  @Override
+  public int getNumberOfMonthsInYear() { return 360; }
+
+  /**
+   * Gets the number of days in a week.
+   * In the Maya calendar, there is no concept of a week, so the value
+   * returned is one.
+   * @return the number of days in a week.
+   */
+  @Override
+  public int getNumberOfDaysInWeek() { return 1; }
+
   /**
    * Prints the date.
    * @param the date.

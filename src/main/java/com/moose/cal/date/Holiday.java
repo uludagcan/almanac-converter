@@ -15,36 +15,33 @@ limitations under the License.
 *****************************************************************************/
 package com.moose.cal.date;
 
-public class Holiday {
+public enum Holiday {
+  // Catholic
+  ASH_WEDNESDAY   ( 0),
+  PALM_SUNDAY     ( 1),
+  HOLY_THURSDAY   ( 2),
+  GOOD_FRIDAY     ( 3),
+  EASTER          ( 4),
+  ASCENSION       ( 5),
+  PENTECOST       ( 6),
+  TRINITY_SUNDAY  ( 7),
+  ADVENT          ( 8),
 
-  public enum Catholic {
-    ASH_WEDNESDAY,
-    PALM_SUNDAY,
-    HOLY_THURSDAY,
-    GOOD_FRIDAY,
-    EASTER,
-    ASCENSION,
-    PENTECOST,
-    TRINITY_SUNDAY,
-    ADVENT
-  };
+  // Islamic
+  ASHURA          ( 9),
+  RAMADAN         (10),
+  EDI_AL_FITR     (11),
+  EID_AL_ADHA     (12),
 
-  public enum Islamic {
-    ASHURA,
-    RAMADAN,
-    EDI_AL_FITR,
-    EID_AL_ADHA,
-  };
+  // Jewish
+  PASSOVER        (13),
+  SHAVUOT         (14),
+  ROSH_HASHANAH   (15),
+  YOM_KIPPUR      (16),
+  SUKKOT          (17),
+  SHEMINI_ATZERET (18);
 
-  public enum Jewish {
-    PASSOVER,
-    SHAVUOT,
-    ROSH_HASHANAH,
-    YOM_KIPPUR,
-    SUKKOT,
-    SHEMINI_ATZERET
-  };
-
-  
-
+  private final int value;
+  private Holiday(int value) { this.value = value; }
+  public int getValue() { return value; }
 }

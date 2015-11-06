@@ -6,24 +6,58 @@ from javax.swing import *
 
 import org.joda.time.DateTime
 from com.moose.cal.date import *
+from com.moose.cal.astro.Meeus import *
+
+DEG = u'\N{DEGREE SIGN}'
 
 def main(args):
-  demo1()
+  basicDemo()
+  lunarDemo()
+  weekdayDemo()
 
-def demo1():
-  gc = GregorianCalendar()
-  jc = JulianCalendar(gc)
-  frc = FrenchRepublicanCalendar(gc)
-  mc = MayaCalendar(gc)
-  ic = IslamicCalendar(gc)
+def weekdayDemo():
+  cal = GregorianCalendar()
+  cal.getWeekday
 
-  print "## TODAY ##"
-  print gc
-  print jc
-  print frc
-  print mc
-  print ic
+def basicDemo():
+  am = [
+    GregorianCalendar(),
+    JulianCalendar(),
+    FrenchRepublicanCalendar(),
+    MayaCalendar(),
+    IslamicCalendar()
+  ]
 
+  print "Today is... "
+  for date in am:
+    print date
+  print ""
+
+def lunarDemo():
+  jd = JulianDay()
+  phase = getLunarPhase(jd.getValue())
+  illum = getLunarIlluminationFromPhase(phase)
+  print "The lunar phase is %d%s, or %d%% illuminated\n" % (phase,DEG,illum)
+
+  gd = GregorianCalendar()
+  year = gd.getYear()
+  month = gd.getMonth()
+  day = gd.getDay()
+
+  quarters = getMoonQuarters(year,month,day)
+
+  moon0 = JulianDay(quarters[0])
+  moon1 = JulianDay(quarters[1])
+  moon2 = JulianDay(quarters[2])
+  moon3 = JulianDay(quarters[3])
+
+  print "New Moon is ",GregorianCalendar(moon0).getDate()
+  print "First Quarter moon is ",GregorianCalendar(moon1).getDate()
+  print "Full Moon is ",GregorianCalendar(moon2).getDate()
+  print "Last Quarter moon is ",GregorianCalendar(moon3).getDate()
+
+
+  
 
 #############################################################################
 class RunMain(Runnable):

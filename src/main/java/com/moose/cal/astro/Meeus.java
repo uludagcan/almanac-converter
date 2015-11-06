@@ -16,7 +16,7 @@ limitations under the License.
 package com.moose.cal.astro;
 
 import java.util.*;
-import java.lang.Math;
+import static java.lang.Math.*;
 
 import static com.moose.cal.util.Util.*;
 
@@ -24,7 +24,7 @@ import static com.moose.cal.util.Util.*;
  * Astronomical equations derived by Belgian Astronomer Jean Meeus.
  * Algorithms also inspired by Fourmilab.
  * @author Chris Engelsma
- * @version 2015.09.23
+ * @version 2015.11.05
  */
 public class Meeus {
 
@@ -33,6 +33,9 @@ public class Meeus {
   public static final double JULIAN_MILLENIUM = (JULIAN_CENTURY * 10);
   public static final double ASTRONOMICAL_UNIT = 149597870.0;
   public static final double TROPICAL_YEAR = 365.24219878;
+  public static final double ECLIPTIC_LONG_EPOCH = 278.833540;
+  public static final double ECLIPTIC_LONG_PERIGREE = 282.596403;
+  
 
   /**
    * The Julian Ephemeris day of an equinox or solstice.
@@ -69,7 +72,7 @@ public class Meeus {
     int i;
 
     if ((year >= 1620) && (year <= 2000)) {
-        i = (int)(Math.floor((year - 1620) / 2.0));
+        i = (int)(floor((year - 1620) / 2.0));
         f = ((year - 1620) / 2.0) - i;  /* Fractional part of year */
         dt = deltaTtab[i] + ((deltaTtab[i + 1] - deltaTtab[i]) * f);
     } else {
@@ -101,8 +104,8 @@ public class Meeus {
     l0 = 280.4664567+(360007.6982779*tau) +
                 (0.03032028*tau*tau) +
                 ((tau*tau*tau)/49931.0) -
-                (Math.pow(tau,4)/15300.0) -
-                (Math.pow(tau,5)/2000000.0);
+                (pow(tau,4)/15300.0) -
+                (pow(tau,5)/2000000.0);
 
     l0 = fixAngle(l0);
     alpha = sunPosition(jd)[10];
@@ -110,7 +113,7 @@ public class Meeus {
     epsilon = obliquityEquation(jd)+nutation(jd)[1];
 
     e = l0 + (-0.0057183) - alpha + (dPsi*dcos(epsilon));
-    e -= 20.0*(Math.floor(e/20.0));
+    e -= 20.0*(floor(e/20.0));
     e /= (24*60);
     return e;
   }
@@ -129,7 +132,7 @@ public class Meeus {
     double u,v;
     v = (jd-J2000)/(JULIAN_CENTURY*100);
     u = v;
-    if (Math.abs(u)<1.0) {
+    if (abs(u)<1.0) {
       for (int i=0; i<10; ++i) {
         eps += (oterms[i]/3600.0)*v;
         v *= u;
@@ -166,12 +169,12 @@ public class Meeus {
     lam = sunLong + (-0.00569) + (-0.00478 * dsin(w));
     epsilon0 = obliquityEquation(jd);
     epsilon = epsilon0 + (0.00256 * dcos(w));
-    alpha = rtd(Math.atan2(dcos(epsilon0)*dsin(sunLong),dcos(sunLong)));
+    alpha = rtd(atan2(dcos(epsilon0)*dsin(sunLong),dcos(sunLong)));
     alpha = fixAngle(alpha);
-    delta = rtd(Math.asin(dsin(epsilon0) * dsin(sunLong)));
-    alphaApp = rtd(Math.atan2(dcos(epsilon) * dsin(lam), dcos(lam)));
+    delta = rtd(asin(dsin(epsilon0) * dsin(sunLong)));
+    alphaApp = rtd(atan2(dcos(epsilon) * dsin(lam), dcos(lam)));
     alphaApp = fixAngle(alphaApp);
-    deltaApp = rtd(Math.asin(dsin(epsilon) * dsin(lam)));
+    deltaApp = rtd(asin(dsin(epsilon) * dsin(lam)));
     return new double[] {
       l0,          //  [0] Geometric mean longitude of the Sun
       m,           //  [1] Mean anomaly of the Sun
@@ -191,6 +194,7 @@ public class Meeus {
   /**
    * The nutation in longitude (delta-Psi) and obliquity (delta-Epsilon) for a
    * given Julian Date.
+   * @param jd a Julian date.
    * @return the nutation.
    */
   public static double[] nutation(double jd) {
@@ -217,8 +221,8 @@ public class Meeus {
         int k = i*5+j;
         if (nutArgMult[k]!=0) ang += nutArgMult[k]*ta[j];
       }
-      dp += (nutArgCoeff[(i*4)+0] + nutArgCoeff[(i*4)+1]*to10)*Math.sin(ang);
-      de += (nutArgCoeff[(i*4)+2] + nutArgCoeff[(i*4)+3]*to10)*Math.cos(ang);
+      dp += (nutArgCoeff[(i*4)+0] + nutArgCoeff[(i*4)+1]*to10)*sin(ang);
+      de += (nutArgCoeff[(i*4)+2] + nutArgCoeff[(i*4)+3]*to10)*cos(ang);
     }
 
     dPsi     = dp/(3600.0*10000.0);
@@ -227,15 +231,208 @@ public class Meeus {
     return new double[] {dPsi,dEpsilon};
   }
 
+  /**
+   * Returns the lunar phase.
+   * From Meeus Chapter 46.
+   * @param jd a Julian Day.
+   * @return the lunar phase as a percentage.
+   */
+  public static double getLunarPhase(double jd) {
+    double t = (jd-J2000)/JULIAN_CENTURY;
+    double t2 = t*t;
+    double t3 = t2*t;
+    double t4 = t3*t;
+    // Moon mean elongation D 
+    double d =     297.8502042 + 
+               t  * 445267.1115168 -
+               t2 * 0.0016300 + 
+               t3 / 545868.0 - 
+               t4 / 113065000.0;
+    // Moon mean anomaly M' 
+    double mp =      134.9634114 +
+                t  * 477198.8675055 +
+                t2 * 0.0087414 +
+                t3 / 69699.0 -
+                t4 / 14712000.0;
+    double m =      357.5291092 + 
+               t  * 35999.0502909 - 
+               t2 * 0.0001536 + 
+               t3 / 24490000.0;
+    double phase = 180.0 - d -
+                   6.289*dsin(mp) + 2.1*dsin(m) - 1.274*dsin(2*d-mp) -
+                   0.658*dsin(2*d) - 0.214*dsin(2*mp) - 0.11*dsin(d);
+    return fixAngle(phase);
+  }
+
+  /**
+   * Gets the lunar illumination as a percentage.
+   * Illumination is rounded to the nearest whole percent (e.g. 14%).
+   * @param the lunar phase.
+   * @return the lunar illumination.
+   */
+  public static double getLunarIlluminationFromPhase(double phase) {
+    return 100*(1.0+dcos(phase))/2;
+  }
+
+  /**
+   * Gets the dates of the next four quarters of the moon from a given day.
+   * The returned array will begin with the next new moon, followed by the
+   * first quarter moon, the full moon, and finally the last quarter moon.
+   * @param year a year.
+   * @param month a month.
+   * @param a day.
+   * @return an array[4] containing the next lunar cycle in Julian days.
+   */
+  public static double[] getMoonQuarters(int year, int month, int day) {
+    double[] quarters = new double[4];
+    double k = floor((year+((month-1)+day/30.0)/12.0-2000)*12.3685);
+    // Time in Julian centuries since 2000
+    double t = k/1236.85;
+    double t2 = t*t;
+    double t3 = t2*t;
+    double t4 = t3*t;
+    // Sun's mean anomaly M
+    double m = 2.5534 + 
+               k  * 29.10535669 - 
+               t2 * 0.0000218;
+    // Moon's mean anomaly M'
+    double mp = 201.5643 + 
+                k  * 385.81693528 + 
+                t2 * 0.0107438 +
+                t3 * 0.00001239 -
+                t3 * 0.00000011;
+    double e = 1 - 0.002516*t - 0.0000074*t2;
+    // Moon's argument of latitude
+    double f = 160.7108 + 
+               k * 390.67050274 -
+               t2 * 0.0016341 -
+               t3 * 0.00000227*t3 +
+               t4 * 0.000000011;
+    double omega = 124.7746 -
+                   k  * 1.56375580 +
+                   t2 * 0.0020691 +
+                   t3 * 0.00000215;
+    m  = fixAngle(m);
+    mp = fixAngle(mp);
+    f  = fixAngle(f);
+    omega = fixAngle(omega);
+
+    // The full planetary arguments list include 14 terms
+    // Only using the 7 most significant.
+    double[] args = new double[] {
+      fixAngle(299.77 +  0.107408*k - 0.009173*t2),
+      fixAngle(251.88 +  0.016321*k),
+      fixAngle(251.83 + 26.651886*k),
+      fixAngle(349.42 + 36.412478*k),
+      fixAngle( 84.88 + 18.206239*k),
+      fixAngle(141.74 + 53.303771*k),
+      fixAngle(207.14 +  2.453732*k)
+    };
+
+    double jde0 = 2451550.09765 +
+                  29.530588853  * k +
+                  0.0001337     * t2 -
+                  0.000000150   * t3 +
+                  0.00000000073 * t4;
+    jde0 -= 58.184/(24.0*60.0*60.0);
+    
+    double[] cnfq = null;
+    double coeffA, coeffB;
+    double adj;
+    double jde;
+
+    for (int iq=0; iq<4; ++iq) {
+
+      cnfq = computeLunarCoefficients(iq,m,mp,f,omega,e);
+      coeffA = 0;
+      coeffB = 0;
+
+      // Quarter adjustment.
+      adj = 0.00306 - 
+            0.00038*e*dcos(m) +
+            0.00026*dcos(mp) -
+            0.00002*dcos(mp-m) +
+            0.00002*dcos(mp+m) +
+            0.00002*dcos(2*f);
+   
+      jde = jde0+(29.530588853*(iq*0.25));
+      for (int i=0; i<16; ++i) 
+        coeffA += tblMoonA[iq][i]*cnfq[i];
+      jde+=coeffA;
+
+      if (iq==1) jde += adj;
+      if (iq==3) jde -= adj;
+
+      for (int i=0; i<7; ++i)
+        coeffB += tblMoonB[i]*dsin(args[i]);
+      quarters[iq] = jde+coeffB;
+
+      m = fixAngle(m+29.10535669*0.25);
+      mp = fixAngle(mp+385.81693528*0.25);
+      f = fixAngle(f+390.67050274*0.25);
+      omega = fixAngle(omega-1.56375580*0.25);
+
+      args[0] = fixAngle(args[0] + 0.107408*0.25);
+      args[1] = fixAngle(args[1] + 0.016321*0.25);
+      args[2] = fixAngle(args[2] +26.651886*0.25);
+      args[3] = fixAngle(args[3] +36.412478*0.25);
+      args[4] = fixAngle(args[4] +18.206239*0.25);
+      args[5] = fixAngle(args[5] +53.303771*0.25);
+      args[6] = fixAngle(args[6] + 2.453732*0.25);
+    }
+
+    return quarters;
+  }
+
 /////////////////////////////////////////////////////////////////////////////
 // private
 
+  private static double[] computeLunarCoefficients(
+    int quarter, double m, double mp, double f, double omega, double e) 
+  {
+    double c01 = dsin(mp);
+    double c02 = dsin(m);
+    double c03 = dsin(2*mp);
+    double c04 = dsin(2*f);
+    double c05 = dsin(mp-m);
+    double c06 = dsin(mp+m);
+    double c07 = dsin(2*m);
+    double c08 = dsin(mp-2*f);
+    double c09 = dsin(mp+2*f);
+    double c10 = dsin(2*mp+m);
+    double c11 = dsin(3*mp);
+    double c12 = dsin(m+2*f);
+    double c13 = dsin(m-2*f);
+    double c14 = dsin(2*mp-m);
+    double c15 = dsin(omega);
+    double c16 = dsin(mp+2*m);
+
+    // Coefficients for new and full moons.
+    if (quarter%2==0) 
+      return new double[] {
+        c01, e*c02,     c03,   c04,
+      e*c05, e*c06, e*e*c07,   c08,
+        c09, e*c10,     c11, e*c12,
+      e*c13, e*c14,     c15,   c16 };
+    else 
+      return new double[] {
+        c01,   e*c02,   e*c06,   c03,
+        c04,   e*c05, e*e*c07,   c08,
+        c09,     c11,   e*c14, e*c12,
+      e*c13, e*e*c16,   e*c10,   c15
+    };
+  }
+
+
   private static double calculateJdeo(double[] series, double y) {
+    double y2 = y*y;
+    double y3 = y2*y;
+    double y4 = y3*y;
     return (series[0] + 
-           (series[1] * y) +
-           (series[2] * Math.pow(y,2)) + 
-           (series[3] * Math.pow(y,3)) + 
-           (series[4] * Math.pow(y,4)));
+           (series[1] * y ) +
+           (series[2] * y2) + 
+           (series[3] * y3) + 
+           (series[4] * y4));
   }
 
 
@@ -251,6 +448,36 @@ public class Meeus {
 
     return jde0;
   }
+
+  /* Coefficients for computing lunar quarters */
+  private static final double[][] tblMoonA = 
+  {
+    { -0.40720, 0.17241, 0.01608, 0.01039,
+       0.00739,-0.00514, 0.00208,-0.00111,
+      -0.00057, 0.00056,-0.00042, 0.00042,
+       0.00038,-0.00024,-0.00017,-0.00007 },
+
+    { -0.62801, 0.17172,-0.01183, 0.00862,
+       0.00804, 0.00454, 0.00204,-0.00180,
+      -0.00070,-0.00040,-0.00034, 0.00032,
+       0.00032,-0.00028, 0.00027,-0.00017 },
+
+    { -0.40614, 0.17302, 0.01614, 0.01043,
+       0.00734,-0.00515, 0.00209,-0.00111,
+      -0.00057, 0.00056,-0.00042, 0.00042,
+       0.00038,-0.00024,-0.00017,-0.00007 },
+
+    { -0.62801, 0.17172,-0.01183, 0.00862,
+       0.00804, 0.00454, 0.00204,-0.00180,
+      -0.00070,-0.00040,-0.00034, 0.00032,
+       0.00032,-0.00028, 0.00027,-0.00017 },
+
+  };
+
+  private static final double[] tblMoonB =
+  {
+    0.000325, 0.000165, 0.000164, 0.000126, 0.000110, 0.000062, 0.000060
+  };
 
   /* For years -1000 to +1000 */
   private static final double[][] tblA = 

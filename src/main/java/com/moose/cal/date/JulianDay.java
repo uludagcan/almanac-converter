@@ -37,7 +37,8 @@ import static com.moose.cal.util.Converter.*;
  * @author Chris Engelsma
  * @version 2015.08.07
  */
-public final class JulianDay implements Almanac {
+public final class JulianDay extends Almanac {
+
   public static final String CALENDAR_NAME = "Julian Day";
   public static JulianDay EPOCH = new JulianDay(2400000.5);
 
@@ -87,14 +88,18 @@ public final class JulianDay implements Almanac {
    * Constructs a Julian Day using a provided Gregorian Date.
    * @param date A Gregorian Date.
    */
-  public JulianDay(GregorianCalendar date) {
+  public JulianDay(Almanac date) {
     this(Converter.toJulianDay(date));
   }
+
+  @Override 
+  public int getNumberOfDaysInMonth() { return 0; }
 
   /**
    * Returns this calendar's name.
    * @return this calendar's name.
    */
+  @Override
   public String getName() {
     return CALENDAR_NAME;
   }
@@ -126,20 +131,16 @@ public final class JulianDay implements Almanac {
 
   /**
    * Sets this Julian Day to noon.
-   * @return This Julian Day.
    */
-  public JulianDay setToNoon() {
-    _day = Math.ceil(_day-0.5);
-    return this;
+  public void setToNoon() {
+    _day = (this.atNoon()).getValue();
   }
 
   /**
    * Sets this Julian Day to midnight.
-   * @return This Julian Day.
    */
-  public JulianDay setToMidnight() { 
-    _day = Math.floor(_day-0.5)+0.5; 
-    return this;
+  public void setToMidnight() { 
+    _day = (this.atMidnight()).getValue();
   }
 
   /**
@@ -148,6 +149,23 @@ public final class JulianDay implements Almanac {
    */
   public double getValue() {
     return _day;
+  }
+
+  /**
+   * Subtracts days from this Julian day.
+   * @param days.
+   */
+  public JulianDay minus(int days) {
+    _day -= days;
+    return this;
+  }
+
+  /**
+   * Adds days to this Julian day.
+   */ 
+  public JulianDay plus(int days) {
+    _day += days;
+    return this;
   }
 
   /**
@@ -199,23 +217,4 @@ public final class JulianDay implements Almanac {
   
   private double _day;
   
-  /*
-  private static double _julianFromGregorian(GregorianCalendar date) {
-    int month = date.getMonth();
-    int year = date.getYear();
-    int day = date.getDay();
-    if (month==1 || month==2) {
-      year--;
-      month+=12;
-    }
-    int a = (int)Math.floor(year/100);
-    int b = a/4;
-    int c = 2-a+b;
-    int e = (int)(365.25*(year+4716));
-    int f = (int)(30.6001*(month+1));
-    double JDN = c+day+e+f-1524.5;
-    return JDN;
-  }
-  */
 }
-

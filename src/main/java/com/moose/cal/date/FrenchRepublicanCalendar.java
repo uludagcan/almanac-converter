@@ -48,7 +48,8 @@ import org.joda.time.DateTime;
  * @author Chris Engelsma
  * @version 2015.08.07
  */
-public final class FrenchRepublicanCalendar implements Almanac {
+public final class FrenchRepublicanCalendar extends Almanac {
+
   public static final String CALENDAR_NAME = "French Republican Calendar";
   public static final JulianDay EPOCH = new JulianDay(2375839.5);
 
@@ -60,6 +61,16 @@ public final class FrenchRepublicanCalendar implements Almanac {
   }
   
   /**
+   * Constructs a French Republican Date with given year, month and day.
+   * @param year the year
+   * @param month the month
+   * @param day the day
+   */
+  public FrenchRepublicanCalendar(int year, int month, int day) {
+    this(year,month,(day/10)+1,(day%10));
+  }
+
+  /**
    * Constructs a French Republican Date with given year, month,
    * week and day.
    * @param year the year
@@ -68,20 +79,11 @@ public final class FrenchRepublicanCalendar implements Almanac {
    * @param day the day
    */ 
   public FrenchRepublicanCalendar(int year, int month, int week, int day) {
-    _year = year;
-    _month = month;
+    super();
+    this.year = year;
+    this.month = month;
+    this.day = day;
     _week = week;
-    _day = day;
-  }
-
-  /**
-   * Constructs a French Republican Date with given year, month and day.
-   * @param year the year
-   * @param month the month
-   * @param day the day
-   */
-  public FrenchRepublicanCalendar(int year, int month, int day) {
-    this(year,month,(day/10)+1,(day%10));
   }
 
   /**
@@ -122,16 +124,9 @@ public final class FrenchRepublicanCalendar implements Almanac {
    * Returns this calendar's name.
    * @return this calendar's name.
    */
+  @Override
   public String getName() {
     return CALENDAR_NAME;
-  }
-
-  /**
-   * Gets the month.
-   * @return the month.
-   */
-  public int getMonth() {
-    return _month;
   }
 
   /**
@@ -143,14 +138,6 @@ public final class FrenchRepublicanCalendar implements Almanac {
   }
 
   /**
-   * Gets the year.
-   * @return the year.
-   */
-  public int getYear() {
-    return _year;
-  }
-
-  /**
    * Gets the 10-day week (décade).
    * @return the décade.
    */
@@ -158,12 +145,36 @@ public final class FrenchRepublicanCalendar implements Almanac {
     return _week;
   }
 
-  /**
-   * Gets the long-form day number (assumes no use of decades).
-   * @return the day.
-   */
-  public int getDay() {
-    return getDay(false);
+  @Override
+  public void nextDay() {
+    day = getDay(true);
+
+    if (day==getNumberOfDaysInMonth()) {
+      if (month==getNumberOfMonthsInYear()) {
+        month = 1;
+        year++;
+      } else month++;
+      day = 1;
+    } else day++;
+
+    _week = (day/10)+1; 
+    this.day = (day%10);
+  }
+
+  @Override
+  public void prevDay() {
+    day = getDay(true);
+
+    if (day==1) {
+      if (month==1) {
+        month = getNumberOfMonthsInYear();
+        year--;
+      } else month--;
+      day = getNumberOfDaysInMonth();
+    } else day--;
+
+    _week = (day/10)+1; 
+    this.day = (day%10);
   }
 
   /**
@@ -172,8 +183,8 @@ public final class FrenchRepublicanCalendar implements Almanac {
    * @return the day.
    */
   public int getDay(boolean longForm) {
-    if (longForm) return ((_week-1)*10)+_day;
-    else return _day;
+    if (longForm) return ((_week-1)*10)+this.day;
+    else return this.day;
   }
 
   /**
@@ -181,7 +192,35 @@ public final class FrenchRepublicanCalendar implements Almanac {
    * @return the month name
    */
   public String getMonthName() { 
-    return getMonthName(_month);
+    return getMonthName(this.month);
+  }
+
+  /**
+   * Returns the number of days in a given month and year.
+   * @param month a month.
+   * @param year a year.
+   * @return the number of days in the month and year.
+   */
+  public static int getNumberOfDaysInMonth(int month, int year) {
+    return (month==13) ? (isLeapYear(year) ? 6 : 5) : 30;
+  }
+
+  /**
+   * Gets the number of days in this month and year.
+   * @return the number of days in this month and year.
+   */
+  @Override
+  public int getNumberOfDaysInMonth() {
+    return FrenchRepublicanCalendar.getNumberOfDaysInMonth(month,year);
+  }
+
+  /**
+   * Gets the number of days in a given month for this year.
+   * @param a month in this year.
+   * @return the number of days in a month of this year.
+   */
+  public int getNumberOfDaysInMonth(int month) {
+    return FrenchRepublicanCalendar.getNumberOfDaysInMonth(month,this.year);
   }
 
   /**
@@ -202,7 +241,7 @@ public final class FrenchRepublicanCalendar implements Almanac {
    */
   public String getDayName() {
     int iday = getDay(true);
-    return _dayNames[_month-1][iday-1];
+    return _dayNames[this.month-1][iday-1];
   }
 
 
@@ -219,6 +258,31 @@ public final class FrenchRepublicanCalendar implements Almanac {
 
     System.out.println(out);
   }
+
+  /**
+   * Determines if this year is a leap year.
+   * @return true, if a leap year; false, otherwise.
+   */
+  public boolean isLeapYear() {
+    return FrenchRepublicanCalendar.isLeapYear(this.year);
+  }
+
+  /**
+   * Determines if a given year is a leap year.
+   * A leap year is determined by the day of the autumnal solstice.
+   * @param year a year.
+   * @return true, if a leap year; false, otherwise.
+   */
+  public static boolean isLeapYear(int year) {
+    JulianDay jday1 = new JulianDay(new FrenchRepublicanCalendar(year,1,1));
+    JulianDay jday2 = new JulianDay(new FrenchRepublicanCalendar(year+1,1,1));
+    int val1 = (int)jday1.atNoon().getValue();
+    int val2 = (int)jday2.atNoon().getValue();
+    return (val2-val1>365);
+  }
+
+  @Override
+  public int getNumberOfDaysInWeek() { return 10; }
 
   @Override
   public String getDate() {
@@ -242,30 +306,27 @@ public final class FrenchRepublicanCalendar implements Almanac {
     final FrenchRepublicanCalendar date = (FrenchRepublicanCalendar) obj;
 
     return new EqualsBuilder()
-      .append(_year,date.getYear())
-      .append(_month,date.getMonth())
+      .append(this.year,date.getYear())
+      .append(this.month,date.getMonth())
       .append(_week,date.getWeek())
-      .append(_day,date.getDay(false))
+      .append(this.day,date.getDay(false))
       .isEquals();
   }
   
   @Override
   public int hashCode() {
     return new HashCodeBuilder()
-      .append(_year)
-      .append(_month)
+      .append(this.year)
+      .append(this.month)
       .append(_week)
-      .append(_day)
+      .append(this.day)
       .toHashCode();
   }
 
 /////////////////////////////////////////////////////////////////////////////
 // private
 
-  private int _year;
-  private int _month;
   private int _week;
-  private int _day;
 
   final static String[] _monthNames = 
   {

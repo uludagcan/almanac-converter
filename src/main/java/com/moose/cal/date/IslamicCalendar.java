@@ -38,7 +38,8 @@ import static com.moose.cal.util.Converter.*;
  * @author Chris Engelsma
  * @version 2015.10.07
  */
-public class IslamicCalendar implements Almanac {
+public class IslamicCalendar extends Almanac {
+
   public static final String CALENDAR_NAME = "Islamic Calendar";
   public static final JulianDay EPOCH = new JulianDay(1948439.5);
 
@@ -83,41 +84,19 @@ public class IslamicCalendar implements Almanac {
    * @param day the Islamic calendar day.
    */
   public IslamicCalendar(int year, int month, int day) {
-    _day = day;
-    _month = month;
-    _year = year;
+    super();
+    this.day = day;
+    this.month = month;
+    this.year = year;
   }
 
   /**
    * Returns this calendar's name.
    * @return this calendar's name.
    */
+  @Override
   public String getName() {
     return CALENDAR_NAME;
-  }
-
-  /**
-   * Gets the year.
-   * @return the year.
-   */
-  public int getYear() {
-    return _year;
-  }
-
-  /**
-   * Gets the month.
-   * @return the month number
-   */
-  public int getMonth() {
-    return _month;
-  }
-
-  /**
-   * Gets the day.
-   * @return the day
-   */
-  public int getDay() {
-    return _day;
   }
 
   /**
@@ -125,7 +104,7 @@ public class IslamicCalendar implements Almanac {
    * @return this month's name.
    */
   public String getMonthName() {
-    return _monthNames[_month-1];
+    return _monthNames[this.month-1];
   }
 
   /** 
@@ -145,6 +124,25 @@ public class IslamicCalendar implements Almanac {
    */
   public static String[] getMonthNames() {
     return _monthNames;
+  }
+
+  /**
+   * Gets the number of days in a given month.
+   * @param month a month.
+   * @return the number of days in the month.
+   */
+  public static int getNumberOfDaysInMonth(int month) {
+    if (month%2==0) return 29;
+    else return 30;
+  }
+
+  /**
+   * Gets the number of days in this month.
+   * @return the number of days in this month.
+   */
+  @Override
+  public int getNumberOfDaysInMonth() {
+    return IslamicCalendar.getNumberOfDaysInMonth(getMonth());
   }
 
   /**
@@ -173,28 +171,24 @@ public class IslamicCalendar implements Almanac {
 
     final IslamicCalendar date = (IslamicCalendar) obj;
     return new EqualsBuilder()
-      .append(_day,date.getDay())
-      .append(_month,date.getMonth())
-      .append(_year,date.getYear())
+      .append(this.day,date.getDay())
+      .append(this.month,date.getMonth())
+      .append(this.year,date.getYear())
       .isEquals();
   }
 
   @Override
   public int hashCode() {
     return new HashCodeBuilder()
-      .append(_day)
-      .append(_month)
-      .append(_year)
+      .append(this.day)
+      .append(this.month)
+      .append(this.year)
       .toHashCode();
   }
 
 //////////////////////////////////////////////////////////////////////////////
 // private
 
-  private int _day;
-  private int _month;
-  private int _year;
-  
   private static final String[] _dayNames = 
   {
     "al-Ahad", 

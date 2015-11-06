@@ -70,7 +70,7 @@ public final class Util {
   }
 
   /**
-   * Fixes an angle between range [0-360].
+   * Fixes an angle between range [0-360).
    * @param a an angle in degrees.
    * @return the fixed angle.
    */  
@@ -79,11 +79,12 @@ public final class Util {
   }
 
   /**
-   * Fixes an angle between range [0-2*PI].
+   * Fixes an angle between range [0-2*PI).
    * @param a an angle in radians.
    * @return the fixed angle.
    */  
   public static double fixAngler(double rad) {
     return rad - (2*Math.PI)*(Math.floor(rad/(2*Math.PI)));
   }
+
 }

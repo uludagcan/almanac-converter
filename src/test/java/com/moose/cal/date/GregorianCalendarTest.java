@@ -45,12 +45,12 @@ public class GregorianCalendarTest {
   }
 
   @Test
-  public void datesShouldBeInOrder() {
-    GregorianCalendar date1 = new GregorianCalendar(1986,9,3);
-    GregorianCalendar date2 = new GregorianCalendar(1986,9,4);
-    assertEquals( "FAIL: Dates should be in chronological order",
-                  true,
-                  GregorianCalendar.datesAreChronological(date1,date2));
+  public void differentDatesShouldNotBeEqual() {
+    GregorianCalendar date1 = new GregorianCalendar(1987,3,10);
+    GregorianCalendar date2 = new GregorianCalendar(1986,9,3);
+    assertEquals( "FAIL: Dates should not be equal",
+                  false,
+                  date1.equals(date2));
   }
 
   @Test 
@@ -82,6 +82,16 @@ public class GregorianCalendarTest {
   }
 
   @Test
+  public void daysPerMonthShouldBeCorrectInLeapYear() {
+    int[] days = new int[] { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    int year = 2000;
+    int[] result = GregorianCalendar.getDaysPerMonthInYear(year);
+    assertArrayEquals("FAIL: Days of month aren't correct",
+                      days,
+                      result);
+  }
+
+  @Test
   public void prolepticLeapYearsShouldDiffer() {
     int year = 1500;
     boolean ypro = GregorianCalendar.isLeapYear(year,true);
@@ -104,6 +114,10 @@ public class GregorianCalendarTest {
   @Test(expected = IndexOutOfBoundsException.class)
   public void monthNameShouldBadMonthNumber() {
     String month = GregorianCalendar.getMonthName(0); // No "0" month!
+  }
+
+  @Test
+  public void nextDayShouldWrap() {
   }
 
   

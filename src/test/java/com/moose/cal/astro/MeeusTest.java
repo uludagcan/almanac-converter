@@ -34,7 +34,7 @@ public class MeeusTest {
     double result = Meeus.equinox(year,season);
     assertEquals( expected,
                   result,
-                  0.0001);
+                  1.0E-6);
   }
 
   @Test
@@ -44,7 +44,7 @@ public class MeeusTest {
     double result = Meeus.equinox(2015,Season.SPRING);
     assertEquals( expected,
                   result,
-                  0.0001);
+                  1.0E-6);
   }
 
   @Test
@@ -54,7 +54,7 @@ public class MeeusTest {
     double result = Meeus.equinox(2015,Season.SUMMER);
     assertEquals( expected,
                   result,
-                  0.0001);
+                  1.0E-6);
   }
 
   @Test
@@ -64,6 +64,11 @@ public class MeeusTest {
     double result = Meeus.equinox(2015,Season.WINTER);
     assertEquals( expected,
                   result,
-                  0.0001);
+                  1.0E-6);
+  }
+
+  @Test
+  public void lunarPhaseShouldComputeCorrectly() {
+    // TODO
   }
 }

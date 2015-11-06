@@ -33,7 +33,8 @@ import static com.moose.cal.util.Converter.*;
  * @author Chris Engelsma
  * @version 2015.10.02
  */
-public final class JulianCalendar implements Almanac {
+public final class JulianCalendar extends Almanac {
+
   public static final String CALENDAR_NAME = "Julian Calendar";
   public static final JulianDay EPOCH = new JulianDay(2299160.5);
 
@@ -77,9 +78,10 @@ public final class JulianCalendar implements Almanac {
    * @param day The day.
    */
   public JulianCalendar(int year, int month, int day) {
-    _day   = day;
-    _month = month;
-    _year  = year;
+    super();
+    this.day   = day;
+    this.month = month;
+    this.year  = year;
   }
 
   /**
@@ -110,7 +112,7 @@ public final class JulianCalendar implements Almanac {
    * @return true, if this is a leap year; false, otherwise.
    */
   public boolean isLeapYear() {
-    return JulianCalendar.isLeapYear(_year);
+    return JulianCalendar.isLeapYear(this.year);
   }
 
   /**
@@ -157,7 +159,7 @@ public final class JulianCalendar implements Almanac {
    * @return the name of the month.
    */
   public String getMonthName() {
-    return JulianCalendar.getMonthName(_month);
+    return JulianCalendar.getMonthName(this.month);
   }
 
   /**
@@ -188,7 +190,7 @@ public final class JulianCalendar implements Almanac {
    * @param year the year. 
    * @return the number of days in the month.
    */
-  public static int getDaysInMonth(int month, int year) {
+  public static int getNumberOfDaysInMonth(int month, int year) {
     if (month==4  || month==6  || month==9  || month==11) 
       return 30;
     if (month==2) {
@@ -199,20 +201,12 @@ public final class JulianCalendar implements Almanac {
   }
 
   /**
-   * Gets the total number of days in a given month for this year.
-   * @param month the month.
-   * @return the number of days in a month of this year.
+   * Gets the number of days for this month and year.
+   * @return the number of days for this month and year.
    */
-  public int getDaysInMonth(int month) {
-    return JulianCalendar.getDaysInMonth(month,getYear());
-  }
-
-  /**
-   * Gets the total number of days for this month and year.
-   * @return the number of days in this month and year.
-   */
-  public int getDaysInMonth() {
-    return JulianCalendar.getDaysInMonth(getMonth(),getYear());
+  @Override
+  public int getNumberOfDaysInMonth() {
+    return JulianCalendar.getNumberOfDaysInMonth(getMonth(),getYear());
   }
 
   /**
@@ -223,7 +217,7 @@ public final class JulianCalendar implements Almanac {
   public static int[] getDaysPerMonthInYear(int year) {
     int[] days = new int[12];
     for (int i=0; i<12; ++i) 
-      days[i] = JulianCalendar.getDaysInMonth(i+1,year);
+      days[i] = JulianCalendar.getNumberOfDaysInMonth(i+1,year);
     return days;
   }
 
@@ -236,80 +230,12 @@ public final class JulianCalendar implements Almanac {
   }
 
   /**
-   * Gets the day.
-   * @return the day.
-   */ 
-  public int getDay() { return _day; }
-   
-  /**
-    * Gets the month.
-    * @return the month.
-   */
-  public int getMonth() { return _month; }  
-  
-  /**
-   * Gets the day.
-   * @return the day.
-   */
-  public int getYear() { return _year; }
-  
-  /**
    * Prints this date with a simple pre-defined format.
    */ 
   @Override
   public String toString() {
     return(CALENDAR_NAME+": " +getDate());
 
-  }
-
-  /**
-   * Checks if this date is before another Julian date.
-   * @param date A Julian calendar date.
-   * @return true, if before; false, otherwise.
-   */ 
-  public boolean isBefore(JulianCalendar date) {
-    double year = date.getYear();
-    double month = date.getMonth();
-    double day = date.getDay();
-    return ((_year<year) ||
-            (_year==year && _month<month) ||
-            (_year==year && _month==month && _day<day));
-  }
-
-  /**
-   * Checks if two dates are in chronological order.
-   * @param firstDate the first date.
-   * @param secondDate the second date.
-   * @return true, if firstDate comes before secondDate; false, otherwise.
-   */
-  public static boolean datesAreChronological(
-    JulianCalendar firstDate, JulianCalendar secondDate) 
-  {
-    double year1  = firstDate.getYear();
-    double month1 = firstDate.getMonth();
-    double day1   = firstDate.getDay();
-
-    double year2  = secondDate.getYear();
-    double month2 = secondDate.getMonth();
-    double day2   = secondDate.getDay();
-
-    return ((year1<year2) ||
-            (year1==year2 && month1<month2) ||
-            (year1==year2 && month1==month2 && day1<day2));
-  }
-
-  /**
-   * Checks if this date is after another Julian date.
-   * @param date A Julian date.
-   * @return true, if after; false, otherwise.
-   */ 
-  public boolean isAfter(JulianCalendar date) {
-    double year = date.getYear();
-    double month = date.getMonth();
-    double day = date.getDay();
-    return ((_year>year) ||
-            (_year==year && _month>month) ||
-            (_year==year && _month==month && _day>day));
   }
 
   /**
@@ -332,43 +258,39 @@ public final class JulianCalendar implements Almanac {
       
     final JulianCalendar date = (JulianCalendar) obj;
     return new EqualsBuilder()
-      .append(_year, date.getYear())
-      .append(_month, date.getMonth())
-      .append(_day, date.getDay())
+      .append(this.year, date.getYear())
+      .append(this.month, date.getMonth())
+      .append(this.day, date.getDay())
       .isEquals();
   }
   
   @Override
   public int hashCode() {
     return new HashCodeBuilder()
-      .append(_year)
-      .append(_month)
-      .append(_day)
+      .append(this.year)
+      .append(this.month)
+      .append(this.day)
       .toHashCode();
   }
 
 /////////////////////////////////////////////////////////////////////////////
 // private
 
-  private int _year;
-  private int _day;
-  private int _month;
-  
   /** The month names will be kept in traditional Roman lettering */
   private static final String[] _monthNames = 
   {
-    "January","IANVARIVS",
-    "February","FEBRVARIVS",
-    "March","MARTIVS",
-    "April","APRILLIS",
-    "May","MAIVS",
-    "June","IVNIVS",
-    "July","IVLIVS",
-    "August","AVGVSTVS",
+    "January",  "IANVARIVS",
+    "February", "FEBRVARIVS",
+    "March",    "MARTIVS",
+    "April",    "APRILLIS",
+    "May",      "MAIVS",
+    "June",     "IVNIVS",
+    "July",     "IVLIVS",
+    "August",   "AVGVSTVS",
     "September","SEPTEMBER",
-    "October","OCTOBER",
-    "November","NOVEMBER",
-    "December","DECEMBER"
+    "October",  "OCTOBER",
+    "November", "NOVEMBER",
+    "December", "DECEMBER"
   };
 
 }

@@ -16,5 +16,8 @@ limitations under the License.
 package com.moose.cal.date;
 
 public class HebrewCalendar {
+  
+  public HebrewCalendar() { }
+
 //TODO
 }

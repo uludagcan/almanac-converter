@@ -44,9 +44,10 @@ import static com.moose.cal.util.Converter.*;
  * not divisible by 400. For example: 1700, 1800 and 1900 are NOT leap
  * years, but 2000 is a leap year.
  * @author Chris Engelsma
- * @version 2015.09.24
+ * @version 2015.11.05
  */
-public final class GregorianCalendar implements Almanac {
+public final class GregorianCalendar extends Almanac {
+
   public static final String CALENDAR_NAME = "Gregorian Calendar";
   public static final JulianDay EPOCH = new JulianDay(2299160.5);
 
@@ -101,15 +102,17 @@ public final class GregorianCalendar implements Almanac {
    * @param day The day.
    */
   public GregorianCalendar(int year, int month, int day) {
-    _day   = day;
-    _month = month;
-    _year  = year;
+    super();
+    this.day   = day;
+    this.month = month;
+    this.year  = year;
   }
 
   /**
    * Returns this calendar's name.
    * @return this calendar's name.
    */
+  @Override
   public String getName() {
     return CALENDAR_NAME;
   }
@@ -132,7 +135,7 @@ public final class GregorianCalendar implements Almanac {
    * @return true, if this is a leap year; false, otherwise.
    */
   public boolean isLeapYear() {
-    return GregorianCalendar.isLeapYear(_year,true);
+    return GregorianCalendar.isLeapYear(this.year,true);
   }
 
   /**
@@ -145,7 +148,7 @@ public final class GregorianCalendar implements Almanac {
    * @return true, if this is a leap year; false, otherwise.
    */
   public boolean isLeapYear(boolean useProleptic) {
-    return GregorianCalendar.isLeapYear(_year,useProleptic);
+    return GregorianCalendar.isLeapYear(this.year,useProleptic);
   }
 
   /**
@@ -164,7 +167,7 @@ public final class GregorianCalendar implements Almanac {
     GregorianCalendar epoch = new GregorianCalendar(EPOCH);
     GregorianCalendar date = new GregorianCalendar(year,1,1);
 
-    if (useProleptic && GregorianCalendar.datesAreChronological(date,epoch)) 
+    if (useProleptic && datesAreChronological(date,epoch)) 
       return JulianCalendar.isLeapYear(year);
 
     if (Math.abs(year)%4==0) {
@@ -201,7 +204,7 @@ public final class GregorianCalendar implements Almanac {
    * @return the name of the month.
    */
   public String getMonthName() {
-    return GregorianCalendar.getMonthName(_month);
+    return GregorianCalendar.getMonthName(this.month);
   }
 
   /**
@@ -232,7 +235,7 @@ public final class GregorianCalendar implements Almanac {
    * @param year the year. 
    * @return the number of days in the month.
    */
-  public static int getDaysInMonth(int month, int year) {
+  public static int getNumberOfDaysInMonth(int month, int year) {
     if (month==4  || month==6  || month==9  || month==11) 
       return 30;
     if (month==2) {
@@ -247,16 +250,17 @@ public final class GregorianCalendar implements Almanac {
    * @param month the month.
    * @return the number of days in a month of this year.
    */
-  public int getDaysInMonth(int month) {
-    return GregorianCalendar.getDaysInMonth(month,getYear());
+  public int getNumberOfDaysInMonth(int month) {
+    return GregorianCalendar.getNumberOfDaysInMonth(month,getYear());
   }
 
   /**
    * Gets the total number of days for this month and year.
    * @return the number of days in this month and year.
    */
-  public int getDaysInMonth() {
-    return GregorianCalendar.getDaysInMonth(getMonth(),getYear());
+  @Override
+  public int getNumberOfDaysInMonth() {
+    return GregorianCalendar.getNumberOfDaysInMonth(getMonth(),getYear());
   }
 
   /**
@@ -267,7 +271,7 @@ public final class GregorianCalendar implements Almanac {
   public static int[] getDaysPerMonthInYear(int year) {
     int[] days = new int[12];
     for (int i=0; i<12; ++i) 
-      days[i] = GregorianCalendar.getDaysInMonth(i+1,year);
+      days[i] = GregorianCalendar.getNumberOfDaysInMonth(i+1,year);
     return days;
   }
 
@@ -277,68 +281,6 @@ public final class GregorianCalendar implements Almanac {
    */
   public int[] getDaysPerMonthInYear() {
     return GregorianCalendar.getDaysPerMonthInYear(getYear());
-  }
-
-  /**
-   * Gets the day.
-   * @return the day.
-   */ 
-  public int getDay() { return _day; }
-   
-  /**
-    * Gets the month.
-    * @return the month.
-   */
-  public int getMonth() { return _month; }  
-  
-  /**
-   * Gets the day.
-   * @return the day.
-   */
-  public int getYear() { return _year; }
-  
-  /**
-   * Checks if this date is before another Gregorian Date.
-   * @param date A Gregorian Date.
-   * @return true, if before; false, otherwise.
-   */ 
-  public boolean isBefore(GregorianCalendar date) {
-    return GregorianCalendar.datesAreChronological(this,date);
-  }
-
-  /**
-   * Checks if this date is after another Gregorian Date.
-   * @param date A Gregorian Date.
-   * @return true, if after; false, otherwise.
-   */ 
-  public boolean isAfter(GregorianCalendar date) {
-    return GregorianCalendar.datesAreChronological(date,this);
-  }
-
-  /**
-   * Checks if two dates are in chronological order.
-   * @param dates dates to be compared.
-   * @return true, if dates are chronological; false, otherwise.
-   */
-  public static boolean datesAreChronological(GregorianCalendar... dates) {
-    double d1,m1,y1;
-    double d2,m2,y2;
-    for (int i=0; i<dates.length-1; ++i) {
-      y1 = dates[i].getYear();
-      m1 = dates[i].getMonth();
-      d1 = dates[i].getDay();
-
-      y2 = dates[i+1].getYear();
-      m2 = dates[i+1].getMonth();
-      d2 = dates[i+1].getDay();
-
-      if ((y1<y2) ||
-          (y1==y2 && m1<m2) ||
-          (y1==y2 && m1==m2 && d1<d2)) continue;
-      else return false;
-    }
-
-    return true;
   }
 
   /**
@@ -357,7 +299,6 @@ public final class GregorianCalendar implements Almanac {
     return new String(CALENDAR_NAME+": " +getDate()); 
   }
 
-
   @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof GregorianCalendar))
@@ -367,27 +308,34 @@ public final class GregorianCalendar implements Almanac {
       
     final GregorianCalendar date = (GregorianCalendar) obj;
     return new EqualsBuilder()
-      .append(_year, date.getYear())
-      .append(_month, date.getMonth())
-      .append(_day, date.getDay())
+      .append(this.year, date.getYear())
+      .append(this.month, date.getMonth())
+      .append(this.day, date.getDay())
       .isEquals();
   }
   
   @Override
   public int hashCode() {
     return new HashCodeBuilder()
-      .append(_year)
-      .append(_month)
-      .append(_day)
+      .append(this.year)
+      .append(this.month)
+      .append(this.day)
       .toHashCode();
   }
 
 /////////////////////////////////////////////////////////////////////////////
 // private
 
-  private int _year;
-  private int _day;
-  private int _month;
+  private static final String[] _weekDayNames = 
+  {
+    "Sunday",    "Sun",
+    "Monday",    "Mon",
+    "Tuesday",   "Tue",
+    "Wednesday", "Wed",
+    "Thursday",  "Thu",
+    "Friday",    "Fri",
+    "Saturday",  "Sat"
+  };
 
   private static final String[] _monthNames = 
   {
@@ -403,17 +351,6 @@ public final class GregorianCalendar implements Almanac {
     "October",   "Oct",
     "November",  "Nov",
     "December",  "Dec"
-  };
-
-  private static final String[] _dayNames =
-  {
-    "Sunday", "Sun",
-    "Monday", "Mon",
-    "Tuesday", "Tue",
-    "Wednesday", "Wed",
-    "Thursday", "Thu",
-    "Friday", "Fri",
-    "Saturday", "Sat"
   };
 
   private static final String[] _eras = 

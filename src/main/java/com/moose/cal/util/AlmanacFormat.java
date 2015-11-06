@@ -19,6 +19,7 @@ import com.moose.cal.date.*;
 
 /**
  * An Almanac formatter.
+ * Not yet implemented.
  * @author Chris Engelsma
  * @version 2015.09.30
  */ 
@@ -234,7 +235,7 @@ public class AlmanacFormat {
       encode(lastTag, count, compiledPattern);
     }
 
-          // Copy the compiled pattern to a char array
+    // Copy the compiled pattern to a char array
     int len = compiledPattern.length();
     char[] r = new char[len];
     compiledPattern.getChars(0, len, r, 0);
