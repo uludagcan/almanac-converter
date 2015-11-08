@@ -13,14 +13,30 @@ holidays = [
   Holiday.PALM_SUNDAY,
   Holiday.HOLY_THURSDAY,
   Holiday.GOOD_FRIDAY,
-  Holiday.EASTER ]
-#  Holiday.ASCENSION,
-#  Holiday.PENTECOST,
-#  Holiday.TRINITY_SUNDAY,
-#  Holiday.ADVENT]
+  Holiday.EASTER,
+  Holiday.ASCENSION,
+  Holiday.PENTECOST,
+  Holiday.TRINITY_SUNDAY,
+  Holiday.ADVENT,
+  
+  Holiday.ASHURA,
+  Holiday.RAMADAN,
+  Holiday.EID_AL_FITR,
+  Holiday.EID_AL_ADHA,
+  
+  Holiday.NEW_YEARS_DAY,
+  Holiday.MARTIN_LUTHER_KING,
+  Holiday.WASHINGTONS_BIRTHDAY,
+  Holiday.MEMORIAL_DAY,
+  Holiday.INDEPENDENCE_DAY,
+  Holiday.LABOR_DAY,
+  Holiday.COLUMBUS_DAY,
+  Holiday.VETERANS_DAY,
+  Holiday.THANKSGIVING,
+  Holiday.CHRISTMAS]
 
 def main(args):
-  holidayDemo(2000)
+  holidayDemo(2015)
 
 def holidayDemo(year):
   for holiday in holidays:

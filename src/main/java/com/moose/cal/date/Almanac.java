@@ -123,6 +123,30 @@ public abstract class Almanac {
   }
 
   /**
+   * Sets the year.
+   * @param year the year.
+   */
+  public void setYear(int year) {
+    this.year = year;
+  }
+
+  /**
+   * Sets the month.
+   * @param year the month.
+   */
+  public void setMonth(int month) {
+    this.month = month;
+  }
+
+  /**
+   * Sets the day.
+   * @param year the day.
+   */
+  public void setDay(int day) {
+    this.day = day;
+  }
+
+  /**
    * Increments this date by one day.
    */
   public void nextDay() {
@@ -151,9 +175,9 @@ public abstract class Almanac {
 //////////////////////////////////////////////////////////////////////////////
 // abstract
   
-  abstract String getDate();
-  abstract String getName();
-  abstract int getNumberOfDaysInMonth();
+  public abstract String getDate();
+  public abstract String getName();
+  public abstract int getNumberOfDaysInMonth();
 
 //////////////////////////////////////////////////////////////////////////////
 // protected

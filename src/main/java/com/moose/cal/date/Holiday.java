@@ -15,6 +15,14 @@ limitations under the License.
 *****************************************************************************/
 package com.moose.cal.date;
 
+import com.moose.cal.astro.*;
+import static com.moose.cal.astro.Meeus.*;
+
+/**
+ * Religious and secular holidays.
+ * @author Chris Engelsma
+ * @version 2015.11.06
+ */
 public enum Holiday {
   // Catholic
   ASH_WEDNESDAY   ( 0),
@@ -28,10 +36,10 @@ public enum Holiday {
   ADVENT          ( 8),
 
   // Islamic
-  ASHURA          ( 9),
-  RAMADAN         (10),
-  EDI_AL_FITR     (11),
-  EID_AL_ADHA     (12),
+  ASHURA      ( 9),
+  RAMADAN     (10),
+  EID_AL_FITR (11),
+  EID_AL_ADHA (12),
 
   // Jewish
   PASSOVER        (13),
@@ -39,7 +47,21 @@ public enum Holiday {
   ROSH_HASHANAH   (15),
   YOM_KIPPUR      (16),
   SUKKOT          (17),
-  SHEMINI_ATZERET (18);
+  SHEMINI_ATZERET (18),
+
+  // US Federal Holidays
+  NEW_YEARS_DAY         (20),
+  MARTIN_LUTHER_KING    (21),
+  WASHINGTONS_BIRTHDAY  (22),
+  MEMORIAL_DAY          (23),
+  INDEPENDENCE_DAY      (24),
+  LABOR_DAY             (25),
+  COLUMBUS_DAY          (26),
+  VETERANS_DAY          (27),
+  THANKSGIVING          (28),
+  CHRISTMAS             (29);
+
+
 
   private final int value;
   private Holiday(int value) { this.value = value; }

@@ -168,6 +168,12 @@ public final class JulianDay extends Almanac {
     return this;
   }
 
+  @Override
+  public void nextDay() { _day += 1; }
+
+  @Override
+  public void prevDay() { _day -= 1; }
+
   /**
    * Gets the Modified Julian Day (MJD).
    * The Modified Julian Day is an adjusted version of the Julian
