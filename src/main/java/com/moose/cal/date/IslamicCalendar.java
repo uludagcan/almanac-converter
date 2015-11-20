@@ -137,6 +137,45 @@ public class IslamicCalendar extends Almanac {
   }
 
   /**
+   * Sets this calendar.
+   * @param a an almanac.
+   */
+  @Override
+  public void set(Almanac a) {
+    IslamicCalendar cal = toIslamicCalendar(a);
+    this.year = cal.getYear();
+    this.month = cal.getMonth();
+    this.day = cal.getDay();
+  }
+
+  /**
+   * Gets the months
+   * @return the months.
+   */
+  @Override
+  public String[] getMonths() {
+    return _monthNames;
+  }
+
+  /**
+   * Gets the weekday name.
+   * @return the weekday.
+   */
+  @Override
+  public String getWeekDay() {
+    return _weekDayNames[getWeekDayNumber()];
+  }
+
+  /**
+   * Gets the days of the week.
+   * @return the days of the week.
+   */
+  @Override
+  public String[] getWeekDays() {
+    return _weekDayNames;
+  }
+  
+  /**
    * Gets the number of days in this month.
    * @return the number of days in this month.
    */
@@ -189,7 +228,7 @@ public class IslamicCalendar extends Almanac {
 //////////////////////////////////////////////////////////////////////////////
 // private
 
-  private static final String[] _dayNames = 
+  private static final String[] _weekDayNames = 
   {
     "al-Ahad", 
     "al-Ithnayn",

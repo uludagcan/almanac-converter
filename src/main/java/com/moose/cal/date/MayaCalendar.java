@@ -16,6 +16,7 @@ limitations under the License.
 package com.moose.cal.date;
 
 import com.moose.cal.util.*;
+import static com.moose.cal.util.Converter.*;
 import com.moose.cal.astro.*;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -75,7 +76,7 @@ public class MayaCalendar extends Almanac {
    * @param a an Almanac.
    */
   public MayaCalendar(Almanac a) {
-    this(Converter.toMayaCalendar(a));
+    this(toMayaCalendar(a));
   }
 
   /**
@@ -118,6 +119,46 @@ public class MayaCalendar extends Almanac {
   @Override
   public String getName() {
     return CALENDAR_NAME;
+  }
+
+  /**
+   * Sets this K'in.
+   * @param kin the K'in.
+   */
+  public void setKin(int kin) {
+    _kin = kin;
+  }
+
+  /**
+   * Sets this Uinal.
+   * @param uinal the Uinal.
+   */
+  public void setUinal(int uinal) {
+    _uinal = uinal;
+  }
+
+  /**
+   * Sets this Tun.
+   * @param tun the Tun.
+   */
+  public void setTun(int tun) {
+    _tun = tun;
+  }
+
+  /**
+   * Sets this K'atun
+   * @param katun the K'atun.
+   */
+  public void setKatun(int katun) {
+    _katun = katun;
+  }
+
+  /**
+   * Sets this B'aktun
+   * @param baktun the B'aktun.
+   */
+  public void setBaktun(int baktun) {
+    _baktun = baktun;
   }
 
   /**
@@ -166,6 +207,20 @@ public class MayaCalendar extends Almanac {
     return _baktun;
   }
   
+  /**
+   * Sets this calendar.
+   * @param a an almanac.
+   */
+  @Override
+  public void set(Almanac a) {
+    MayaCalendar cal = toMayaCalendar(a);
+    _kin = cal.getKin();
+    _uinal = cal.getUinal();
+    _tun = cal.getTun();
+    _katun = cal.getKatun();
+    _baktun = cal.getBaktun();
+  }
+
   /**
    * Gets the number of days in a month (katun).
    * @return the number of days in a month (katun).

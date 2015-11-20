@@ -46,7 +46,7 @@ import org.joda.time.DateTime;
  * introduced, naming each day of the year after various crops, minerals, 
  * animals and work tools to reflect the changing of the seasons. 
  * @author Chris Engelsma
- * @version 2015.08.07
+ * @version 2015.11.09
  */
 public final class FrenchRepublicanCalendar extends Almanac {
 
@@ -121,6 +121,27 @@ public final class FrenchRepublicanCalendar extends Almanac {
   }
 
   /**
+   * Gets the 10-day week (décade).
+   * @return the décade.
+   */
+  public int getWeek() {
+    return _week;
+  }
+
+  /**
+   * Sets this calendar.
+   * @param a an almanac.
+   */
+  @Override
+  public void set(Almanac a) {
+    FrenchRepublicanCalendar cal = toFrenchRepublicanCalendar(a);
+    this.year = cal.getYear();
+    this.month = cal.getMonth();
+    this.day = cal.getDay();
+    _week = cal.getWeek();
+  }
+ 
+  /**
    * Returns this calendar's name.
    * @return this calendar's name.
    */
@@ -133,22 +154,45 @@ public final class FrenchRepublicanCalendar extends Almanac {
    * Gets the month names.
    * @return the month names.
    */
-  public static String[] getMonthNames() {
+  @Override
+  public String[] getMonths() {
     return _monthNames;
   }
 
   /**
-   * Gets the 10-day week (décade).
-   * @return the décade.
+   * Sets the day.
+   * @param day the day.
    */
-  public int getWeek() {
-    return _week;
+  @Override
+  public void setDay(int day) {
+    this.day = (day/10)+1;
+    _week = day%10;
   }
 
+  /**
+   * Gets the weekday name.
+   * @return the weekday.
+   */
+  @Override 
+  public String getWeekDay() {
+    return (this.year>=1) ? _weekDayNames[getDay(false)-1] : "";
+  }
+
+  /**
+   * Gets the days of the week.
+   * @return the days of the week.
+   */
+  @Override
+  public String[] getWeekDays() {
+    return _weekDayNames;
+  }
+
+  /**
+   * Sets this date to the next day.
+   */
   @Override
   public void nextDay() {
     day = getDay(true);
-
     if (day==getNumberOfDaysInMonth()) {
       if (month==getNumberOfMonthsInYear()) {
         month = 1;
@@ -161,6 +205,9 @@ public final class FrenchRepublicanCalendar extends Almanac {
     this.day = (day%10);
   }
 
+  /**
+   * Sets this date to the previous day.
+   */
   @Override
   public void prevDay() {
     day = getDay(true);
@@ -232,7 +279,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
   public static String getMonthName(int month) 
     throws IndexOutOfBoundsException
   {
-    return getMonthNames()[month-1];
+    return _monthNames[month-1];
   }
 
   /**
@@ -286,9 +333,9 @@ public final class FrenchRepublicanCalendar extends Almanac {
 
   @Override
   public String getDate() {
-    return new String(getDay(true)+" "+
-                      getMonthName()+", "+
-                      toRoman(getYear()));
+    return (this.year>=1) ? new String(getDay(true)+" "+
+                                       getMonthName()+", "+
+                                       toRoman(getYear())) : "";
   }
 
   @Override
@@ -343,6 +390,20 @@ public final class FrenchRepublicanCalendar extends Almanac {
     "Thermidor",
     "Fructidor",
     "Sans-culottides"
+  };
+
+  final static String[] _weekDayNames =
+  {
+    "Primidi",
+    "Duodi",
+    "Tridi",
+    "Quartidi",
+    "Quintidi",
+    "Sextidi",
+    "Septidi",
+    "Octidi",
+    "Nonidi",
+    "Décadi"
   };
   
   final static String[][] _dayNames =

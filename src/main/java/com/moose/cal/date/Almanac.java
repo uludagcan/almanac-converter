@@ -17,13 +17,15 @@ package com.moose.cal.date;
 
 import static com.moose.cal.util.Converter.*;
 import static java.lang.Math.*;
+import java.io.Serializable;
 
 /**
  * An almanac.
  * @author Chris Engelsma.
  * @version 2015.11.04
  */
-public abstract class Almanac {
+public abstract class Almanac implements Serializable {
+  private static final long serialVersionUID = 1L;
 
   /**
    * Gets the week length.
@@ -44,10 +46,18 @@ public abstract class Almanac {
    * @param jd an Almanac.
    * @return a weekday in the range [0,6].
    */
-  public int getWeekDay() {
+  public int getWeekDayNumber() {
     int weekLength = getNumberOfDaysInWeek();
     double jd = (toJulianDay(this)).getValue();
     return (int)floor(jd+1.5)%weekLength;
+  }
+
+  /**
+   * Gets the day of the week.
+   * @return the week day.
+   */
+  public String getWeekDay() {
+    return "";
   }
 
   /**
@@ -123,6 +133,22 @@ public abstract class Almanac {
   }
 
   /**
+   * Gets the month names.
+   * @return the month names.
+   */
+  public String[] getMonths() {
+    return new String[getNumberOfMonthsInYear()];
+  }
+
+  /**
+   * Gets the weekday names.
+   * @return the week day names.
+   */
+  public String[] getWeekDays() {
+    return new String[getNumberOfDaysInWeek()];
+  }
+
+  /**
    * Sets the year.
    * @param year the year.
    */
@@ -178,6 +204,7 @@ public abstract class Almanac {
   public abstract String getDate();
   public abstract String getName();
   public abstract int getNumberOfDaysInMonth();
+  public abstract void set(Almanac a);
 
 //////////////////////////////////////////////////////////////////////////////
 // protected

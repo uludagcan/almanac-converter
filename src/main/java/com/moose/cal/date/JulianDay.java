@@ -57,7 +57,7 @@ public final class JulianDay extends Almanac {
    * @param jd A Julian Day.
    */
   public JulianDay(double jd) {
-    _day = jd;
+    _jday = jd;
   }
 
   /**
@@ -89,7 +89,7 @@ public final class JulianDay extends Almanac {
    * @param date A Gregorian Date.
    */
   public JulianDay(Almanac date) {
-    this(Converter.toJulianDay(date));
+    this(toJulianDay(date));
   }
 
   @Override 
@@ -118,7 +118,7 @@ public final class JulianDay extends Almanac {
    * @return This Julian Day at noon.
    */
   public JulianDay atNoon() {
-    return new JulianDay(Math.ceil(_day-0.5));
+    return new JulianDay(Math.ceil(_jday-0.5));
   }
 
   /**
@@ -126,53 +126,22 @@ public final class JulianDay extends Almanac {
    * @return This Julian Day at midnight.
    */
   public JulianDay atMidnight() {
-    return new JulianDay(Math.floor(_day-0.5)+0.5);
+    return new JulianDay(Math.floor(_jday-0.5)+0.5);
   }
 
   /**
    * Sets this Julian Day to noon.
    */
   public void setToNoon() {
-    _day = (this.atNoon()).getValue();
+    _jday = (this.atNoon()).getValue();
   }
 
   /**
    * Sets this Julian Day to midnight.
    */
   public void setToMidnight() { 
-    _day = (this.atMidnight()).getValue();
+    _jday = (this.atMidnight()).getValue();
   }
-
-  /**
-   * Gets this day as a double.
-   * @return this day.
-   */
-  public double getValue() {
-    return _day;
-  }
-
-  /**
-   * Subtracts days from this Julian day.
-   * @param days.
-   */
-  public JulianDay minus(int days) {
-    _day -= days;
-    return this;
-  }
-
-  /**
-   * Adds days to this Julian day.
-   */ 
-  public JulianDay plus(int days) {
-    _day += days;
-    return this;
-  }
-
-  @Override
-  public void nextDay() { _day += 1; }
-
-  @Override
-  public void prevDay() { _day -= 1; }
 
   /**
    * Gets the Modified Julian Day (MJD).
@@ -181,7 +150,58 @@ public final class JulianDay extends Almanac {
    * @return The Modified Julian Day.
    */ 
   public double getModified() {
-    return _day-EPOCH.getValue();
+    return _jday-EPOCH.getValue();
+  }
+
+  /**
+   * Gets this day as a double.
+   * @return this day.
+   */
+  public double getValue() {
+    return _jday;
+  }
+
+  /**
+   * Subtracts days from this Julian day.
+   * @param days.
+   */
+  public JulianDay minus(int days) {
+    _jday -= days;
+    return this;
+  }
+
+  /**
+   * Adds days to this Julian day.
+   */ 
+  public JulianDay plus(int days) {
+    _jday += days;
+    return this;
+  }
+
+  /**
+   * Sets this calendar.
+   * @param a an almanac.
+   */
+  @Override
+  public void set(Almanac a) {
+    JulianDay cal = toJulianDay(a);
+    _jday = cal.getValue();
+  }
+
+  /**
+   * Sets this calendar to the next day.
+   */
+  @Override
+  public void nextDay() { 
+    _jday += 1; 
+  }
+
+  /**
+   * Sets this calendar to the previous day.
+   */
+  @Override
+  public void prevDay() { 
+    _jday -= 1; 
   }
 
   /**
@@ -202,14 +222,14 @@ public final class JulianDay extends Almanac {
       
     final JulianDay date = (JulianDay) obj;
     return new EqualsBuilder()
-      .append(_day, date.getValue())
+      .append(_jday, date.getValue())
       .isEquals();
   }
 
   @Override
   public int hashCode() {
     return new HashCodeBuilder()
-      .append(_day)
+      .append(_jday)
       .toHashCode();
   }
 
@@ -221,6 +241,6 @@ public final class JulianDay extends Almanac {
 /////////////////////////////////////////////////////////////////////////////
 // private
   
-  private double _day;
+  private double _jday;
   
 }

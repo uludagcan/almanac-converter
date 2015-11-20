@@ -173,20 +173,20 @@ public class HolidayCalculator {
     while (full <= eq) 
       full = getMoonQuarters(year,month++,day)[2];
     cal = new GregorianCalendar(new JulianDay(full));
-    if (cal.getWeekDay()==0) cal.nextDay();
-    while (cal.getWeekDay()>0) cal.nextDay();
+    if (cal.getWeekDayNumber()==0) cal.nextDay();
+    while (cal.getWeekDayNumber()>0) cal.nextDay();
     return new JulianDay(cal);
   }
 
   protected static JulianDay getFollowingWeekDay(int wd, JulianDay day) {
-    if (day.getWeekDay()==wd) day.nextDay();
-    while (day.getWeekDay()!=wd) day.nextDay();
+    if (day.getWeekDayNumber()==wd) day.nextDay();
+    while (day.getWeekDayNumber()!=wd) day.nextDay();
     return day;
   }
 
   protected static JulianDay getPrecedingWeekDay(int wd, JulianDay day) {
-    if (day.getWeekDay()==wd) day.prevDay();
-    while (day.getWeekDay()!=wd) day.prevDay();
+    if (day.getWeekDayNumber()==wd) day.prevDay();
+    while (day.getWeekDayNumber()!=wd) day.prevDay();
     return day;
   }
 

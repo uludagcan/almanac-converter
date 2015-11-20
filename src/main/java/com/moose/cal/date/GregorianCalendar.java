@@ -195,7 +195,7 @@ public final class GregorianCalendar extends Almanac {
   public static String getMonthName(int month) 
     throws IndexOutOfBoundsException 
   {
-    return GregorianCalendar.getMonthNames()[month-1];
+    return _monthNames[month-1];
   }
 
   /**
@@ -205,28 +205,6 @@ public final class GregorianCalendar extends Almanac {
    */
   public String getMonthName() {
     return GregorianCalendar.getMonthName(this.month);
-  }
-
-  /**
-   * Gets the month names.
-   * @return the month names.
-   */
-  public static String[] getMonthNames() {
-    String[] months = new String[12];
-    for (int i=0; i<12; ++i)
-      months[i] = _monthNames[2*i];
-    return months;
-  }
-
-  /**
-   * Gets the short month names.
-   * @return the short month names.
-   */
-  public static String[] getShortMonthNames() {
-    String[] months = new String[12];
-    for (int i=0; i<12; ++i)
-      months[i] = _monthNames[2*i+1];
-    return months;
   }
 
   /**
@@ -252,6 +230,43 @@ public final class GregorianCalendar extends Almanac {
    */
   public int getNumberOfDaysInMonth(int month) {
     return GregorianCalendar.getNumberOfDaysInMonth(month,getYear());
+  }
+
+  /**
+   * Gets the months.
+   * @return the months.
+   */
+  public String[] getMonths() {
+    return _monthNames;
+  }
+
+  /**
+   * Gets the weekdays.
+   * @return the weekdays.
+   */
+  public String[] getWeekDays() {
+    return _weekDayNames;
+  }
+
+  /**
+   * Sets this calendar.
+   * @param a an almanac.
+   */
+  @Override
+  public void set(Almanac a) {
+    GregorianCalendar cal = toGregorianCalendar(a);
+    this.year = cal.getYear();
+    this.month = cal.getMonth();
+    this.day = cal.getDay();
+  }
+
+  /**
+   * Gets the weekday name for this date.
+   * @return the weekday name.
+   */
+  @Override
+  public String getWeekDay() {
+    return _weekDayNames[getWeekDayNumber()];
   }
 
   /**
@@ -328,29 +343,29 @@ public final class GregorianCalendar extends Almanac {
 
   private static final String[] _weekDayNames = 
   {
-    "Sunday",    "Sun",
-    "Monday",    "Mon",
-    "Tuesday",   "Tue",
-    "Wednesday", "Wed",
-    "Thursday",  "Thu",
-    "Friday",    "Fri",
-    "Saturday",  "Sat"
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
   };
 
   private static final String[] _monthNames = 
   {
-    "January",   "Jan",
-    "February",  "Feb",
-    "March",     "Mar",
-    "April",     "Apr",
-    "May",       "May",
-    "June",      "Jun",
-    "July",      "Jul",
-    "August",    "Aug",
-    "September", "Sept",
-    "October",   "Oct",
-    "November",  "Nov",
-    "December",  "Dec"
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
   };
 
   private static final String[] _eras = 

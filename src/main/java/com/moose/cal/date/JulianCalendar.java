@@ -149,8 +149,8 @@ public final class JulianCalendar extends Almanac {
    public static String getMonthName(int month, boolean latin) 
     throws IndexOutOfBoundsException
    {
-    int mult = (latin) ? 2 : 1;
-    return JulianCalendar.getMonthNames()[mult*(month-1)];
+    int l = (latin) ? 1 : 0;
+    return _monthNames[2*(month-1)+l];
   }
 
   /**
@@ -160,14 +160,6 @@ public final class JulianCalendar extends Almanac {
    */
   public String getMonthName() {
     return JulianCalendar.getMonthName(this.month);
-  }
-
-  /**
-   * Gets the month names.
-   * @return the month names.
-   */
-  public static String[] getMonthNames() {
-    return JulianCalendar.getMonthNames(false);
   }
 
   /**
@@ -201,15 +193,6 @@ public final class JulianCalendar extends Almanac {
   }
 
   /**
-   * Gets the number of days for this month and year.
-   * @return the number of days for this month and year.
-   */
-  @Override
-  public int getNumberOfDaysInMonth() {
-    return JulianCalendar.getNumberOfDaysInMonth(getMonth(),getYear());
-  }
-
-  /**
    * Gets an array of month-lengths for a given year.
    * @param year a year.
    * @return an array[12] of month-lengths for a given year.
@@ -230,12 +213,55 @@ public final class JulianCalendar extends Almanac {
   }
 
   /**
+   * Sets this calendar.
+   * @param a an almanac.
+   */
+  @Override
+  public void set(Almanac a) {
+    JulianCalendar cal = toJulianCalendar(a);
+    this.year = cal.getYear();
+    this.month = cal.getMonth();
+    this.day = cal.getDay();
+  }
+
+  /**
+   * Gets the month names.
+   * @return the month names.
+   */
+  @Override
+  public String[] getMonths() {
+    return JulianCalendar.getMonthNames(false);
+  }
+
+  /**
+   * Gets the weekday name.
+   * @return weekday.
+   */
+  @Override
+  public String getWeekDay() {
+    return _weekDayNames[getWeekDayNumber()];
+  }
+
+  @Override
+  public String[] getWeekDays() {
+    return _weekDayNames;
+  }
+
+  /**
+   * Gets the number of days for this month and year.
+   * @return the number of days for this month and year.
+   */
+  @Override
+  public int getNumberOfDaysInMonth() {
+    return JulianCalendar.getNumberOfDaysInMonth(getMonth(),getYear());
+  }
+
+  /**
    * Prints this date with a simple pre-defined format.
    */ 
   @Override
   public String toString() {
     return(CALENDAR_NAME+": " +getDate());
-
   }
 
   /**
@@ -276,21 +302,31 @@ public final class JulianCalendar extends Almanac {
 /////////////////////////////////////////////////////////////////////////////
 // private
 
-  /** The month names will be kept in traditional Roman lettering */
+  private static final String[] _weekDayNames = 
+  {
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  };
+
   private static final String[] _monthNames = 
   {
-    "January",  "IANVARIVS",
-    "February", "FEBRVARIVS",
-    "March",    "MARTIVS",
-    "April",    "APRILLIS",
-    "May",      "MAIVS",
-    "June",     "IVNIVS",
-    "July",     "IVLIVS",
-    "August",   "AVGVSTVS",
-    "September","SEPTEMBER",
-    "October",  "OCTOBER",
-    "November", "NOVEMBER",
-    "December", "DECEMBER"
+    "January",  "Ianuarius",
+    "February", "Februarius",
+    "March",    "Martius",
+    "April",    "Aprilis",
+    "May",      "Maius",
+    "June",     "Iunius",
+    "July",     "Iulius",
+    "August",   "Augustus",
+    "September","September",
+    "October",  "October",
+    "November", "November",
+    "December", "December"
   };
 
 }
