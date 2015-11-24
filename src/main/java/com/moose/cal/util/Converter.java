@@ -246,7 +246,7 @@ public class Converter {
     double djour = (dd-equinoxe) % 30;
     week = (int)(Math.floor(djour/10)+1);
     day = (int)((djour % 10)+1);
-    if (month>12) day+=11;
+//    if (month>12) day+=11;
 
     // Adjust for Sans-culottides
     if (day>10) {

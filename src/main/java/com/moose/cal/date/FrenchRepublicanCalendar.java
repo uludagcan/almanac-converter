@@ -160,13 +160,22 @@ public final class FrenchRepublicanCalendar extends Almanac {
   }
 
   /**
+   * Gets the number of months in the year.
+   * @return the number of months in the year.
+   */
+  @Override
+  public int getNumberOfMonthsInYear() {
+    return 13;
+  }
+
+  /**
    * Sets the day.
    * @param day the day.
    */
   @Override
   public void setDay(int day) {
-    this.day = (day/10)+1;
-    _week = day%10;
+    this.day = (day%10);
+    _week = day/10+1;
   }
 
   /**
