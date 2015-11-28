@@ -28,18 +28,6 @@ public abstract class Almanac implements Serializable {
   private static final long serialVersionUID = 1L;
 
   /**
-   * Gets the week length.
-   * @return the week length.
-   */
-  public int getNumberOfDaysInWeek() { return 7; }
-
-  /** 
-   * Gets the year length in months.
-   * @return the number of months in a year.
-   */
-  public int getNumberOfMonthsInYear() { return 12; }
-
-  /**
    * Returns the weekday of a 7-day week.
    * The returned value will be an integer representing the day number of the
    * week starting at Sunday (0) and ending on Saturday (6).
@@ -198,12 +186,30 @@ public abstract class Almanac implements Serializable {
     } else day--;
   }
 
+  /**
+   * Adds days to this date.
+   * @param n the number of days to add.
+   */
+  public void addDays(int n) {
+    for (int i=0; i<n; ++i) nextDay();
+  }
+
+  /**
+   * Subtracts days from this date.
+   * @param n the number of days to subtract.
+   */
+  public void subtractDays(int n) {
+    for (int i=0; i<n; ++i) prevDay();
+  }
+
 //////////////////////////////////////////////////////////////////////////////
 // abstract
   
   public abstract String getDate();
   public abstract String getName();
   public abstract int getNumberOfDaysInMonth();
+  public abstract int getNumberOfDaysInWeek();
+  public abstract int getNumberOfMonthsInYear();
   public abstract void set(Almanac a);
 
 //////////////////////////////////////////////////////////////////////////////

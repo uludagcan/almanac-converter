@@ -30,7 +30,7 @@ import static com.moose.cal.util.Converter.*;
 
 /**
  * A date in the Julian calendar.
- * @author Chris Engelsma
+ * @author Chris Engelsma.
  * @version 2015.10.02
  */
 public final class JulianCalendar extends Almanac {
@@ -242,6 +242,10 @@ public final class JulianCalendar extends Almanac {
     return _weekDayNames[getWeekDayNumber()];
   }
 
+  /**
+   * Gets the names of the weekdays.
+   * @return an array[7] of the weekdays.
+   */
   @Override
   public String[] getWeekDays() {
     return _weekDayNames;
@@ -254,6 +258,24 @@ public final class JulianCalendar extends Almanac {
   @Override
   public int getNumberOfDaysInMonth() {
     return JulianCalendar.getNumberOfDaysInMonth(getMonth(),getYear());
+  }
+
+  /**
+   * Gets the number of days in a week.
+   * @return the number of days in a week.
+   */
+  @Override
+  public int getNumberOfDaysInWeek() {
+    return 7;
+  }
+
+  /** 
+   * Gets the number of months in a year.
+   * @return the number of months in a year.
+   */
+  @Override
+  public int getNumberOfMonthsInYear() {
+    return 12;
   }
 
   /**

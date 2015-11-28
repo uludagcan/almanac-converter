@@ -214,10 +214,10 @@ public class MayaCalendar extends Almanac {
   @Override
   public void set(Almanac a) {
     MayaCalendar cal = toMayaCalendar(a);
-    _kin = cal.getKin();
-    _uinal = cal.getUinal();
-    _tun = cal.getTun();
-    _katun = cal.getKatun();
+    _kin    = cal.getKin();
+    _uinal  = cal.getUinal();
+    _tun    = cal.getTun();
+    _katun  = cal.getKatun();
     _baktun = cal.getBaktun();
   }
 

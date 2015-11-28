@@ -13,11 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 *****************************************************************************/
-package com.moose.cal.date;
+package com.moose.cal.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
 import org.junit.Test;
+
+import com.moose.cal.date.*;
 
 /**
  * Tests {@link com.moose.cal.date.HolidayCalculator}.
@@ -41,8 +43,7 @@ public class HolidayCalculatorTest {
       new GregorianCalendar(2006,4,16),
       new GregorianCalendar(2007,4, 8),
       new GregorianCalendar(2008,3,23),
-      new GregorianCalendar(2009,4,12) 
-      };
+      new GregorianCalendar(2009,4,12)};
 
     for (int i=0; i<n; ++i) 
       actual[i] = new GregorianCalendar(HolidayCalculator.getEaster(i+2000));

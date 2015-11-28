@@ -91,15 +91,6 @@ public class IslamicCalendar extends Almanac {
   }
 
   /**
-   * Returns this calendar's name.
-   * @return this calendar's name.
-   */
-  @Override
-  public String getName() {
-    return CALENDAR_NAME;
-  }
-
-  /**
    * Gets this month's name.
    * @return this month's name.
    */
@@ -137,6 +128,15 @@ public class IslamicCalendar extends Almanac {
   }
 
   /**
+   * Returns this calendar's name.
+   * @return this calendar's name.
+   */
+  @Override
+  public String getName() {
+    return CALENDAR_NAME;
+  }
+
+  /**
    * Sets this calendar.
    * @param a an almanac.
    */
@@ -168,7 +168,7 @@ public class IslamicCalendar extends Almanac {
 
   /**
    * Gets the days of the week.
-   * @return the days of the week.
+   * @return an array[7] of the weekday names.
    */
   @Override
   public String[] getWeekDays() {
@@ -185,8 +185,26 @@ public class IslamicCalendar extends Almanac {
   }
 
   /**
-   * Prints the date.
-   * @param the date.
+   * Gets the number of days in a week.
+   * @return the number of days in a week.
+   */
+  @Override
+  public int getNumberOfDaysInWeek() {
+    return 7;
+  }
+
+  /**
+   * Gets the number of months in a year.
+   * @return the number of months in a year.
+   */
+  @Override
+  public int getNumberOfMonthsInYear() {
+    return 12;
+  }
+
+  /**
+   * Gets the date as a string.
+   * @return the date as a string.
    */  
   @Override
   public String getDate() {

@@ -279,6 +279,24 @@ public final class GregorianCalendar extends Almanac {
   }
 
   /**
+   * Gets the number of days in a week.
+   * @return the number of days in a week.
+   */
+  @Override
+  public int getNumberOfDaysInWeek() {
+    return 7;
+  }
+
+  /**
+   * Gets the number of months in a year.
+   * @return the number of months in a year.
+   */
+  @Override
+  public int getNumberOfMonthsInYear() {
+    return 12;
+  }
+
+  /**
    * Gets an array of month-lengths for a given year.
    * @param year a year.
    * @return an array[12] of month-lengths for a given year.

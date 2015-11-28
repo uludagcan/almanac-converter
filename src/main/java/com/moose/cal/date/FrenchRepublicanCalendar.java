@@ -252,16 +252,6 @@ public final class FrenchRepublicanCalendar extends Almanac {
   }
 
   /**
-   * Returns the number of days in a given month and year.
-   * @param month a month.
-   * @param year a year.
-   * @return the number of days in the month and year.
-   */
-  public static int getNumberOfDaysInMonth(int month, int year) {
-    return (month==13) ? (isLeapYear(year) ? 6 : 5) : 30;
-  }
-
-  /**
    * Gets the number of days in this month and year.
    * @return the number of days in this month and year.
    */
@@ -277,6 +267,16 @@ public final class FrenchRepublicanCalendar extends Almanac {
    */
   public int getNumberOfDaysInMonth(int month) {
     return FrenchRepublicanCalendar.getNumberOfDaysInMonth(month,this.year);
+  }
+
+  /**
+   * Returns the number of days in a given month and year.
+   * @param month a month.
+   * @param year a year.
+   * @return the number of days in the month and year.
+   */
+  public static int getNumberOfDaysInMonth(int month, int year) {
+    return (month==13) ? (isLeapYear(year) ? 6 : 5) : 30;
   }
 
   /**
@@ -337,9 +337,19 @@ public final class FrenchRepublicanCalendar extends Almanac {
     return (val2-val1>365);
   }
 
+  /**
+   * Gets the number of days in a week.
+   * @return the number of days in a week.
+   */
   @Override
-  public int getNumberOfDaysInWeek() { return 10; }
+  public int getNumberOfDaysInWeek() { 
+    return 10; 
+  }
 
+  /**
+   * Gets the date as a string.
+   * @return the date as a string.
+   */
   @Override
   public String getDate() {
     return (this.year>=1) ? new String(getDay(true)+" "+
