@@ -19,9 +19,9 @@ To install, you will need [Gradle](https://gradle.org/) or [Apache Ant](http://a
 
 See the wiki for examples.
 
-###Why Almanac-Converter?
+###Inspiration
 
-Almanac Converter expands on pre-existing robust date libraries and enables two-way conversion between various calendars. 
+While there exists other Java-based date-time handlers, Almanac converter's central focus is around converting between historical dates. As such, it's design approach is different. First, it uses the Julian Day as the backbone behind the conversions. Secondly, constructing and converting is very simple and direct. 
 
 
 ![Gregorian Calendar](http://www.hypotemoose.com/img/app/cal/gregorian1.jpg)
