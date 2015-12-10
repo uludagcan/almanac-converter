@@ -23,6 +23,7 @@ See the wiki for examples.
 
 While there exists other Java-based date-time handlers, Almanac converter's central focus is around converting between historical dates. As such, it's design approach is different. First, it uses the Julian Day as the backbone behind the conversions. Secondly, constructing and converting is very simple and direct. 
 
+###Supported Calendars
 
 ![Gregorian Calendar](http://www.hypotemoose.com/img/app/cal/gregorian1.jpg)
 The Gregorian Calendar is internationally the most widely used civil calendar. It was named for Pope Gregory XIII who introduced it on October 15, 1582. The calendar was a refinement to the Julian Calendar, with the motivation of setting the Easter holiday to a specific date instead of the spring equinox, which naturally drifted dates.
