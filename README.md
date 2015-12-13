@@ -48,6 +48,9 @@ The Maya calendar consists of several cycles (or counts) of different lengths. T
 ![Maya Calendar](http://www.hypotemoose.com/img/app/cal/islamic1.jpg)
 The Islamic calendar, or Hijri calendar, is a lunar calendar currently used in many Muslim countries and also used by Muslims to determine the proper days on which to observing the annual fasting, to attend Hajj, and to celebrate other Islamic holidays and festivals. The calendar consists of 12 months with a year of 354 days. The lengths of the months are determined by the birth of a new lunar cycle, which historically resulted in each month being 29 or 30 days depending on the visibility of the moon. However, certain sects and groups now use a tabular Islamic calendar, in which odd-numbered months have thirty days, and even months have 29.
 
+![Hebrew Calendar](http://www.hypotemoose.com/img/app/cal/hebrew1.jpg)
+The Hebrew (Jewish) calendar is a calendar used predominantly for Jewish religious observances. It determines the dates for Jewish holidays and the appropriate public reading of Torah portions. In Israel, it is used for religious purposes, provides a time frame for agriculture and is an official calendar used for civil purposes.
+
 ## Other - Julian Day
 The Julian Day is the continuous count of days since the beginning of the Julian Period used primarily by astronomers. The Julian Period is a chronological interval of 7980 years beginning in 4713 BC, and has been used since 1583 to convert between different calendars. The next Julian Period begins in the year 3268 AD.
 
@@ -59,8 +62,8 @@ The Julian Day is the continuous count of days since the beginning of the Julian
 * French Republican Calendar [100%] DONE
 * Mayan Calendar             [100%] DONE
 * Islamic Calendar           [100%] DONE
-* Hebrew Calendar            [ 20%] IN PROGRESS
-* Persian Calendar           [  0%] PLANNING
+* Hebrew Calendar            [ 90%] BETA
+* Persian Calendar           [ 20%] IN PROGRESS
 * Coptic Calendar            [  0%] PLANNING
 * Chinese Calendar           [  0%] PLANNING
 * Soviet Calendar            [  0%] PLANNING
