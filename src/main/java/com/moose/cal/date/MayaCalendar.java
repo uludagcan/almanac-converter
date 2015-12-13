@@ -113,15 +113,6 @@ public class MayaCalendar extends Almanac {
   }
 
   /**
-   * Returns this calendar's name.
-   * @return this calendar's name.
-   */
-  @Override
-  public String getName() {
-    return CALENDAR_NAME;
-  }
-
-  /**
    * Sets this K'in.
    * @param kin the K'in.
    */

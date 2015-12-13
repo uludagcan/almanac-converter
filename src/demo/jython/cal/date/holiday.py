@@ -6,6 +6,7 @@ from javax.swing import *
 
 import org.joda.time.DateTime
 from com.moose.cal.date import *
+from com.moose.cal.util import *
 from com.moose.cal.astro.Meeus import *
 
 holidays = [

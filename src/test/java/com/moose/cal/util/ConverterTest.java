@@ -47,6 +47,7 @@ public class ConverterTest {
                   actual.equals(expected));
   }
 
+  @Test
   public void julianDayShouldConvertToJulianCalendar() {
     JulianCalendar actual = 
       Converter.toJulianCalendar(new JulianDay(2446864.5));
@@ -123,6 +124,26 @@ public class ConverterTest {
       Converter.toJulianDay(new IslamicCalendar(1407,7,9));
     JulianDay expected = new JulianDay(2446864.5);
     assertEquals( "FAIL: Islamic Calendar -> Julian Day is broken",
+                  true,
+                  actual.equals(expected));
+  }
+
+  @Test
+  public void julianDayShouldConvertToHebrewCalendar() {
+    HebrewCalendar actual = 
+      Converter.toHebrewCalendar(new JulianDay(2446864.5));
+    HebrewCalendar expected = new HebrewCalendar(5747,12,9);
+    assertEquals( "FAIL: Julian Day -> Hebrew Calendar is broken",
+                  true,
+                  actual.equals(expected));
+  }
+
+  @Test
+  public void hebrewCalendarShouldConvertToJulianDay() {
+    JulianDay actual = 
+      Converter.toJulianDay(new HebrewCalendar(5747,12,9));
+    JulianDay expected = new JulianDay(2446864.5);
+    assertEquals( "FAIL: Julian Day -> Hebrew Calendar is broken",
                   true,
                   actual.equals(expected));
   }

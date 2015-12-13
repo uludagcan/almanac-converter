@@ -85,14 +85,6 @@ public final class JulianCalendar extends Almanac {
   }
 
   /**
-   * Returns this calendar's name.
-   * @return this calendar's name.
-   */
-  public String getName() {
-    return CALENDAR_NAME;
-  }
- 
-  /**
    * Returns today's date as a string.
    * Convenience static method.
    * @return today's date.

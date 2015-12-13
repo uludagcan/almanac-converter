@@ -81,7 +81,7 @@ public class AlmanacFormat {
     int beginOffset = buffer.length();
     switch (patternCharIndex) {
       case 0: // 'G' - Era
-        current = "";
+        buffer.append("Era");
         break;
       case 1: // 'y' - Year
         if (count>=4) buffer.append("Long year");

@@ -94,41 +94,32 @@ public final class JulianDay extends Almanac {
 
   /**
    * Gets the number of days in a month.
-   * Note: Overloaded function; only returns zero for this calendar.
+   * Note: Overloaded function; only returns one for this calendar.
    * @return the number of days in a month.
    */
   @Override 
   public int getNumberOfDaysInMonth() { 
-    return 0; 
+    return 1; 
   }
 
   /**
    * Gets the number of days in a week.
-   * Note: Overloaded function; only returns zero for this calendar.
+   * Note: Overloaded function; only returns one for this calendar.
    * @return the number of days in a week.
    */
   @Override
   public int getNumberOfDaysInWeek() {
-    return 0;
+    return 7;
   }
 
   /**
    * Gets the number of months in the year.
-   * Note: Overloaded function; only returns zero for this calendar.
+   * Note: Overloaded function; only returns one for this calendar.
    * @return the number of months in a year.
    */
   @Override
   public int getNumberOfMonthsInYear() {
-    return 0;
-  }
-
-  /**
-   * Returns this calendar's name.
-   * @return this calendar's name.
-   */
-  @Override
-  public String getName() {
-    return CALENDAR_NAME;
+    return 12;
   }
 
   /**

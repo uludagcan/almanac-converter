@@ -52,14 +52,14 @@ public final class GregorianCalendar extends Almanac {
   public static final JulianDay EPOCH = new JulianDay(2299160.5);
 
   /**
-   * Constructs a Gregorian Date using today's date.
+   * Constructs a Gregorian Calendar using today's date.
    */
   public GregorianCalendar() {
     this(Calendar.getInstance());
   }
 
   /**
-   * Constructs a Greogrian Date using a Java calendar date.
+   * Constructs a Greogrian Calendar using a Java calendar date.
    */
   public GregorianCalendar(Calendar cal) {
     this(cal.get(Calendar.YEAR), 
@@ -68,7 +68,7 @@ public final class GregorianCalendar extends Almanac {
   }
 
   /**
-   * Constructs a Gregorian Date from another Almanac.
+   * Constructs a Gregorian Calendar from another Almanac.
    * @param date another Almanac
    */
   public GregorianCalendar(Almanac date) {
@@ -76,8 +76,8 @@ public final class GregorianCalendar extends Almanac {
   }
 
   /**
-   * Constructs a Gregorian Date given another Gregorian Date.
-   * @param date A Gregorian Date.
+   * Constructs a Gregorian Calendar given another Gregorian Calendar.
+   * @param date A Gregorian Calendar.
    */
   public GregorianCalendar(GregorianCalendar date) {
     this(date.getYear(),
@@ -86,7 +86,7 @@ public final class GregorianCalendar extends Almanac {
   }
 
   /**
-   * Constructs a Gregorian Date given a Joda DateTime.
+   * Constructs a Gregorian Calendar given a Joda DateTime.
    * @param dt a Joda DateTime.
    */
   public GregorianCalendar(DateTime dt) {
@@ -96,25 +96,15 @@ public final class GregorianCalendar extends Almanac {
   }
 
   /**
-   * Constructs a Gregorian Date from a given day, month and year.
+   * Constructs a Gregorian Calendar from a given day, month and year.
    * @param year The year.
    * @param month The month.
    * @param day The day.
    */
   public GregorianCalendar(int year, int month, int day) {
-    super();
-    this.day   = day;
-    this.month = month;
     this.year  = year;
-  }
-
-  /**
-   * Returns this calendar's name.
-   * @return this calendar's name.
-   */
-  @Override
-  public String getName() {
-    return CALENDAR_NAME;
+    this.month = month;
+    this.day   = day;
   }
 
   /**
@@ -213,7 +203,7 @@ public final class GregorianCalendar extends Almanac {
    * @param year the year. 
    * @return the number of days in the month.
    */
-  public static int getNumberOfDaysInMonth(int month, int year) {
+  public static int getNumberOfDaysInMonth(int year, int month) {
     if (month==4  || month==6  || month==9  || month==11) 
       return 30;
     if (month==2) {
@@ -229,7 +219,7 @@ public final class GregorianCalendar extends Almanac {
    * @return the number of days in a month of this year.
    */
   public int getNumberOfDaysInMonth(int month) {
-    return GregorianCalendar.getNumberOfDaysInMonth(month,getYear());
+    return GregorianCalendar.getNumberOfDaysInMonth(this.year,this.month);
   }
 
   /**
@@ -275,7 +265,7 @@ public final class GregorianCalendar extends Almanac {
    */
   @Override
   public int getNumberOfDaysInMonth() {
-    return GregorianCalendar.getNumberOfDaysInMonth(getMonth(),getYear());
+    return GregorianCalendar.getNumberOfDaysInMonth(this.year,this.month);
   }
 
   /**
@@ -304,7 +294,7 @@ public final class GregorianCalendar extends Almanac {
   public static int[] getDaysPerMonthInYear(int year) {
     int[] days = new int[12];
     for (int i=0; i<12; ++i) 
-      days[i] = GregorianCalendar.getNumberOfDaysInMonth(i+1,year);
+      days[i] = GregorianCalendar.getNumberOfDaysInMonth(year,i+1);
     return days;
   }
 

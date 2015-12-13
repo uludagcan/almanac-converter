@@ -16,11 +16,14 @@ limitations under the License.
 package com.moose.cal.date;
 
 import java.util.Calendar;
+import java.util.Random;
 import org.joda.time.DateTime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
 import org.junit.Test;
+
+import static com.moose.cal.util.Converter.*;
 
 /**
  * Tests {@link com.moose.cal.date.GregorianCalendar}.
@@ -117,8 +120,21 @@ public class GregorianCalendarTest {
   }
 
   @Test
-  public void nextDayShouldWrap() {
+  public void testGregorianRoundTrip() {
+    Random r = new Random();
+    double min = GregorianCalendar.EPOCH.getValue();
+    double jday = (new JulianDay()).getValue();
+    double rand = 0.0;
+    for (int i=0; i<1000; ++i) {
+      rand = (double)(r.nextInt((int)(jday-min))+min);
+      JulianDay jday1 = new JulianDay(rand);
+      GregorianCalendar a = new GregorianCalendar(jday1);
+      JulianDay jday2 = toJulianDay(a);
+      GregorianCalendar b = toGregorianCalendar(jday2);
+      assertEquals( "FAIL: Gregorian Calendar failed round trip",
+                    a,
+                    b);
+    }
   }
-
-  
+ 
 }

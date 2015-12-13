@@ -142,15 +142,6 @@ public final class FrenchRepublicanCalendar extends Almanac {
   }
  
   /**
-   * Returns this calendar's name.
-   * @return this calendar's name.
-   */
-  @Override
-  public String getName() {
-    return CALENDAR_NAME;
-  }
-
-  /**
    * Gets the month names.
    * @return the month names.
    */

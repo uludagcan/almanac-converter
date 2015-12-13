@@ -26,58 +26,61 @@ import org.junit.Test;
 import static com.moose.cal.util.Converter.*;
 
 /**
- * Tests {@link com.moose.cal.date.FrenchRepublicanCalendar}.
+ * Tests {@link com.moose.cal.date.HebrewCalendar}.
  * @author Chris Engelsma
- * @version 2015.10.09
+ * @version 2015.12.10
  */
-public class FrenchRepublicanCalendarTest {
+public class HebrewCalendarTest {
   @Test
   public void sameDatesShouldBeEqual() {
-    FrenchRepublicanCalendar date1 = new FrenchRepublicanCalendar(195,6,2,9);
-    FrenchRepublicanCalendar date2 = new FrenchRepublicanCalendar(195,6,2,9);
+    HebrewCalendar date1 = new HebrewCalendar(5747,12,9);
+    HebrewCalendar date2 = new HebrewCalendar(5747,12,9);
     assertEquals( "FAIL: Dates should be equal",
+                  true,
+                  date1.equals(date2));
+  }
+
+  @Test
+  public void daysPerMonthShouldBeCorrect() {
+    int[] days = new int[] { 30, 29, 30, 29, 30, 29, 30, 30, 30, 29, 30, 29};
+    int year = 5747;
+    int[] result = HebrewCalendar.getDaysPerMonthInYear(year);
+    assertArrayEquals("FAIL: Days of month aren't correct",
+                      days,
+                      result);
+  }
+
+  @Test
+  public void jodaDateTimeShouldConstruct() {
+    HebrewCalendar date1 = 
+      new HebrewCalendar(new DateTime(1987,3,10,0,1));
+    HebrewCalendar date2 = new HebrewCalendar(5747,12,9);
+    assertEquals( "FAIL: Date should construct from Joda DateTime",
                   true,
                   date1.equals(date2));
   }
 
   @Test(expected = IndexOutOfBoundsException.class)
   public void monthNameShouldBadMonthNumber() {
-    String month = FrenchRepublicanCalendar.getMonthName(0); // No "0" month!
+    String month = HebrewCalendar.getMonthName(0); // No "0" month!
   }
 
   @Test
-  public void leapYearShouldComputeCorrectly() {
-    int n = 12;
-    boolean[] expected = new boolean[n];
-    boolean[] actual = new boolean[n];
-
-    for (int i=0; i<n; ++i) expected[i] = false;
-    expected[2] = true; expected[6] = true; expected[10] = true;
-
-    for (int i=0; i<n; ++i) 
-      actual[i] = FrenchRepublicanCalendar.isLeapYear(i+1);
-
-    assertArrayEquals("FAIL: Leap years not computing correctly",
-                      actual,
-                      expected);
-  }
-
-  @Test
-  public void testFrenchRepublicanRoundTrip() {
+  public void testHebrewRoundTrip() {
     Random r = new Random();
-    double min = FrenchRepublicanCalendar.EPOCH.getValue();
+    double min = HebrewCalendar.EPOCH.getValue();
     double jday = (new JulianDay()).getValue();
     double rand = 0.0;
     for (int i=0; i<1000; ++i) {
       rand = (double)(r.nextInt((int)(jday-min))+min);
       JulianDay jday1 = new JulianDay(rand);
-      FrenchRepublicanCalendar a = new FrenchRepublicanCalendar(jday1);
+      HebrewCalendar a = new HebrewCalendar(jday1);
       JulianDay jday2 = toJulianDay(a);
-      FrenchRepublicanCalendar b = toFrenchRepublicanCalendar(jday2);
+      HebrewCalendar b = toHebrewCalendar(jday2);
       assertEquals( "FAIL: French Republican Calendar failed round trip",
                     a,
                     b);
     }
   }
-  
+
 }

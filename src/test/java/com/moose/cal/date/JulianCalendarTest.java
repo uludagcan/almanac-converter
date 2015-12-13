@@ -15,11 +15,14 @@ limitations under the License.
 *****************************************************************************/
 package com.moose.cal.date;
 
+import java.util.Random;
 import org.joda.time.DateTime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
 import org.junit.Test;
+
+import static com.moose.cal.util.Converter.*;
 
 /**
  * Tests {@link com.moose.cal.date.JulianCalendar}.
@@ -95,5 +98,22 @@ public class JulianCalendarTest {
     String month = JulianCalendar.getMonthName(0); // No "0" month!
   }
 
-  
+  @Test
+  public void testJulianRoundTrip() {
+    Random r = new Random();
+    double min = JulianCalendar.EPOCH.getValue();
+    double jday = (new JulianDay()).getValue();
+    double rand = 0.0;
+    for (int i=0; i<1000; ++i) {
+      rand = (double)(r.nextInt((int)(jday-min))+min);
+      JulianDay jday1 = new JulianDay(rand);
+      JulianCalendar a = new JulianCalendar(jday1);
+      JulianDay jday2 = toJulianDay(a);
+      JulianCalendar b = toJulianCalendar(jday2);
+      assertEquals( "FAIL: French Republican Calendar failed round trip",
+                    a,
+                    b);
+    }
+  }
+ 
 }

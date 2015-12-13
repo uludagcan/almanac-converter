@@ -25,6 +25,8 @@ import java.io.Serializable;
  * @version 2015.11.04
  */
 public abstract class Almanac implements Serializable {
+
+  public static final String CALENDAR_NAME = "";
   private static final long serialVersionUID = 1L;
 
   /**
@@ -206,7 +208,6 @@ public abstract class Almanac implements Serializable {
 // abstract
   
   public abstract String getDate();
-  public abstract String getName();
   public abstract int getNumberOfDaysInMonth();
   public abstract int getNumberOfDaysInWeek();
   public abstract int getNumberOfMonthsInYear();

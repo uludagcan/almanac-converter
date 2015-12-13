@@ -1,57 +1,59 @@
 /*****************************************************************************
-Copyright 2015 Hypotemoose, Inc.
+  Copyright 2015 Hypotemoose, Inc.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-   http://www.apache.org/licenses/LICENSE-2.0
+     http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
 *****************************************************************************/
-package com.moose.cal.util;
+  package com.moose.cal.util;
 
-import com.moose.cal.date.*;
-import com.moose.cal.astro.*;
-
-/**
- * A mechanism to convert between various calendars.
- * @author Chris Engelsma
- * @version 2015.10.02
- */
-public class Converter {
+  import com.moose.cal.date.*;
+  import com.moose.cal.astro.*;
 
   /**
-   * Converts an Almanac to a Julian day.
-   * @param a an Almanac.
-   * @return the Julian day.
+   * A mechanism to convert between various calendars.
+   * @author Chris Engelsma
+   * @version 2015.10.02
    */
-  public static JulianDay toJulianDay(Almanac a) {
-    if (!(a instanceof JulianDay)) {
-      if (a instanceof GregorianCalendar)
-        return _g2jd((GregorianCalendar)a);
-      if (a instanceof JulianCalendar)
-        return _jul2jd((JulianCalendar)a);
-      if (a instanceof FrenchRepublicanCalendar)
-        return _frc2jd((FrenchRepublicanCalendar)a);
-      if (a instanceof MayaCalendar)
-        return _m2jd((MayaCalendar)a);
-      if (a instanceof IslamicCalendar)
-        return _is2jd((IslamicCalendar)a);
+  public class Converter {
+
+    /**
+     * Converts an Almanac to a Julian day.
+     * @param a an Almanac.
+     * @return the Julian day.
+     */
+    public static JulianDay toJulianDay(Almanac a) {
+      if (!(a instanceof JulianDay)) {
+        if (a instanceof GregorianCalendar)
+          return _g2jd((GregorianCalendar)a);
+        if (a instanceof JulianCalendar)
+          return _jul2jd((JulianCalendar)a);
+        if (a instanceof FrenchRepublicanCalendar)
+          return _frc2jd((FrenchRepublicanCalendar)a);
+        if (a instanceof MayaCalendar)
+          return _m2jd((MayaCalendar)a);
+        if (a instanceof IslamicCalendar)
+          return _is2jd((IslamicCalendar)a);
+        if (a instanceof HebrewCalendar)
+          return _he2jd((HebrewCalendar)a);
+      }
+      return (JulianDay)a;
     }
-    return (JulianDay)a;
-  }
 
-  /**
-   * Converts an Almanac to a Gregorian date.
-   * @param a an Almanac.
-   * @return the Gregorian date.
-   */
-  public static GregorianCalendar toGregorianCalendar(Almanac a) {
+    /**
+     * Converts an Almanac to a Gregorian date.
+     * @param a an Almanac.
+     * @return the Gregorian date.
+     */
+    public static GregorianCalendar toGregorianCalendar(Almanac a) {
     if (a instanceof GregorianCalendar)
       return (GregorianCalendar)a;
     else 
@@ -105,10 +107,17 @@ public class Converter {
       return _jd2is(toJulianDay(a));
   }
 
+  public static HebrewCalendar toHebrewCalendar(Almanac a) {
+    if (a instanceof HebrewCalendar)
+      return (HebrewCalendar)a;
+    else
+      return _jd2he(toJulianDay(a));
+  }
+
 /////////////////////////////////////////////////////////////////////////////
 // private
 
-  /* To Julian Day **********************************************************/
+/* To Julian Day ************************************************************/
 
   private static JulianDay _g2jd(GregorianCalendar date) {
     int month = date.getMonth();
@@ -198,7 +207,30 @@ public class Converter {
     return new JulianDay(jd);
   }
 
-  /* From Julian Day ********************************************************/
+  private static JulianDay _he2jd(HebrewCalendar date) {
+    int day = date.getDay();
+    int month = date.getMonth();
+    int year = date.getYear();
+    int months = date.getNumberOfMonthsInYear();
+    double jd = date.EPOCH.getValue() + 
+                delayHebrewYear(year) +
+                delayHebrewYearAdjacent(year) +
+                day + 1;
+    
+    if (month<7) {
+      for (int i=7; i<=months; ++i) 
+        jd+=HebrewCalendar.getNumberOfDaysInMonth(year,i);
+      for (int i=1; i<month; ++i)
+        jd+=HebrewCalendar.getNumberOfDaysInMonth(year,i);
+    } else {
+      for (int i=7; i<month; ++i) {
+        jd+=HebrewCalendar.getNumberOfDaysInMonth(year,i);
+      }
+    }
+    return new JulianDay(jd);
+  }
+
+/* From Julian Day **********************************************************/
 
   private static GregorianCalendar _jd2g(JulianDay jd) {
     int J = (int)(jd.getValue()+0.5);
@@ -246,9 +278,7 @@ public class Converter {
     double djour = (dd-equinoxe) % 30;
     week = (int)(Math.floor(djour/10)+1);
     day = (int)((djour % 10)+1);
-//    if (month>12) day+=11;
 
-    // Adjust for Sans-culottides
     if (day>10) {
       day -= 12;
       week = 1;
@@ -293,6 +323,67 @@ public class Converter {
     return new IslamicCalendar(year,month,day);
   }
 
+  private static HebrewCalendar _jd2he(JulianDay jd) {
+    int year,month,day;
+    double epoch = HebrewCalendar.EPOCH.getValue();
+    double jday = jd.atMidnight().getValue();
+    int count = (int)Math.floor(((jday-epoch)*98496.0)/35975351.0);
+
+    year = count-1;
+
+    HebrewCalendar cal = new HebrewCalendar(count,7,1);
+    double guess = _he2jd(cal).getValue();
+    for (int i=count; jday>=guess; ++i) {
+      year++;
+      cal.setYear(i+1);
+      guess = _he2jd(cal).getValue();
+    }
+
+    cal.set(year,1,1);
+    int first = (jday<_he2jd(cal).getValue()) ? 7 : 1;
+    month = first;
+
+    cal.set(year,first,HebrewCalendar.getNumberOfDaysInMonth(year,first));
+    guess = toJulianDay(cal).getValue();
+
+    for (int i=first; jday>guess; ++i,++month) {
+      cal.set(year,i,HebrewCalendar.getNumberOfDaysInMonth(year,i));
+      guess = toJulianDay(cal).getValue();
+    }
+    --month;
+    cal.set(year,month,1);
+    day = (int)(jday-_he2jd(cal).getValue())+1;
+    return new HebrewCalendar(year,month,day);
+  }
+
+//////////////////////////////////////////////////////////////////////////////
+// protected 
+
+  /**
+   * Delay start of new year so it doesn't fall on Sunday, Wednesday or
+   * Friday.
+   */
+  protected static int delayHebrewYear(int year) {
+    int months = (int)Math.floor(((235*year)-234)/19);
+    int parts = 12084+(13753*months);
+    int day = (months*29)+(int)Math.floor(parts/25920);
+    if ((3*(day+1))%7 < 3) 
+      ++day;
+    return day;
+  }
+
+  /**
+   * Check for delay due to length of adjacent years.
+   */
+  protected static int delayHebrewYearAdjacent(int year) {
+    int last = delayHebrewYear(year-1);
+    int now = delayHebrewYear(year);
+    int next = delayHebrewYear(year+1);
+    int val = ((next-now)==356) ? 2 : (((now-last)==382) ? 1 : 0);
+    return val;
+  }
+
+
   /* Other helper functions ************************************************/
 
   private static double[] anneeDeLaRevolution(JulianDay julday) {
@@ -313,7 +404,7 @@ public class Converter {
     double adr = (lasteq - FrenchRepublicanCalendar.EPOCH.getValue());
     adr /= Meeus.TROPICAL_YEAR;
     adr += 1;
-    return new double[] {Math.round(adr), lasteq};
+    return new double[] { Math.round(adr), lasteq };
   }
 
   private static double _parisEquinox(int year) {
@@ -335,7 +426,6 @@ public class Converter {
     eqTehran = Math.floor(eqTehran-0.5)+0.5;
     return eqTehran;
   }
-
 
   /* Constants for Maya Calendar */
   private static final double _luinal      = 20.0;

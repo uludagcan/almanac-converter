@@ -128,15 +128,6 @@ public class IslamicCalendar extends Almanac {
   }
 
   /**
-   * Returns this calendar's name.
-   * @return this calendar's name.
-   */
-  @Override
-  public String getName() {
-    return CALENDAR_NAME;
-  }
-
-  /**
    * Sets this calendar.
    * @param a an almanac.
    */
