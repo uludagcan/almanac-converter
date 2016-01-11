@@ -1,6 +1,6 @@
 Almanac Converter 
 -----------------
-[![Build Status](https://travis-ci.org/hypotemoose/almanac-converter.svg?branch=master)](https://travis-ci.org/Hypotemoose/almanac-converter) [![Code Climate](https://codeclimate.com/github/chrisengelsma/almanac-converter/badges/gpa.svg)](https://codeclimate.com/github/chrisengelsma/almanac-converter)
+[![Build Status](https://travis-ci.org/hypotemoose/almanac-converter.svg?branch=master)](https://travis-ci.org/Hypotemoose/almanac-converter) [![Code Climate](https://codeclimate.com/github/chrisengelsma/almanac-converter/badges/gpa.svg)](https://codeclimate.com/github/chrisengelsma/almanac-converter)[![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
 
 An easy-to-use Java-based calendar converter - able to convert between various known calendars.
 
