@@ -21,7 +21,7 @@ See the wiki for examples.
 
 ###Inspiration
 
-While there exists other Java-based date-time handlers, Almanac converter's central focus is around converting between historical dates. As such, it's design approach is different. First, it uses the Julian Day as the backbone behind the conversions. Secondly, constructing and converting is very simple and direct. 
+While there exists other Java-based date-time handlers, Almanac converter's central focus is around converting between historical dates. As such, its design approach is different. First, it uses the Julian Day as the backbone behind the conversions. Secondly, constructing and converting is very simple and direct. 
 
 ###Supported Calendars
 
