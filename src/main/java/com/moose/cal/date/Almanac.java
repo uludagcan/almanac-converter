@@ -208,6 +208,7 @@ public abstract class Almanac implements Serializable {
 // abstract
   
   public abstract String getDate();
+  public abstract String getName();
   public abstract int getNumberOfDaysInMonth();
   public abstract int getNumberOfDaysInWeek();
   public abstract int getNumberOfMonthsInYear();

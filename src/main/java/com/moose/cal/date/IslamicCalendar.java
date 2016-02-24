@@ -211,6 +211,11 @@ public class IslamicCalendar extends Almanac {
   }
 
   @Override
+  public String getName() {
+    return CALENDAR_NAME;
+  }
+
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof IslamicCalendar))
       return false;

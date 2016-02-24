@@ -13,11 +13,6 @@ DEG = u'\N{DEGREE SIGN}'
 def main(args):
   basicDemo()
   lunarDemo()
-  weekdayDemo()
-
-def weekdayDemo():
-  cal = GregorianCalendar()
-  cal.getWeekday
 
 def basicDemo():
   am = [
@@ -25,7 +20,8 @@ def basicDemo():
     JulianCalendar(),
     FrenchRepublicanCalendar(),
     MayaCalendar(),
-    IslamicCalendar()
+    IslamicCalendar(),
+    HebrewCalendar()
   ]
 
   print "Today is... "

@@ -232,6 +232,11 @@ public final class JulianDay extends Almanac {
   }
 
   @Override
+  public String getName() {
+    return CALENDAR_NAME;
+  }
+
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof JulianDay))
       return false;

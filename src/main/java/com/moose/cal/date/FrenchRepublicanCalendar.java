@@ -349,6 +349,11 @@ public final class FrenchRepublicanCalendar extends Almanac {
   }
 
   @Override
+  public String getName() {
+    return CALENDAR_NAME;
+  }
+
+  @Override
   public String toString() {
     return new String(CALENDAR_NAME+": "+getDate());
   }

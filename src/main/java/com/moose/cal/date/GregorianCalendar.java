@@ -323,6 +323,11 @@ public final class GregorianCalendar extends Almanac {
   }
 
   @Override
+  public String getName() {
+    return CALENDAR_NAME;
+  }
+
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof GregorianCalendar))
       return false;
