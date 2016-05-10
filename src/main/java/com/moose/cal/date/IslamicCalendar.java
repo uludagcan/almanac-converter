@@ -201,8 +201,8 @@ public class IslamicCalendar extends Almanac {
    */  
   @Override
   public String getDate() {
-    return new String( getMonthName()+" "+
-                       getDay()+", "+
+    return new String( getDay()+" "+
+                       getMonthName()+", "+
                        getYear());
   }
 

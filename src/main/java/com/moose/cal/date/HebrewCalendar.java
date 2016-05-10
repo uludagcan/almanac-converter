@@ -136,12 +136,21 @@ public class HebrewCalendar extends Almanac {
   }
 
   /**
+   * Gets the weekday name.
+   * @return the weekday.
+   */
+  @Override
+  public String getWeekDay() {
+    return weekDayNames[getWeekDayNumber()];
+  }
+
+  /**
    * Gets the date.
    * @return the date.
    */
   @Override
   public String getDate() {
-    return getMonthName()+" "+getDay()+", "+getYear();
+    return getDay()+" "+getMonthName()+" "+getYear();
   }
 
   /**
