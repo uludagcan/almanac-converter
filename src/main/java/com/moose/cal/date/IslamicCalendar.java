@@ -15,12 +15,14 @@ limitations under the License.
 *****************************************************************************/
 package com.moose.cal.date;
 
+import com.moose.cal.constants.CalendarConstants;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import org.joda.time.DateTime;
 
 import static com.moose.cal.util.Converter.*;
+import static com.moose.cal.constants.CalendarConstants.IslamicCalendarConstants.*;
 
 /**
  * An Islamic calendar date.
@@ -95,7 +97,7 @@ public class IslamicCalendar extends Almanac {
    * @return this month's name.
    */
   public String getMonthName() {
-    return _monthNames[this.month-1];
+    return monthNames[this.month-1];
   }
 
   /** 
@@ -114,7 +116,7 @@ public class IslamicCalendar extends Almanac {
    * @return the names of the months.
    */
   public static String[] getMonthNames() {
-    return _monthNames;
+    return monthNames;
   }
 
   /**
@@ -145,7 +147,7 @@ public class IslamicCalendar extends Almanac {
    */
   @Override
   public String[] getMonths() {
-    return _monthNames;
+    return monthNames;
   }
 
   /**
@@ -154,7 +156,7 @@ public class IslamicCalendar extends Almanac {
    */
   @Override
   public String getWeekDay() {
-    return _weekDayNames[getWeekDayNumber()];
+    return weekDayNames[getWeekDayNumber()];
   }
 
   /**
@@ -163,7 +165,7 @@ public class IslamicCalendar extends Almanac {
    */
   @Override
   public String[] getWeekDays() {
-    return _weekDayNames;
+    return weekDayNames;
   }
   
   /**
@@ -239,33 +241,4 @@ public class IslamicCalendar extends Almanac {
       .toHashCode();
   }
 
-//////////////////////////////////////////////////////////////////////////////
-// private
-
-  private static final String[] _weekDayNames = 
-  {
-    "al-Ahad", 
-    "al-Ithnayn",
-    "ath-Thalatha",
-    "al-Arbia",
-    "al-Khamis",
-    "al-Jumu'ah",
-    "as-Sabt"
-  };
-
-  private static final String[] _monthNames =
-  {
-    "Muharram",
-    "Safar",
-    "Rabi' al-Awwal",
-    "Rabi' ath-Thani",
-    "Jumada al-Ula",
-    "Jumada ath-Thaniyah",
-    "Rajab",
-    "Sha'ban",
-    "Ramadan",
-    "Shawwal",
-    "Dhu al-Qa'dah",
-    "Dhu al-Hijjah"
-  };
 }

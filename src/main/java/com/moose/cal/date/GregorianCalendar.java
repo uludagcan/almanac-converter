@@ -17,16 +17,14 @@ package com.moose.cal.date;
 
 import java.lang.Math;
 import java.util.*;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import org.joda.time.DateTime;
 
-import com.moose.cal.util.*;
 import static com.moose.cal.util.Converter.*;
+import static com.moose.cal.constants.CalendarConstants.GregorianCalendarConstants.*;
 
 /**
  * A Gregorian Calendar Date.
@@ -185,7 +183,7 @@ public final class GregorianCalendar extends Almanac {
   public static String getMonthName(int month) 
     throws IndexOutOfBoundsException 
   {
-    return _monthNames[month-1];
+    return monthNames[month-1];
   }
 
   /**
@@ -227,7 +225,7 @@ public final class GregorianCalendar extends Almanac {
    * @return the months.
    */
   public String[] getMonths() {
-    return _monthNames;
+    return monthNames;
   }
 
   /**
@@ -235,7 +233,7 @@ public final class GregorianCalendar extends Almanac {
    * @return the weekdays.
    */
   public String[] getWeekDays() {
-    return _weekDayNames;
+    return weekDayNames;
   }
 
   /**
@@ -256,7 +254,7 @@ public final class GregorianCalendar extends Almanac {
    */
   @Override
   public String getWeekDay() {
-    return _weekDayNames[getWeekDayNumber()];
+    return weekDayNames[getWeekDayNumber()];
   }
 
   /**
@@ -350,40 +348,4 @@ public final class GregorianCalendar extends Almanac {
       .append(this.day)
       .toHashCode();
   }
-
-/////////////////////////////////////////////////////////////////////////////
-// private
-
-  private static final String[] _weekDayNames = 
-  {
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
-  };
-
-  private static final String[] _monthNames = 
-  {
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-  };
-
-  private static final String[] _eras = 
-  {
-    "BC","BCE",
-    "AD","CE"
-  };
 }

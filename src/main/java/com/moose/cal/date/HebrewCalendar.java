@@ -15,18 +15,15 @@ limitations under the License.
 *****************************************************************************/
 package com.moose.cal.date;
 
-import java.lang.Math;
 import java.util.*;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import org.joda.time.DateTime;
 
-import com.moose.cal.util.*;
 import static com.moose.cal.util.Converter.*;
+import static com.moose.cal.constants.CalendarConstants.HebrewCalendarConstants.*;
 
 /**
  * A Hebrew Calendar Date.
@@ -102,7 +99,7 @@ public class HebrewCalendar extends Almanac {
 
   /**
    * Constructs a Hebrew Calendar from another Almanac.
-   * @param date another Almanac
+   * @param a another Almanac
    */
   public HebrewCalendar(Almanac a) {
     this(toHebrewCalendar(a));
@@ -127,7 +124,7 @@ public class HebrewCalendar extends Almanac {
   public static String getMonthName(int month) 
     throws IndexOutOfBoundsException 
   {
-    return _monthNames[month-1];
+    return monthNames[month-1];
   }
 
   /**
@@ -144,9 +141,7 @@ public class HebrewCalendar extends Almanac {
    */
   @Override
   public String getDate() {
-    return new String( getMonthName()+" "+
-                       getDay()+", "+
-                       getYear());
+    return getMonthName()+" "+getDay()+", "+getYear();
   }
 
   /**
@@ -222,7 +217,7 @@ public class HebrewCalendar extends Almanac {
 
   @Override
   public String toString() {
-    return new String(CALENDAR_NAME+": " +getDate()); 
+    return CALENDAR_NAME+": " +getDate();
   }
 
   /**
@@ -291,37 +286,4 @@ public class HebrewCalendar extends Almanac {
       .append(this.day)
       .toHashCode();
   }
-
-//////////////////////////////////////////////////////////////////////////////
-// private
-
-
-  private static final String[] _weekDayNames = 
-  {
-    "Yom Rishon",
-    "Yom Sheni",
-    "Yom Shlishi",
-    "Yom Revi'i",
-    "Yom Chamishi",
-    "Yom Shishi",
-    "Yom Shabbat"
-  };
-
-  private static final String[] _monthNames = 
-  {
-    "Nisan",
-    "Iyar",
-    "Sivan",
-    "Tammuz",
-    "Av",
-    "Elul",
-    "Tishrei",
-    "Marcheshvan",
-    "Kislev",
-    "Tevet",
-    "Shevat",
-    "Adar",
-    "Veadar"
-  };
-
 }

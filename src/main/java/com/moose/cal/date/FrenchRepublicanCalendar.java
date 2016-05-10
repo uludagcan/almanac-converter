@@ -15,7 +15,6 @@ limitations under the License.
 *****************************************************************************/
 package com.moose.cal.date;
 
-import com.moose.cal.astro.*;
 import static com.moose.cal.util.RomanNumeralGenerator.*;
 import static com.moose.cal.util.Converter.*;
 import static com.moose.cal.util.Util.*;
@@ -23,7 +22,7 @@ import static com.moose.cal.util.Util.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import org.joda.time.DateTime;
+import static com.moose.cal.constants.CalendarConstants.FrenchRepublicanCalendarConstants.*;
 
 /**
  * A date in the French Republican Calendar.
@@ -147,7 +146,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
    */
   @Override
   public String[] getMonths() {
-    return _monthNames;
+    return monthNames;
   }
 
   /**
@@ -175,7 +174,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
    */
   @Override 
   public String getWeekDay() {
-    return (this.year>=1) ? _weekDayNames[getDay(false)-1] : "";
+    return (this.year>=1) ? weekDayNames[getDay(false)-1] : "";
   }
 
   /**
@@ -184,7 +183,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
    */
   @Override
   public String[] getWeekDays() {
-    return _weekDayNames;
+    return weekDayNames;
   }
 
   /**
@@ -200,8 +199,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
       } else month++;
       day = 1;
     } else day++;
-
-    _week = (day/10)+1; 
+    _week = (day/10)+1;
     this.day = (day%10);
   }
 
@@ -211,7 +209,6 @@ public final class FrenchRepublicanCalendar extends Almanac {
   @Override
   public void prevDay() {
     day = getDay(true);
-
     if (day==1) {
       if (month==1) {
         month = getNumberOfMonthsInYear();
@@ -219,8 +216,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
       } else month--;
       day = getNumberOfDaysInMonth();
     } else day--;
-
-    _week = (day/10)+1; 
+    _week = (day/10)+1;
     this.day = (day%10);
   }
 
@@ -253,7 +249,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
 
   /**
    * Gets the number of days in a given month for this year.
-   * @param a month in this year.
+   * @param month a month in this year.
    * @return the number of days in a month of this year.
    */
   public int getNumberOfDaysInMonth(int month) {
@@ -279,7 +275,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
   public static String getMonthName(int month) 
     throws IndexOutOfBoundsException
   {
-    return _monthNames[month-1];
+    return monthNames[month-1];
   }
 
   /**
@@ -288,7 +284,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
    */
   public String getDayName() {
     int iday = getDay(true);
-    return _dayNames[this.month-1][iday-1];
+    return dayNames[this.month-1][iday-1];
   }
 
 
@@ -343,9 +339,8 @@ public final class FrenchRepublicanCalendar extends Almanac {
    */
   @Override
   public String getDate() {
-    return (this.year>=1) ? new String(getDay(true)+" "+
-                                       getMonthName()+", "+
-                                       toRoman(getYear())) : "";
+    return (this.year>=1) ?
+      new String(getDay(true)+" "+getMonthName()+", "+toRoman(getYear())) : "";
   }
 
   @Override
@@ -364,7 +359,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
       return false;
     if (obj == this)
       return true;
-      
+
     final FrenchRepublicanCalendar date = (FrenchRepublicanCalendar) obj;
 
     return new EqualsBuilder()
@@ -374,7 +369,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
       .append(this.day,date.getDay(false))
       .isEquals();
   }
-  
+
   @Override
   public int hashCode() {
     return new HashCodeBuilder()
@@ -390,155 +385,4 @@ public final class FrenchRepublicanCalendar extends Almanac {
 
   private int _week;
 
-  final static String[] _monthNames = 
-  {
-    "Vendémiaire",
-    "Brumaire",
-    "Frimaire",
-    "Nivôse",
-    "Pluviôse",
-    "Ventôse",
-    "Germinal",
-    "Floréal",
-    "Prairial",
-    "Messidor",
-    "Thermidor",
-    "Fructidor",
-    "Sans-culottides"
-  };
-
-  final static String[] _weekDayNames =
-  {
-    "Primidi",
-    "Duodi",
-    "Tridi",
-    "Quartidi",
-    "Quintidi",
-    "Sextidi",
-    "Septidi",
-    "Octidi",
-    "Nonidi",
-    "Décadi"
-  };
-  
-  final static String[][] _dayNames =
-  {
-    // Vendémiaire
-    {
-      "Raisin","Safran","Châtaigne","Colchique","Cheval",
-      "Balsamine","Carotte","Amaranthe","Panais","Cuve",
-      "Pomme de terre","Immortelle","Potiron","Réséda","Âne",
-      "Belle de nuit","Citrouille","Sarrasin","Tournesol","Pressoir",
-      "Chanvre","Pêche","Navet","Amaryllis","Bœuf",
-      "Aubergine","Piment","Tomate","Orge","Tonneau"
-     },
-     // Brumaire
-     {
-       "Pomme","Céleri","Poire","Betterave","Oie",
-       "Héliotrope","Figue","Scorsonère","Alisier","Charrue",
-       "Salsifis","Mâcre","Topinambour","Endive","Dindon",
-       "Chervis","Cresson","Dentelaire","Grenade","Herse",
-       "Bacchante","Azerole","Garance","Orange","Faisan",
-       "Pistache","Macjonc","Coing","Cormier","Rouleau"
-     },
-     // Frimaire
-     {
-       "Raiponce","Turneps","Chicorée","Nèfle","Cochon",
-       "Mâche","Chou-fleur","Miel","Genièvre","Pioche",
-       "Cire","Raifort","Cèdre","Sapin","Chevreuil",
-       "Ajonc","Cyprès","Lierre","Sabine","Hoyau",
-       "Érable à sucre","Bruyère","Roseau","Oseille","Grillon",
-       "Pignon","Liège","Truffe","Olive","Pelle"
-     },
-     // Nivôse
-     {
-       "Tourbe","Houille","Bitume","Soufre","Chien",
-       "Lave","Terre végétale","Fumier","Salpêtre","Fléau",
-       "Granit","Argile","Ardoise","Grès","Lapin",
-       "Silex","Marne","Pierre à chaux","Marbre","Van",
-       "Pierre à plâtre","Sel","Fer","Cuivre","Chat",
-       "Étain","Plomb","Zinc","Mercure","Crible"
-    },
-    // Pluviôse
-    {
-      "Lauréole","Mousse","Fragon","Perce-neige","Taureau",
-      "Laurier-thym","Amadouvier","Mézéréon","Peuplier","Coignée",
-      "Ellébore","Brocoli","Laurier","Avelinier","Vache",
-      "Buis","Lichen","If","Pulmonaire","Serpette",
-      "Thlaspi","Thimelé","Chiendent","Trainasse","Lièvre",
-      "Guède","Noisetier","Cyclamen","Chélidoine","Traîneau"
-    },
-    // Ventôse
-    {
-      "Tussilage","Cornouiller","Violier","Troène","Bouc",
-      "Asaret","Alaterne","Violette","Marceau","Bêche",
-      "Narcisse","Orme","Fumeterre","Vélar","Chêvre",
-      "Épinard","Doronic","Mouron","Cerfeuil","Cordeau",
-      "Mandragore","Persil","Cochléaria","Pâquerette","Thon",
-      "Pissenlit","Sylvie","Capillaire","Frêne","Plantoir"
-    },
-    // Germinal
-    {
-      "Primevère","Platane","Asperge","Tulipe","Poule",
-      "Bette","Bouleau","Jonquille","Aulne","Couvoir",
-      "Pervenche","Charme","Morille","Hêtre","Abeille",
-      "Laitue","Mélèze","Ciguë","Radis","Ruche",
-      "Gainier","Romaine","Marronnier","Roquette","Pigeon",
-      "Lilas","Anémone","Pensée","Myrtille","Greffoir"
-    },
-    // Floréal
-    {
-      "Rose","Chêne","Fougère","Aubépine","Rossignol",
-      "Ancolie","Muguet","Champignon","Hyacinthe","Râteau",
-      "Rhubarbe","Sainfoin","Bâton d'or","Charmerisier","Ver à soie",
-      "Consoude","Pimprenelle","Corbeille d'or","Arroche","Sarcloir",
-      "Statice","Fritillaire","Bourrache","Valériane","Carpe",
-      "Fusain","Civette","Buglosse","Sénevé","Houlette"
-    },
-    // Prairial
-    {
-      "Luzerne","Hémérocalle","Trèfle","Angélique","Canard",
-      "Mélisse","Fromental","Martagon","Serpolet","Faux",
-      "Fraise","Bétoine","Pois","Acacia","Caille",
-      "Œillet","Sureau","Pavot","Tilleul","Fourche",
-      "Barbeau","Camomille","Chèvrefeuille","Caille-lait","Tanche",
-      "Jasmin","Verveine","Thym","Pivoine","Chariot"
-    },
-    // Messidor
-    {
-      "Seigle","Avoine","Oignon","Véronique","Mulet",
-      "Romarin","Concombre","Échalote","Absinthe","Faucille",
-      "Coriandre","Artichaut","Girofle","Lavande","Chamois",
-      "Tabac","Groseille","Gesse","Cerise","Parc",
-      "Menthe","Cumin","Haricot","Haricot","Orcanète","Pintade",
-      "Sauge","Ail","Vesce","Blé","Chalémie"
-    },
-    // Thermidor
-    {
-      "Épeautre","Bouillon blanc","Melon","Ivraie","Bélier",
-      "Prêle","Armoise","Carthame","Mûre","Arrosoir",
-      "Panic","Salicorne","Abricot","Basilic","Brebis",
-      "Guimauve","Lin","Amande","Gentiane","Écluse",
-      "Carline","Câprier","Lentille","Aunée","Loutre",
-      "Myrte","Colza","Lupin","Coton","Moulin"
-    },
-    // Fructidor
-    {
-      "Prune","Millet","Lycoperdon","Escourgeon","Saumon",
-      "Tubéreuse","Sucrion","Apocyn","Réglisse","Échelle",
-      "Pastèque","Fenouil","Épine vinette","Noix","Truite",
-      "Citron","Cardère","Nerprun","Tagette","Hotte",
-      "Églantier","Noisette","Houblon","Sorgho","Écrevisse",
-      "Bigarade","Verge d'or","Maïs","Marron","Panier"
-    },
-    // Sans-culottides
-    {
-      "La Fête de la Vertu",
-      "La Fête du Génie",
-      "La Fête di Travail",
-      "La Fête de l'Opinion",
-      "La Fête des Récompenses",
-      "La Fête de la Révolution"
-    }
-  };
 }

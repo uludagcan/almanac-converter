@@ -148,7 +148,7 @@ public abstract class Almanac implements Serializable {
 
   /**
    * Sets the month.
-   * @param year the month.
+   * @param month the month.
    */
   public void setMonth(int month) {
     this.month = month;
@@ -156,7 +156,7 @@ public abstract class Almanac implements Serializable {
 
   /**
    * Sets the day.
-   * @param year the day.
+   * @param day the day.
    */
   public void setDay(int day) {
     this.day = day;
