@@ -336,7 +336,6 @@
     year = count-1;
 
     HebrewCalendar cal = new HebrewCalendar(count,7,1);
-    System.out.println(cal);
     double guess = _he2jd(cal).getValue();
     for (int i=count; jday>=guess; ++i) {
       year++;
@@ -348,14 +347,10 @@
     month = first;
 
     cal.set(year,first,HebrewCalendar.getNumberOfDaysInMonth(year,first));
-    guess = toJulianDay(cal).getValue();
 
-    for (int i=first; jday>guess; ++i) {
-      month++;
-      cal.set(year,i,HebrewCalendar.getNumberOfDaysInMonth(year,i));
-      guess = toJulianDay(cal).getValue();
+    for (int i=first; jday>_he2jd(new HebrewCalendar(year,i,HebrewCalendar.getNumberOfDaysInMonth(year,i))).getValue(); ++i) {
+      ++month;
     }
-    --month;
     cal.set(year,month,1);
     day = (int)(jday-_he2jd(cal).getValue())+1;
     return new HebrewCalendar(year,month,day);

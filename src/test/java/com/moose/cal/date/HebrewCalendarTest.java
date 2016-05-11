@@ -57,6 +57,8 @@ public class HebrewCalendarTest {
     HebrewCalendar date1 = 
       new HebrewCalendar(new DateTime(1987,3,10,0,1));
     HebrewCalendar date2 = new HebrewCalendar(5747,12,9);
+    System.out.println(date1);
+    System.out.println(date2);
     assertEquals( "FAIL: Date should construct from Joda DateTime",
                   true,
                   date1.equals(date2));
@@ -76,12 +78,10 @@ public class HebrewCalendarTest {
     for (int i=0; i<1000; ++i) {
       rand = r.nextInt((int)(jday-min))+min;
       JulianDay jday1 = new JulianDay(rand);
-      HebrewCalendar a = new HebrewCalendar(jday1);
-      JulianDay jday2 = toJulianDay(a);
-      HebrewCalendar b = toHebrewCalendar(jday2);
-      assertEquals( "FAIL: Hebrew Calendar failed round trip",
-                    a,
-                    b);
+      HebrewCalendar expected = new HebrewCalendar(jday1);
+      JulianDay jday2 = toJulianDay(expected);
+      HebrewCalendar actual = toHebrewCalendar(jday2);
+      assertEquals(expected,actual);
     }
   }
 
@@ -89,7 +89,7 @@ public class HebrewCalendarTest {
   public void testNextDayWorks() {
     HebrewCalendar calendar = new HebrewCalendar(5776,1,1);
     JulianDay jd = Converter.toJulianDay(calendar).atMidnight();
-    for (int i=0; i< 365; ++i) {
+    for (int i=0; i< 385; ++i) {
       calendar.nextDay();
       jd.nextDay();
       JulianDay converted = Converter.toJulianDay(calendar);

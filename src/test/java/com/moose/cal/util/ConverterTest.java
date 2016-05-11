@@ -131,8 +131,8 @@ public class ConverterTest {
   @Test
   public void julianDayShouldConvertToHebrewCalendar() {
     HebrewCalendar actual = 
-      Converter.toHebrewCalendar(new JulianDay(2446864.5));
-    HebrewCalendar expected = new HebrewCalendar(5747,12,9);
+      Converter.toHebrewCalendar(new JulianDay(2457665.5));
+    HebrewCalendar expected = new HebrewCalendar(5777,7,2);
     assertEquals( "FAIL: Julian Day -> Hebrew Calendar is broken",
                   true,
                   actual.equals(expected));
@@ -147,4 +147,5 @@ public class ConverterTest {
                   true,
                   actual.equals(expected));
   }
+
 }
