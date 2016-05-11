@@ -181,7 +181,8 @@ public final class JulianDay extends Almanac {
 
   /**
    * Subtracts days from this Julian day.
-   * @param days.
+   * @param days number of days to subtract.
+   * @return n days before this day.
    */
   public JulianDay minus(int days) {
     _jday -= days;
@@ -190,7 +191,9 @@ public final class JulianDay extends Almanac {
 
   /**
    * Adds days to this Julian day.
-   */ 
+   * @param days number of days to add.
+   * @return n days after this day.
+   */
   public JulianDay plus(int days) {
     _jday += days;
     return this;
@@ -223,14 +226,18 @@ public final class JulianDay extends Almanac {
   }
 
   /**
-   * Prints the date.
-   * @param the date.
+   * Gets the date.
+   * @return the date.
    */  
   @Override
   public String getDate() {
     return Double.toString(getValue());
   }
 
+  /**
+   * Gets the calendar name.
+   * @return the calendar name.
+   */
   @Override
   public String getName() {
     return CALENDAR_NAME;

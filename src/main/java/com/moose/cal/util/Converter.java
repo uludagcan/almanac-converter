@@ -212,21 +212,25 @@
     int month = date.getMonth();
     int year = date.getYear();
     int months = date.getNumberOfMonthsInYear();
-    double jd = date.EPOCH.getValue() + 
+    double jd = HebrewCalendar.EPOCH.getValue() +
                 delayHebrewYear(year) +
                 delayHebrewYearAdjacent(year) +
                 day + 1;
-    
+
     if (month<7) {
-      for (int i=7; i<=months; ++i) 
-        jd+=HebrewCalendar.getNumberOfDaysInMonth(year,i);
-      for (int i=1; i<month; ++i)
-        jd+=HebrewCalendar.getNumberOfDaysInMonth(year,i);
+      for (int i=7; i<=months; ++i) {
+        jd += HebrewCalendar.getNumberOfDaysInMonth(year, i);
+      }
+
+      for (int i=1; i<month; ++i) {
+        jd += HebrewCalendar.getNumberOfDaysInMonth(year, i);
+      }
     } else {
       for (int i=7; i<month; ++i) {
         jd+=HebrewCalendar.getNumberOfDaysInMonth(year,i);
       }
     }
+
     return new JulianDay(jd);
   }
 
@@ -332,6 +336,7 @@
     year = count-1;
 
     HebrewCalendar cal = new HebrewCalendar(count,7,1);
+    System.out.println(cal);
     double guess = _he2jd(cal).getValue();
     for (int i=count; jday>=guess; ++i) {
       year++;
@@ -339,14 +344,14 @@
       guess = _he2jd(cal).getValue();
     }
 
-    cal.set(year,1,1);
-    int first = (jday<_he2jd(cal).getValue()) ? 7 : 1;
+    int first = (jday<_he2jd(new HebrewCalendar(year,1,1)).getValue()) ? 7 : 1;
     month = first;
 
     cal.set(year,first,HebrewCalendar.getNumberOfDaysInMonth(year,first));
     guess = toJulianDay(cal).getValue();
 
-    for (int i=first; jday>guess; ++i,++month) {
+    for (int i=first; jday>guess; ++i) {
+      month++;
       cal.set(year,i,HebrewCalendar.getNumberOfDaysInMonth(year,i));
       guess = toJulianDay(cal).getValue();
     }

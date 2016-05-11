@@ -41,11 +41,11 @@ public class HebrewCalendar extends Almanac {
 
   public static final String CALENDAR_NAME = "Hebrew Calendar";
   public static final JulianDay EPOCH = new JulianDay(347995.5);
-  
+
   /**
    * Constructs a Hebrew Calendar using today's date.
    */
-  public HebrewCalendar() { 
+  public HebrewCalendar() {
     this(Calendar.getInstance());
   }
 
@@ -72,7 +72,7 @@ public class HebrewCalendar extends Almanac {
   public static int[] getDaysPerMonthInYear(int year) {
     int n = HebrewCalendar.getNumberOfMonthsInYear(year);
     int[] days = new int[n];
-    for (int i=0; i<n; ++i) 
+    for (int i=0; i<n; ++i)
      days[i] = HebrewCalendar.getNumberOfDaysInMonth(year,i+1);
     return days;
   }
@@ -116,13 +116,22 @@ public class HebrewCalendar extends Almanac {
   }
 
   /**
+   * Gets the months
+   * @return the months.
+   */
+  @Override
+  public String[] getMonths() {
+    return monthNames;
+  }
+
+  /**
    * Gets the name of a given month.
    * @param month the month number [1-12].
    * @throws IndexOutOfBoundsException
    * @return the name of the month.
    */
-  public static String getMonthName(int month) 
-    throws IndexOutOfBoundsException 
+  public static String getMonthName(int month)
+    throws IndexOutOfBoundsException
   {
     return monthNames[month-1];
   }
@@ -150,7 +159,7 @@ public class HebrewCalendar extends Almanac {
    */
   @Override
   public String getDate() {
-    return getDay()+" "+getMonthName()+" "+getYear();
+    return getDay()+" "+getMonthName()+", "+getYear();
   }
 
   /**
@@ -162,7 +171,7 @@ public class HebrewCalendar extends Almanac {
   public static int getNumberOfDaysInMonth(int year, int month) {
 
     // Fixed 29-day months.
-    if (month==2 || month==4 || month==6 || month==10 || month==13) 
+    if (month==2 || month==4 || month==6 || month==10 || month==13)
       return 29;
 
     // Adar has 29 days on non-leap years.
@@ -171,11 +180,11 @@ public class HebrewCalendar extends Almanac {
     }
 
     // Heshvan (8) and Kislev (9) depend on length of the year
-    if (month==8 && !(getNumberOfDaysInYear(year)%10==5)) 
+    if (month==8 && !(getNumberOfDaysInYear(year)%10==5))
       return 29;
     if (month==9 &&  (getNumberOfDaysInYear(year)%10==3))
       return 29;
-    
+
     return 30;
   }
 
@@ -193,7 +202,7 @@ public class HebrewCalendar extends Almanac {
    */
   @Override
   public int getNumberOfDaysInMonth() {
-    return HebrewCalendar.getNumberOfDaysInMonth(this.month,this.year);
+    return HebrewCalendar.getNumberOfDaysInMonth(this.year,this.month);
   }
 
   /**
@@ -213,7 +222,7 @@ public class HebrewCalendar extends Almanac {
   public int getNumberOfMonthsInYear() {
     return HebrewCalendar.getNumberOfMonthsInYear(this.year);
   }
-  
+
   /**
    * Sets this calendar.
    * @param a an almanac.
@@ -259,12 +268,29 @@ public class HebrewCalendar extends Almanac {
     return (val < 7);
   }
 
+  @Override
+  public void nextDay() {
+    if (day == getNumberOfDaysInMonth()) {
+      if (month == getNumberOfMonthsInYear()) {
+        month = 1;
+      } else {
+        month++;
+        if (month == 7) {
+          year ++;
+        }
+      }
+      day = 1;
+    } else day++;
+  }
+
+
   public static int getNumberOfDaysInYear(int year) {
     HebrewCalendar now  = new HebrewCalendar(year  ,7,1);
     HebrewCalendar next = new HebrewCalendar(year+1,7,1);
     JulianDay jnow  = toJulianDay(now);
     JulianDay jnext = toJulianDay(next);
-    return (int)(jnext.getValue()-jnow.getValue());
+    int num = (int)(jnext.getValue()-jnow.getValue());
+    return num;
   }
 
   @Override

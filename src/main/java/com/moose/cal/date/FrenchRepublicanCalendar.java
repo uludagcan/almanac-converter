@@ -192,13 +192,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
   @Override
   public void nextDay() {
     day = getDay(true);
-    if (day==getNumberOfDaysInMonth()) {
-      if (month==getNumberOfMonthsInYear()) {
-        month = 1;
-        year++;
-      } else month++;
-      day = 1;
-    } else day++;
+    super.nextDay();
     _week = (day/10)+1;
     this.day = (day%10);
   }
@@ -209,13 +203,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
   @Override
   public void prevDay() {
     day = getDay(true);
-    if (day==1) {
-      if (month==1) {
-        month = getNumberOfMonthsInYear();
-        year--;
-      } else month--;
-      day = getNumberOfDaysInMonth();
-    } else day--;
+    super.prevDay();
     _week = (day/10)+1;
     this.day = (day%10);
   }

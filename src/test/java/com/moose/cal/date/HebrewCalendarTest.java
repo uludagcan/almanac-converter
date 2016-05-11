@@ -17,6 +17,8 @@ package com.moose.cal.date;
 
 import java.util.Calendar;
 import java.util.Random;
+
+import com.moose.cal.util.Converter;
 import org.joda.time.DateTime;
 
 import static org.junit.Assert.assertEquals;
@@ -43,11 +45,11 @@ public class HebrewCalendarTest {
   @Test
   public void daysPerMonthShouldBeCorrect() {
     int[] days = new int[] { 30, 29, 30, 29, 30, 29, 30, 30, 30, 29, 30, 29};
-    int year = 5747;
-    int[] result = HebrewCalendar.getDaysPerMonthInYear(year);
-    assertArrayEquals("FAIL: Days of month aren't correct",
-                      days,
-                      result);
+    HebrewCalendar hebrewCalendar = new HebrewCalendar(5747,1,1);
+    for (int i=0; i<hebrewCalendar.getNumberOfMonthsInYear(); ++i) {
+      hebrewCalendar.setMonth(i+1);
+      assertEquals(hebrewCalendar.getNumberOfDaysInMonth(),days[i]);
+    }
   }
 
   @Test
@@ -62,7 +64,7 @@ public class HebrewCalendarTest {
 
   @Test(expected = IndexOutOfBoundsException.class)
   public void monthNameShouldBadMonthNumber() {
-    String month = HebrewCalendar.getMonthName(0); // No "0" month!
+    HebrewCalendar.getMonthName(0); // No "0" month!
   }
 
   @Test
@@ -70,17 +72,28 @@ public class HebrewCalendarTest {
     Random r = new Random();
     double min = HebrewCalendar.EPOCH.getValue();
     double jday = (new JulianDay()).getValue();
-    double rand = 0.0;
+    double rand;
     for (int i=0; i<1000; ++i) {
-      rand = (double)(r.nextInt((int)(jday-min))+min);
+      rand = r.nextInt((int)(jday-min))+min;
       JulianDay jday1 = new JulianDay(rand);
       HebrewCalendar a = new HebrewCalendar(jday1);
       JulianDay jday2 = toJulianDay(a);
       HebrewCalendar b = toHebrewCalendar(jday2);
-      assertEquals( "FAIL: French Republican Calendar failed round trip",
+      assertEquals( "FAIL: Hebrew Calendar failed round trip",
                     a,
                     b);
     }
   }
 
+  @Test
+  public void testNextDayWorks() {
+    HebrewCalendar calendar = new HebrewCalendar(5776,1,1);
+    JulianDay jd = Converter.toJulianDay(calendar).atMidnight();
+    for (int i=0; i< 365; ++i) {
+      calendar.nextDay();
+      jd.nextDay();
+      JulianDay converted = Converter.toJulianDay(calendar);
+      assertEquals(jd.getValue(),converted.getValue(),0.00);
+    }
+  }
 }

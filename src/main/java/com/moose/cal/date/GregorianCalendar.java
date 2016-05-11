@@ -188,7 +188,6 @@ public final class GregorianCalendar extends Almanac {
 
   /**
    * Gets the month name.
-   * @param month the month number [1-12].
    * @return the name of the month.
    */
   public String getMonthName() {
