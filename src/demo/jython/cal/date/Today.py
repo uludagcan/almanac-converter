@@ -5,8 +5,8 @@ from java.lang import *
 from javax.swing import *
 
 import org.joda.time.DateTime
-from com.moose.cal.date import *
-from com.moose.cal.astro.Meeus import *
+from com.hm.cal.date import *
+from com.hm.cal.astro.Meeus import *
 
 DEG = u'\N{DEGREE SIGN}'
 
