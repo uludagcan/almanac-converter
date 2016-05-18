@@ -1,49 +1,50 @@
 /*****************************************************************************
-Copyright 2015 Hypotemoose, Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*****************************************************************************/
+ * Copyright 2015 Hypotemoose, Inc.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *****************************************************************************/
 package com.hm.cal.date;
-
-import static com.hm.cal.util.RomanNumeralGenerator.*;
-import static com.hm.cal.util.Converter.*;
-import static com.hm.cal.util.Util.*;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import static com.hm.cal.constants.CalendarConstants.FrenchRepublicanCalendarConstants.*;
+import static com.hm.cal.util.AlmanacConverter.toFrenchRepublicanCalendar;
+import static com.hm.cal.util.RomanNumeralGenerator.itr;
+import static com.hm.cal.util.RomanNumeralGenerator.toRoman;
+import static com.hm.cal.util.Util.its;
 
 /**
  * A date in the French Republican Calendar.
  * <p>
  * The French Republican Calendar (FRC) was a calendar created and used
- * during the French Revolution. It was only used in practice for 12 years 
+ * during the French Revolution. It was only used in practice for 12 years
  * starting in late 1793 until it was abolished by Napoleon Bonaparte as an
- * effort to reinstate the catholic church within France. This calendar was 
+ * effort to reinstate the catholic church within France. This calendar was
  * later picked up, albeit briefly, during the Paris Commune of 1871.
  * <p>
- * Each year is divided into 12 months (mois), with each month being an 
- * equal 30 days long, divided out further into 3 weeks (décades) 10 days 
+ * Each year is divided into 12 months (mois), with each month being an
+ * equal 30 days long, divided out further into 3 weeks (décades) 10 days
  * long. Every year begins on the autumnal equinox as observed in Paris.
  * The slight variation in seaons required the use of 5-6 additional
  * "Sans-culottides" days. While the calendar was adopted on October 24, 1793
- * (3 Brumaire, An II), the official epoch was set to September 22, 1792 
+ * (3 Brumaire, An II), the official epoch was set to September 22, 1792
  * (1 Vendemiaire, An I) to commemorate the founding of the republic.
  * <p>
- * To further reduce the influence of the Church, a Rural Calendar was 
- * introduced, naming each day of the year after various crops, minerals, 
- * animals and work tools to reflect the changing of the seasons. 
+ * To further reduce the influence of the Church, a Rural Calendar was
+ * introduced, naming each day of the year after various crops, minerals,
+ * animals and work tools to reflect the changing of the seasons.
+ *
  * @author Chris Engelsma
  * @version 2015.11.09
  */
@@ -51,6 +52,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
 
   public static final String CALENDAR_NAME = "French Republican Calendar";
   public static final JulianDay EPOCH = new JulianDay(2375839.5);
+  private int _week;
 
   /**
    * Constructs a French Republican Date for today's date.
@@ -58,25 +60,27 @@ public final class FrenchRepublicanCalendar extends Almanac {
   public FrenchRepublicanCalendar() {
     this(new JulianDay());
   }
-  
+
   /**
    * Constructs a French Republican Date with given year, month and day.
-   * @param year the year
+   *
+   * @param year  the year
    * @param month the month
-   * @param day the day
+   * @param day   the day
    */
   public FrenchRepublicanCalendar(int year, int month, int day) {
-    this(year,month,(day/10)+1,(day%10));
+    this(year, month, (day / 10) + 1, (day % 10));
   }
 
   /**
    * Constructs a French Republican Date with given year, month,
    * week and day.
-   * @param year the year
+   *
+   * @param year  the year
    * @param month the month
-   * @param week the week
-   * @param day the day
-   */ 
+   * @param week  the week
+   * @param day   the day
+   */
   public FrenchRepublicanCalendar(int year, int month, int week, int day) {
     super();
     this.year = year;
@@ -88,6 +92,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
   /**
    * Constructs a French Republican Date fromr a given Gregorian
    * Calendar date.
+   *
    * @param date a Gregorian Calendar Date.
    */
   public FrenchRepublicanCalendar(GregorianCalendar date) {
@@ -96,6 +101,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
 
   /**
    * Constructs a French Republican Date from a given Julian Day.
+   *
    * @param jd a Julian Day.
    */
   public FrenchRepublicanCalendar(JulianDay jd) {
@@ -104,15 +110,17 @@ public final class FrenchRepublicanCalendar extends Almanac {
 
   /**
    * Constructs a French Republican date from another French Republican date.
+   *
    * @param date a French Republican date.
    */
   public FrenchRepublicanCalendar(FrenchRepublicanCalendar date) {
-    this(date.getYear(),date.getMonth(),date.getWeek(),date.getDay());
+    this(date.getYear(), date.getMonth(), date.getWeek(), date.getDay());
   }
 
   /**
    * Returns today's date as a string.
    * Convenience static method.
+   *
    * @return today's date.
    */
   public static String asToday() {
@@ -120,7 +128,46 @@ public final class FrenchRepublicanCalendar extends Almanac {
   }
 
   /**
+   * Returns the number of days in a given month and year.
+   *
+   * @param month a month.
+   * @param year  a year.
+   * @return the number of days in the month and year.
+   */
+  public static int getNumberOfDaysInMonth(int month, int year) {
+    return (month == 13) ? (isLeapYear(year) ? 6 : 5) : 30;
+  }
+
+  /**
+   * Gets a month name.
+   *
+   * @param month a month number [1-12].
+   * @return a month name
+   * @throws IndexOutOfBoundsException
+   */
+  public static String getMonthName(int month)
+    throws IndexOutOfBoundsException {
+    return monthNames[month - 1];
+  }
+
+  /**
+   * Determines if a given year is a leap year.
+   * A leap year is determined by the day of the autumnal solstice.
+   *
+   * @param year a year.
+   * @return true, if a leap year; false, otherwise.
+   */
+  public static boolean isLeapYear(int year) {
+    JulianDay jday1 = new JulianDay(new FrenchRepublicanCalendar(year, 1, 1));
+    JulianDay jday2 = new JulianDay(new FrenchRepublicanCalendar(year + 1, 1, 1));
+    int val1 = (int) jday1.atNoon().getValue();
+    int val2 = (int) jday2.atNoon().getValue();
+    return (val2 - val1 > 365);
+  }
+
+  /**
    * Gets the 10-day week (décade).
+   *
    * @return the décade.
    */
   public int getWeek() {
@@ -129,6 +176,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
 
   /**
    * Sets this calendar.
+   *
    * @param a an almanac.
    */
   @Override
@@ -139,9 +187,10 @@ public final class FrenchRepublicanCalendar extends Almanac {
     this.day = cal.getDay();
     _week = cal.getWeek();
   }
- 
+
   /**
    * Gets the month names.
+   *
    * @return the month names.
    */
   @Override
@@ -151,6 +200,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
 
   /**
    * Gets the number of months in the year.
+   *
    * @return the number of months in the year.
    */
   @Override
@@ -160,25 +210,28 @@ public final class FrenchRepublicanCalendar extends Almanac {
 
   /**
    * Sets the day.
+   *
    * @param day the day.
    */
   @Override
   public void setDay(int day) {
-    this.day = (day%10);
-    _week = day/10+1;
+    this.day = (day % 10);
+    _week = day / 10 + 1;
   }
 
   /**
    * Gets the weekday name.
+   *
    * @return the weekday.
    */
-  @Override 
+  @Override
   public String getWeekDay() {
-    return (this.year>=1) ? weekDayNames[getDay(false)-1] : "";
+    return (this.year >= 1) ? weekDayNames[getDay(false) - 1] : "";
   }
 
   /**
    * Gets the days of the week.
+   *
    * @return the days of the week.
    */
   @Override
@@ -193,8 +246,8 @@ public final class FrenchRepublicanCalendar extends Almanac {
   public void nextDay() {
     day = getDay(true);
     super.nextDay();
-    _week = (day/10)+1;
-    this.day = (day%10);
+    _week = (day / 10) + 1;
+    this.day = (day % 10);
   }
 
   /**
@@ -204,94 +257,77 @@ public final class FrenchRepublicanCalendar extends Almanac {
   public void prevDay() {
     day = getDay(true);
     super.prevDay();
-    _week = (day/10)+1;
-    this.day = (day%10);
+    _week = (day / 10) + 1;
+    this.day = (day % 10);
   }
 
   /**
    * Gets the day number.
+   *
    * @param longForm true, if using long form (no decades); false, otherwise.
    * @return the day.
    */
   public int getDay(boolean longForm) {
-    if (longForm) return ((_week-1)*10)+this.day;
+    if (longForm) return ((_week - 1) * 10) + this.day;
     else return this.day;
   }
 
   /**
    * Gets the month name.
+   *
    * @return the month name
    */
-  public String getMonthName() { 
+  public String getMonthName() {
     return getMonthName(this.month);
   }
 
   /**
    * Gets the number of days in this month and year.
+   *
    * @return the number of days in this month and year.
    */
   @Override
   public int getNumberOfDaysInMonth() {
-    return FrenchRepublicanCalendar.getNumberOfDaysInMonth(month,year);
+    return FrenchRepublicanCalendar.getNumberOfDaysInMonth(month, year);
   }
 
   /**
    * Gets the number of days in a given month for this year.
+   *
    * @param month a month in this year.
    * @return the number of days in a month of this year.
    */
   public int getNumberOfDaysInMonth(int month) {
-    return FrenchRepublicanCalendar.getNumberOfDaysInMonth(month,this.year);
-  }
-
-  /**
-   * Returns the number of days in a given month and year.
-   * @param month a month.
-   * @param year a year.
-   * @return the number of days in the month and year.
-   */
-  public static int getNumberOfDaysInMonth(int month, int year) {
-    return (month==13) ? (isLeapYear(year) ? 6 : 5) : 30;
-  }
-
-  /**
-   * Gets a month name.
-   * @param month a month number [1-12].
-   * @throws IndexOutOfBoundsException
-   * @return a month name
-   */
-  public static String getMonthName(int month) 
-    throws IndexOutOfBoundsException
-  {
-    return monthNames[month-1];
+    return FrenchRepublicanCalendar.getNumberOfDaysInMonth(month, this.year);
   }
 
   /**
    * Gets the Rural calendar name of the day.
+   *
    * @return the Rural calendar name of the day.
    */
   public String getDayName() {
     int iday = getDay(true);
-    return dayNames[this.month-1][iday-1];
+    return dayNames[this.month - 1][iday - 1];
   }
-
 
   /**
    * Prints this date in long form.
    */
   public void printLong() {
     String out = "French Republican Date: ";
-    out += "Année "+its(getYear())+" de la République\n";
-    out += "  Mois de "+getMonthName() + "\n";
-    out += "  Décade "+itr(getWeek());
-    out += " Jour "+itr(getDay(false));
-    out += " - \""+getDayName()+"\"";
+    out += "Année " + its(getYear()) + " de la République\n";
+    out += "  Mois de " + getMonthName() + "\n";
+    out += "  Décade " + itr(getWeek());
+    out += " Jour " + itr(getDay(false));
+    out += " - \"" + getDayName() + "\"";
 
     System.out.println(out);
   }
 
   /**
    * Determines if this year is a leap year.
+   *
    * @return true, if a leap year; false, otherwise.
    */
   public boolean isLeapYear() {
@@ -299,36 +335,24 @@ public final class FrenchRepublicanCalendar extends Almanac {
   }
 
   /**
-   * Determines if a given year is a leap year.
-   * A leap year is determined by the day of the autumnal solstice.
-   * @param year a year.
-   * @return true, if a leap year; false, otherwise.
-   */
-  public static boolean isLeapYear(int year) {
-    JulianDay jday1 = new JulianDay(new FrenchRepublicanCalendar(year,1,1));
-    JulianDay jday2 = new JulianDay(new FrenchRepublicanCalendar(year+1,1,1));
-    int val1 = (int)jday1.atNoon().getValue();
-    int val2 = (int)jday2.atNoon().getValue();
-    return (val2-val1>365);
-  }
-
-  /**
    * Gets the number of days in a week.
+   *
    * @return the number of days in a week.
    */
   @Override
-  public int getNumberOfDaysInWeek() { 
-    return 10; 
+  public int getNumberOfDaysInWeek() {
+    return 10;
   }
 
   /**
    * Gets the date as a string.
+   *
    * @return the date as a string.
    */
   @Override
   public String getDate() {
-    return (this.year>=1) ?
-      new String(getDay(true)+" "+getMonthName()+", "+toRoman(getYear())) : "";
+    return (this.year >= 1) ?
+      new String(getDay(true) + " " + getMonthName() + ", " + toRoman(getYear())) : "";
   }
 
   @Override
@@ -338,7 +362,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
 
   @Override
   public String toString() {
-    return new String(CALENDAR_NAME+": "+getDate());
+    return new String(CALENDAR_NAME + ": " + getDate());
   }
 
   @Override
@@ -351,12 +375,15 @@ public final class FrenchRepublicanCalendar extends Almanac {
     final FrenchRepublicanCalendar date = (FrenchRepublicanCalendar) obj;
 
     return new EqualsBuilder()
-      .append(this.year,date.getYear())
-      .append(this.month,date.getMonth())
-      .append(_week,date.getWeek())
-      .append(this.day,date.getDay(false))
+      .append(this.year, date.getYear())
+      .append(this.month, date.getMonth())
+      .append(_week, date.getWeek())
+      .append(this.day, date.getDay(false))
       .isEquals();
   }
+
+/////////////////////////////////////////////////////////////////////////////
+// private
 
   @Override
   public int hashCode() {
@@ -367,10 +394,5 @@ public final class FrenchRepublicanCalendar extends Almanac {
       .append(this.day)
       .toHashCode();
   }
-
-/////////////////////////////////////////////////////////////////////////////
-// private
-
-  private int _week;
 
 }

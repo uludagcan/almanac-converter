@@ -1,28 +1,25 @@
 /*****************************************************************************
-Copyright 2015 Hypotemoose, Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*****************************************************************************/
+ * Copyright 2015 Hypotemoose, Inc.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *****************************************************************************/
 package com.hm.cal.date;
-
-import java.lang.Math;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import org.joda.time.DateTime;
 
-import static com.hm.cal.util.Converter.*;
+import static com.hm.cal.util.AlmanacConverter.toJulianDay;
 
 /**
  * A Julian Day.
@@ -30,8 +27,9 @@ import static com.hm.cal.util.Converter.*;
  * The Julian Day is the continuous count of days since the beginning of the
  * Julian Period used primarily by astronomers. The Julian Period is a
  * chronological interval of 7980 years beginning in 4713 BC, and has been
- * used since 1583 to convert between different calendars. The next Julian 
+ * used since 1583 to convert between different calendars. The next Julian
  * Period begins in the year 3268 AD.
+ *
  * @author Chris Engelsma
  * @version 2015.08.07
  */
@@ -39,10 +37,12 @@ public final class JulianDay extends Almanac {
 
   public static final String CALENDAR_NAME = "Julian Day";
   public static JulianDay EPOCH = new JulianDay(2400000.5);
+  private double _jday;
 
   /**
    * A Julian Day.
    * Day number is set using a given Julian Day.
+   *
    * @param jd A Julian Day.
    */
   public JulianDay(JulianDay jd) {
@@ -52,6 +52,7 @@ public final class JulianDay extends Almanac {
   /**
    * A Julian Day.
    * Day number is set to a given value.
+   *
    * @param jd A Julian Day.
    */
   public JulianDay(double jd) {
@@ -64,18 +65,20 @@ public final class JulianDay extends Almanac {
   public JulianDay() {
     this(new GregorianCalendar());
   }
-  
+
   /**
    * Constructs a Julian Day from a given integer.
    * Note: Day will be set to midnight.
+   *
    * @param jd A Julian Day.
    */
   public JulianDay(int jd) {
-    this((double)jd);
+    this((double) jd);
   }
 
   /**
    * Constructs a Julian Day from a Joda DateTime.
+   *
    * @param dt a Joda DateTime object.
    */
   public JulianDay(DateTime dt) {
@@ -84,6 +87,7 @@ public final class JulianDay extends Almanac {
 
   /**
    * Constructs a Julian Day using a provided Gregorian Date.
+   *
    * @param date A Gregorian Date.
    */
   public JulianDay(Almanac date) {
@@ -91,18 +95,30 @@ public final class JulianDay extends Almanac {
   }
 
   /**
+   * Returns today's date as a string.
+   * Convenience static method.
+   *
+   * @return today's date.
+   */
+  public static String asToday() {
+    return (new JulianDay()).toString();
+  }
+
+  /**
    * Gets the number of days in a month.
    * Note: Overloaded function; only returns one for this calendar.
+   *
    * @return the number of days in a month.
    */
-  @Override 
-  public int getNumberOfDaysInMonth() { 
-    return 1; 
+  @Override
+  public int getNumberOfDaysInMonth() {
+    return 1;
   }
 
   /**
    * Gets the number of days in a week.
    * Note: Overloaded function; only returns one for this calendar.
+   *
    * @return the number of days in a week.
    */
   @Override
@@ -113,6 +129,7 @@ public final class JulianDay extends Almanac {
   /**
    * Gets the number of months in the year.
    * Note: Overloaded function; only returns one for this calendar.
+   *
    * @return the number of months in a year.
    */
   @Override
@@ -121,28 +138,21 @@ public final class JulianDay extends Almanac {
   }
 
   /**
-   * Returns today's date as a string.
-   * Convenience static method.
-   * @return today's date.
-   */
-  public static String asToday() {
-    return (new JulianDay()).toString();
-  }
-
-  /**
    * Returns this Julian Day set to noon.
+   *
    * @return This Julian Day at noon.
    */
   public JulianDay atNoon() {
-    return new JulianDay(Math.ceil(_jday-0.5));
+    return new JulianDay(Math.ceil(_jday - 0.5));
   }
 
   /**
    * Returns this Julian Day set to midnight.
+   *
    * @return This Julian Day at midnight.
    */
   public JulianDay atMidnight() {
-    return new JulianDay(Math.floor(_jday-0.5)+0.5);
+    return new JulianDay(Math.floor(_jday - 0.5) + 0.5);
   }
 
   /**
@@ -155,7 +165,7 @@ public final class JulianDay extends Almanac {
   /**
    * Sets this Julian Day to midnight.
    */
-  public void setToMidnight() { 
+  public void setToMidnight() {
     _jday = (this.atMidnight()).getValue();
   }
 
@@ -163,14 +173,16 @@ public final class JulianDay extends Almanac {
    * Gets the Modified Julian Day (MJD).
    * The Modified Julian Day is an adjusted version of the Julian
    * Day by setting the Epoch to midnight, November 17, 1858.
+   *
    * @return The Modified Julian Day.
-   */ 
+   */
   public double getModified() {
-    return _jday-EPOCH.getValue();
+    return _jday - EPOCH.getValue();
   }
 
   /**
    * Gets this day as a double.
+   *
    * @return this day.
    */
   public double getValue() {
@@ -179,6 +191,7 @@ public final class JulianDay extends Almanac {
 
   /**
    * Subtracts days from this Julian day.
+   *
    * @param days number of days to subtract.
    * @return n days before this day.
    */
@@ -189,6 +202,7 @@ public final class JulianDay extends Almanac {
 
   /**
    * Adds days to this Julian day.
+   *
    * @param days number of days to add.
    * @return n days after this day.
    */
@@ -199,6 +213,7 @@ public final class JulianDay extends Almanac {
 
   /**
    * Sets this calendar.
+   *
    * @param a an almanac.
    */
   @Override
@@ -211,22 +226,23 @@ public final class JulianDay extends Almanac {
    * Sets this calendar to the next day.
    */
   @Override
-  public void nextDay() { 
-    _jday += 1; 
+  public void nextDay() {
+    _jday += 1;
   }
 
   /**
    * Sets this calendar to the previous day.
    */
   @Override
-  public void prevDay() { 
-    _jday -= 1; 
+  public void prevDay() {
+    _jday -= 1;
   }
 
   /**
    * Gets the date.
+   *
    * @return the date.
-   */  
+   */
   @Override
   public String getDate() {
     return Double.toString(getValue());
@@ -234,6 +250,7 @@ public final class JulianDay extends Almanac {
 
   /**
    * Gets the calendar name.
+   *
    * @return the calendar name.
    */
   @Override
@@ -247,7 +264,7 @@ public final class JulianDay extends Almanac {
       return false;
     if (obj == this)
       return true;
-      
+
     final JulianDay date = (JulianDay) obj;
     return new EqualsBuilder()
       .append(_jday, date.getValue())
@@ -263,12 +280,7 @@ public final class JulianDay extends Almanac {
 
   @Override
   public String toString() {
-    return(CALENDAR_NAME+": "+getDate());
+    return (CALENDAR_NAME + ": " + getDate());
   }
 
-/////////////////////////////////////////////////////////////////////////////
-// private
-  
-  private double _jday;
-  
 }

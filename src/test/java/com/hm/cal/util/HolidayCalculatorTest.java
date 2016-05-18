@@ -17,12 +17,14 @@ package com.hm.cal.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
+
+import com.hm.cal.constants.Holiday;
 import org.junit.Test;
 
 import com.hm.cal.date.*;
 
 /**
- * Tests {@link com.hm.cal.date.HolidayCalculator}.
+ * Tests {@link com.hm.cal.util.HolidayCalculator}.
  * Calculations are tested against known dates.
  * @author Chris Engelsma
  * @version 2015.11.06

@@ -13,27 +13,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-package com.hm.cal.astro;
+package com.hm.cal.constants;
 
 /**
- * An astronomical season.
+ * Religious and secular holidays.
  *
  * @author Chris Engelsma
- * @version 2015.08.10
+ * @version 2015.11.06
  */
-public enum Season {
-  SPRING(0),
-  SUMMER(1),
-  AUTUMN(2),
-  WINTER(3);
+public enum Holiday {
+  // Catholic
+  ASH_WEDNESDAY(0),
+  PALM_SUNDAY(1),
+  HOLY_THURSDAY(2),
+  GOOD_FRIDAY(3),
+  EASTER(4),
+  ASCENSION(5),
+  PENTECOST(6),
+  TRINITY_SUNDAY(7),
+  ADVENT(8),
 
-  private final int id;
+  // Islamic
+  ASHURA(9),
+  RAMADAN(10),
+  EID_AL_FITR(11),
+  EID_AL_ADHA(12),
 
-  Season(int id) {
-    this.id = id;
+  // Jewish
+  PASSOVER(13),
+  SHAVUOT(14),
+  ROSH_HASHANAH(15),
+  YOM_KIPPUR(16),
+  SUKKOT(17),
+  SHEMINI_ATZERET(18),
+
+  // US Federal Holidays
+  NEW_YEARS_DAY(20),
+  MARTIN_LUTHER_KING(21),
+  WASHINGTONS_BIRTHDAY(22),
+  MEMORIAL_DAY(23),
+  INDEPENDENCE_DAY(24),
+  LABOR_DAY(25),
+  COLUMBUS_DAY(26),
+  VETERANS_DAY(27),
+  THANKSGIVING(28),
+  CHRISTMAS(29);
+
+
+  private final int value;
+
+  private Holiday(int value) {
+    this.value = value;
   }
 
   public int getValue() {
-    return id;
+    return value;
   }
 }

@@ -4,24 +4,24 @@ from java.awt import *
 from java.lang import *
 from javax.swing import *
 
-import org.joda.time.DateTime
 from com.hm.cal.date import *
 from com.hm.cal.astro.Meeus import *
 
 DEG = u'\N{DEGREE SIGN}'
 
 def main(args):
-  basicDemo()
-  lunarDemo()
+  basic_demo()
+  lunar_demo()
 
-def basicDemo():
+def basic_demo():
   am = [
     GregorianCalendar(),
     JulianCalendar(),
     FrenchRepublicanCalendar(),
     MayaCalendar(),
     IslamicCalendar(),
-    HebrewCalendar()
+    HebrewCalendar(),
+    PersianCalendar()
   ]
 
   print "Today is... "
@@ -29,7 +29,7 @@ def basicDemo():
     print date
   print ""
 
-def lunarDemo():
+def lunar_demo():
   jd = JulianDay()
   phase = getLunarPhase(jd.getValue())
   illum = getLunarIlluminationFromPhase(phase)
@@ -51,9 +51,6 @@ def lunarDemo():
   print "First Quarter moon is ",GregorianCalendar(moon1).getDate()
   print "Full Moon is ",GregorianCalendar(moon2).getDate()
   print "Last Quarter moon is ",GregorianCalendar(moon3).getDate()
-
-
-  
 
 #############################################################################
 class RunMain(Runnable):

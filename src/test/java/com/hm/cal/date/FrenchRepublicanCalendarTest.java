@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
 import org.junit.Test;
 
-import static com.hm.cal.util.Converter.*;
+import static com.hm.cal.util.AlmanacConverter.*;
 
 /**
  * Tests {@link com.hm.cal.date.FrenchRepublicanCalendar}.

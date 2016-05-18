@@ -19,12 +19,12 @@ holidays = [
   Holiday.PENTECOST,
   Holiday.TRINITY_SUNDAY,
   Holiday.ADVENT,
-  
+
   Holiday.ASHURA,
   Holiday.RAMADAN,
   Holiday.EID_AL_FITR,
   Holiday.EID_AL_ADHA,
-  
+
   Holiday.NEW_YEARS_DAY,
   Holiday.MARTIN_LUTHER_KING,
   Holiday.WASHINGTONS_BIRTHDAY,

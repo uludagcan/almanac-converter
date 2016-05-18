@@ -17,14 +17,14 @@ package com.hm.cal.date;
 
 import java.util.Random;
 
-import com.hm.cal.util.Converter;
+import com.hm.cal.util.AlmanacConverter;
 import org.joda.time.DateTime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
 import org.junit.Test;
 
-import static com.hm.cal.util.Converter.*;
+import static com.hm.cal.util.AlmanacConverter.*;
 
 /**
  * Tests {@link com.hm.cal.date.HebrewCalendar}.
@@ -56,8 +56,6 @@ public class HebrewCalendarTest {
     HebrewCalendar date1 = 
       new HebrewCalendar(new DateTime(1987,3,10,0,1));
     HebrewCalendar date2 = new HebrewCalendar(5747,12,9);
-    System.out.println(date1);
-    System.out.println(date2);
     assertEquals( "FAIL: Date should construct from Joda DateTime",
                   true,
                   date1.equals(date2));
@@ -87,11 +85,11 @@ public class HebrewCalendarTest {
   @Test
   public void testNextDayWorks() {
     HebrewCalendar calendar = new HebrewCalendar(5776,1,1);
-    JulianDay jd = Converter.toJulianDay(calendar).atMidnight();
+    JulianDay jd = AlmanacConverter.toJulianDay(calendar).atMidnight();
     for (int i=0; i< 385; ++i) {
       calendar.nextDay();
       jd.nextDay();
-      JulianDay converted = Converter.toJulianDay(calendar);
+      JulianDay converted = AlmanacConverter.toJulianDay(calendar);
       assertEquals(jd.getValue(),converted.getValue(),0.00);
     }
   }
