@@ -26,6 +26,7 @@ import static com.hm.cal.util.AlmanacConverter.*;
 
 /**
  * Tests {@link com.hm.cal.date.GregorianCalendar}.
+ *
  * @author Chris Engelsma
  * @version 2015.09.23
  */

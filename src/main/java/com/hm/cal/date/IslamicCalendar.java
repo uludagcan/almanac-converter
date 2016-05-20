@@ -15,9 +15,13 @@
  *****************************************************************************/
 package com.hm.cal.date;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.time.DateTime;
+import sun.util.resources.cldr.naq.CalendarData_naq_NA;
+
+import java.util.Arrays;
 
 import static com.hm.cal.constants.CalendarConstants.IslamicCalendarConstants.monthNames;
 import static com.hm.cal.constants.CalendarConstants.IslamicCalendarConstants.weekDayNames;
@@ -45,15 +49,29 @@ public class IslamicCalendar extends Almanac {
   public static final String CALENDAR_NAME = "Islamic Calendar";
   public static final JulianDay EPOCH = new JulianDay(1948439.5);
 
+  private CalendarType calendarType;
+  private LeapYearRule leapYearRule;
+
+  public enum CalendarType {
+    ASTRONOMICAL,
+    CIVIL
+  }
+
+  public enum LeapYearRule {
+    BASE_16,
+    BASE_15,
+  }
+
   /**
-   * Constructs an Islamic date using today's date.
+   * Constructs an Islamic calendar.
    */
   public IslamicCalendar() {
     this(new JulianDay());
   }
 
   /**
-   * Constructs an Islamic date using an existing Almanac.
+   * Constructs an Islamic calendar.
+   * Note: This constructs a civil calendar with a base-16 leap year rule.
    *
    * @param a an Almanac.
    */
@@ -62,7 +80,7 @@ public class IslamicCalendar extends Almanac {
   }
 
   /**
-   * Constructs an Islamic date using an existing Islamic Calendar.
+   * Constructs an Islamic calendar.
    *
    * @param date an Islamic date.
    */
@@ -71,7 +89,7 @@ public class IslamicCalendar extends Almanac {
   }
 
   /**
-   * Constructs an Islamic date using a Joda DateTime.
+   * Constructs an Islamic calendar.
    *
    * @param dt a Joda DateTime.
    */
@@ -80,18 +98,56 @@ public class IslamicCalendar extends Almanac {
   }
 
   /**
-   * Constructs an Islamic date using an existing year, month and day in the
-   * Islamic calendar.
+   * Constructs an Islamic calendar.
+   * Note: This constructs a civil calendar using a base-16 leap year rule.
    *
-   * @param year  the Islamic calendar year.
-   * @param month the Islamic calendar month.
-   * @param day   the Islamic calendar day.
+   * @param year a year
+   * @param month a month
+   * @param day a day
    */
   public IslamicCalendar(int year, int month, int day) {
-    super();
-    this.day = day;
-    this.month = month;
+    this(year,month,day,CalendarType.CIVIL);
+  }
+
+  /**
+   * Constructs an Islamic calendar.
+   * Note: This constructs a calendar using a base-16 leap year rule.
+   *
+   * @param year a year
+   * @param month a month
+   * @param day a day
+   * @param calendarType a calendar type
+   */
+  public IslamicCalendar(int year, int month, int day, CalendarType calendarType) {
+    this(year,month,day,calendarType,LeapYearRule.BASE_16);
+  }
+
+  /**
+   * Constructs an Islamic calendar.
+   *
+   * @param year a year
+   * @param month a month
+   * @param day a day
+   * @param leapYearRule a leap year rule.
+   */
+  public IslamicCalendar(int year, int month, int day, LeapYearRule leapYearRule) {
+    this(year,month,day,CalendarType.CIVIL,leapYearRule);
+  }
+  /**
+   * Constructs an Islamic calendar.
+   *
+   * @param year a year
+   * @param month a month
+   * @param day a day
+   * @param calendarType a calendar type
+   * @param leapYearRule a leap year rule
+   */
+  public IslamicCalendar(int year, int month, int day, CalendarType calendarType, LeapYearRule leapYearRule) {
     this.year = year;
+    this.month = month;
+    this.day = day;
+    this.calendarType = calendarType;
+    this.leapYearRule = leapYearRule;
   }
 
   /**
@@ -101,8 +157,7 @@ public class IslamicCalendar extends Almanac {
    * @throws IndexOutOfBoundsException
    * @return the name of the month.
    */
-  public static String getMonthName(int month)
-    throws IndexOutOfBoundsException {
+  public static String getMonthName(int month) throws IndexOutOfBoundsException {
     return IslamicCalendar.getMonthNames()[month - 1];
   }
 
@@ -117,13 +172,87 @@ public class IslamicCalendar extends Almanac {
 
   /**
    * Gets the number of days in a given month.
+   * Note: this method will employ the base-16 leap year rule.
    *
-   * @param month a month.
-   * @return the number of days in the month.
+   * @param month a month
+   * @param year a year
+   * @return the number of days in the month
    */
-  public static int getNumberOfDaysInMonth(int month) {
-    if (month % 2 == 0) return 29;
-    else return 30;
+  public static int getNumberOfDaysInMonthInYear(int month, int year) {
+    return getNumberOfDaysInMonthInYear(month,year,LeapYearRule.BASE_16);
+  }
+
+  /**
+   * Gets the number of days in a given month.
+   *
+   * @param month a month
+   * @param year a year
+   * @param leapYearRule a leap year rule
+   * @return the number of days in a month
+   */
+  public static int getNumberOfDaysInMonthInYear(int month, int year, LeapYearRule leapYearRule) {
+    if (month % 2 != 0 || (month==12 && isLeapYear(year,leapYearRule))) return 30;
+    return 29;
+  }
+
+  /**
+   * Gets the number of days in a year.
+   * Note: this method employs a base-16 leap year rule.
+   *
+   * @param year a year
+   * @return the number of days in a year
+   */
+  public static int getNumberOfDaysInYear(int year) {
+    return getNumberOfDaysInYear(year, LeapYearRule.BASE_16);
+  }
+
+  /**
+   * Gets the number of days in a year.
+   *
+   * @param year a year
+   * @param leapYearRule a leap year rule
+   * @return the number of days in the year
+   */
+  public static int getNumberOfDaysInYear(int year, LeapYearRule leapYearRule) {
+    int sum = 0;
+    int[] days = getDaysPerMonthInYear(year,leapYearRule);
+    for (int i=0; i<12; ++i) sum += days[i];
+    return sum;
+  }
+
+  /**
+   * Gets the number of days for each month in a year.
+   * Note: this method employs a base-16 leap year rule.
+   *
+   * @param year a year
+   * @return an array[12] of month lengths
+   */
+  public static int[] getDaysPerMonthInYear(int year) {
+    return getDaysPerMonthInYear(year,LeapYearRule.BASE_16);
+  }
+
+  /**
+   * Gets the number of days for each month in a year.
+   *
+   * @param year a year
+   * @param leapYearRule a leap year rule
+   * @return an array[12] of month lengths
+   */
+  public static int[] getDaysPerMonthInYear(int year, LeapYearRule leapYearRule) {
+    int[] days = new int[12];
+    for (int i=0; i<12; ++i) {
+      days[i] = getNumberOfDaysInMonthInYear(i+1,year,leapYearRule);
+    }
+    return days;
+  }
+
+  /**
+   * Gets the number of days for each month in this year.
+   *
+   * @return an array[12] of day counts per month
+   */
+  public int[] getDaysPerMonthInYear() {
+    return IslamicCalendar.getDaysPerMonthInYear(year,leapYearRule);
   }
 
   /**
@@ -133,6 +262,78 @@ public class IslamicCalendar extends Almanac {
    */
   public String getMonthName() {
     return monthNames[this.month - 1];
+  }
+
+  /**
+   * Determines if a given year is a leap year.
+   * Note: This method employs the base 16 leap year rule.
+   *
+   * @param year a year.
+   * @return true, if a leap year; false, otherwise.
+   */
+  public static boolean isLeapYear(int year) {
+    return isLeapYear(year,LeapYearRule.BASE_16);
+  }
+
+  /**
+   * Determines if a given year is a leap year with a provided leap year rule.
+   *
+   * @param year a year
+   * @param leapYearRule a leap year rule.
+   * @return true, if a leap year; false, otherwise.
+   */
+  public static boolean isLeapYear(int year, LeapYearRule leapYearRule) {
+    switch(leapYearRule) {
+      case BASE_15:
+        return ((((year*11)+15) % 30) < 11);
+      default:      // Default is BASE_16
+        return ((((year*11)+14) % 30) < 11);
+    }
+  }
+
+  /**
+   * Determines if this year is a leap year.
+   *
+   * @return true, if a leap year; false, otherwise.
+   */
+  public boolean isLeapYear() {
+    return IslamicCalendar.isLeapYear(year,leapYearRule);
+  }
+
+  /**
+   * Sets the leap year rule.
+   *
+   * @param leapYearRule a leap year rule.
+   */
+  public void setLeapYearRule(LeapYearRule leapYearRule) {
+    this.leapYearRule = leapYearRule;
+  }
+
+  /**
+   * Gets the leap year rule.
+   *
+   * @return the leap year rule.
+   */
+  public LeapYearRule getLeapYearRule() {
+    return leapYearRule;
+  }
+
+  /**
+   * Sets the calendar type.
+   *
+   * @param calendarType a calendar type
+   */
+  public void setCalendarType(CalendarType calendarType) {
+    this.calendarType = calendarType;
+  }
+
+  /**
+   * Gets the calendar type.
+   *
+   * @return the calendar type
+   */
+  public CalendarType getCalendarType() {
+    return calendarType;
   }
 
   /**
@@ -185,7 +386,7 @@ public class IslamicCalendar extends Almanac {
    */
   @Override
   public int getNumberOfDaysInMonth() {
-    return IslamicCalendar.getNumberOfDaysInMonth(getMonth());
+    return IslamicCalendar.getNumberOfDaysInMonthInYear(getMonth(),getYear());
   }
 
   /**
@@ -244,6 +445,8 @@ public class IslamicCalendar extends Almanac {
       .append(this.day, date.getDay())
       .append(this.month, date.getMonth())
       .append(this.year, date.getYear())
+      .append(this.calendarType, date.getCalendarType())
+      .append(this.leapYearRule, date.getLeapYearRule())
       .isEquals();
   }
 
@@ -253,6 +456,8 @@ public class IslamicCalendar extends Almanac {
       .append(this.day)
       .append(this.month)
       .append(this.year)
+      .append(this.calendarType)
+      .append(this.leapYearRule)
       .toHashCode();
   }
 
