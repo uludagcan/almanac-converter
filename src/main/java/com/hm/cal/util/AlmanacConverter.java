@@ -233,11 +233,12 @@ public class AlmanacConverter {
     int day = date.getDay();
     int month = date.getMonth();
     int year = date.getYear();
+    int astro = date.getCalendarType().getValue();
     double jd = (day +
       Math.ceil(29.5 * (month - 1)) +
       (year - 1) * 354 +
       Math.floor((3 + (11 * year)) / 30) +
-      IslamicCalendar.EPOCH.getValue()) - 1;
+      (IslamicCalendar.EPOCH.getValue()-astro)) - 1;
     return new JulianDay(jd);
   }
 

@@ -22,10 +22,10 @@ import static org.junit.Assert.assertTrue;
 public class IslamicCalendarTest {
 
   @Test
-  public void leapYearRuleShouldWorkForBase16() {
+  public void leapYearRuleShouldWorkForWestIslamic() {
     int[] leapYears = { 2, 5, 7, 10, 13, 16, 18, 21, 24, 26, 29 };
     for (int i=1; i<31; ++i) {
-      int actual = IslamicCalendar.getNumberOfDaysInYear(i, IslamicCalendar.LeapYearRule.BASE_16);
+      int actual = IslamicCalendar.getNumberOfDaysInYear(i, IslamicCalendar.LeapYearRule.WEST_ISLAMIC);
       if (ArrayUtils.contains(leapYears, i)) {
         assertEquals(355, actual);
       } else {
@@ -35,10 +35,36 @@ public class IslamicCalendarTest {
   }
 
   @Test
-  public void daysPerMonthShouldBeCorrectBase15() {
+  public void daysPerMonthShouldBeCorrectEastIslamic() {
     int[] leapYears = { 2, 5, 7, 10, 13, 15, 18, 21, 24, 26, 29 };
     for (int i=1; i<31; ++i) {
-      int actual = IslamicCalendar.getNumberOfDaysInYear(i, IslamicCalendar.LeapYearRule.BASE_15);
+      int actual = IslamicCalendar.getNumberOfDaysInYear(i, IslamicCalendar.LeapYearRule.EAST_ISLAMIC);
+      if (ArrayUtils.contains(leapYears, i)) {
+        assertEquals(355, actual);
+      } else {
+        assertEquals(354, actual);
+      }
+    }
+  }
+
+  @Test
+  public void daysPerMonthShouldBeCorrectFatimid() {
+    int[] leapYears = { 2, 5, 8, 10, 13, 16, 19, 21, 24, 27, 29 };
+    for (int i=1; i<31; ++i) {
+      int actual = IslamicCalendar.getNumberOfDaysInYear(i, IslamicCalendar.LeapYearRule.TAIYABI_ISMAILI);
+      if (ArrayUtils.contains(leapYears, i)) {
+        assertEquals(355, actual);
+      } else {
+        assertEquals(354, actual);
+      }
+    }
+  }
+
+  @Test
+  public void daysPerMonthShouldBeCorrectHabashAlHasib() {
+    int[] leapYears = { 2, 5, 8, 11, 13, 16, 19, 21, 24, 27, 30 };
+    for (int i=1; i<31; ++i) {
+      int actual = IslamicCalendar.getNumberOfDaysInYear(i, IslamicCalendar.LeapYearRule.HABASH_AL_HASIB);
       if (ArrayUtils.contains(leapYears, i)) {
         assertEquals(355, actual);
       } else {

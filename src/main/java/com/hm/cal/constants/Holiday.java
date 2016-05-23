@@ -62,7 +62,7 @@ public enum Holiday {
 
   private final int value;
 
-  private Holiday(int value) {
+  Holiday(int value) {
     this.value = value;
   }
 

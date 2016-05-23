@@ -15,13 +15,9 @@
  *****************************************************************************/
 package com.hm.cal.date;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.time.DateTime;
-import sun.util.resources.cldr.naq.CalendarData_naq_NA;
-
-import java.util.Arrays;
 
 import static com.hm.cal.constants.CalendarConstants.IslamicCalendarConstants.monthNames;
 import static com.hm.cal.constants.CalendarConstants.IslamicCalendarConstants.weekDayNames;
@@ -41,8 +37,19 @@ import static com.hm.cal.util.AlmanacConverter.toIslamicCalendar;
  * calendar, in which odd-numbered months have thirty days, and even months
  * have 29.
  *
+ * As of now, this only supports the tabular Islamic calendar.
+ *
+ * Leap years are determined differently depending on the location and
+ * religious sect. The four used here include the following 30-year
+ * leap-year patterns:
+ *
+ * West Islamic (base-16):    2, 5, 7, 10, 13, 16, 18, 21, 24, 26, 29
+ * East Islamic (base-15):    2, 5, 7, 10, 13, 15, 18, 21, 24, 26, 29
+ * Taiyabi Ismaili (Fatimid): 2, 5, 8, 10, 13, 16, 19, 21, 24, 27, 29
+ * Habash Al Hasib:           2, 5, 8, 11, 13, 16, 19, 21, 24, 27, 30
+ *
  * @author Chris Engelsma
- * @version 2015.10.07
+ * @since 2016.05.22
  */
 public class IslamicCalendar extends Almanac {
 
@@ -52,14 +59,33 @@ public class IslamicCalendar extends Almanac {
   private CalendarType calendarType;
   private LeapYearRule leapYearRule;
 
+  /**
+   * The calendar type (astronomical versus civil).
+   * This determines the starting epoch.
+   */
   public enum CalendarType {
-    ASTRONOMICAL,
-    CIVIL
+    CIVIL        (0),
+    ASTRONOMICAL (1);
+
+    private final int value;
+
+    private CalendarType(int value) {
+      this.value = value;
+    }
+
+    public int getValue() {
+      return value;
+    }
   }
 
+  /**
+   * The leap year rule.
+   */
   public enum LeapYearRule {
-    BASE_16,
-    BASE_15,
+    WEST_ISLAMIC,
+    EAST_ISLAMIC,
+    TAIYABI_ISMAILI,
+    HABASH_AL_HASIB
   }
 
   /**
@@ -85,7 +111,7 @@ public class IslamicCalendar extends Almanac {
    * @param date an Islamic date.
    */
   public IslamicCalendar(IslamicCalendar date) {
-    this(date.getYear(), date.getMonth(), date.getDay());
+    this(date.getYear(), date.getMonth(), date.getDay(), date.getCalendarType(), date.getLeapYearRule());
   }
 
   /**
@@ -119,7 +145,7 @@ public class IslamicCalendar extends Almanac {
    * @param calendarType a calendar type
    */
   public IslamicCalendar(int year, int month, int day, CalendarType calendarType) {
-    this(year,month,day,calendarType,LeapYearRule.BASE_16);
+    this(year,month,day,calendarType,LeapYearRule.WEST_ISLAMIC);
   }
 
   /**
@@ -179,7 +205,7 @@ public class IslamicCalendar extends Almanac {
    * @return the number of days in the month
    */
   public static int getNumberOfDaysInMonthInYear(int month, int year) {
-    return getNumberOfDaysInMonthInYear(month,year,LeapYearRule.BASE_16);
+    return getNumberOfDaysInMonthInYear(month,year,LeapYearRule.WEST_ISLAMIC);
   }
 
   /**
@@ -203,7 +229,7 @@ public class IslamicCalendar extends Almanac {
    * @return the number of days in a year
    */
   public static int getNumberOfDaysInYear(int year) {
-    return getNumberOfDaysInYear(year, LeapYearRule.BASE_16);
+    return getNumberOfDaysInYear(year, LeapYearRule.WEST_ISLAMIC);
   }
 
   /**
@@ -228,7 +254,7 @@ public class IslamicCalendar extends Almanac {
    * @return an array[12] of month lengths
    */
   public static int[] getDaysPerMonthInYear(int year) {
-    return getDaysPerMonthInYear(year,LeapYearRule.BASE_16);
+    return getDaysPerMonthInYear(year,LeapYearRule.WEST_ISLAMIC);
   }
 
   /**
@@ -272,7 +298,7 @@ public class IslamicCalendar extends Almanac {
    * @return true, if a leap year; false, otherwise.
    */
   public static boolean isLeapYear(int year) {
-    return isLeapYear(year,LeapYearRule.BASE_16);
+    return isLeapYear(year,LeapYearRule.WEST_ISLAMIC);
   }
 
   /**
@@ -283,12 +309,19 @@ public class IslamicCalendar extends Almanac {
    * @return true, if a leap year; false, otherwise.
    */
   public static boolean isLeapYear(int year, LeapYearRule leapYearRule) {
+    int shift = 14;        // Default is WEST_ISLAMIC
     switch(leapYearRule) {
-      case BASE_15:
-        return ((((year*11)+15) % 30) < 11);
-      default:      // Default is BASE_16
-        return ((((year*11)+14) % 30) < 11);
+      case HABASH_AL_HASIB:
+        shift = 9;
+        break;
+      case TAIYABI_ISMAILI:
+        shift = 11;
+        break;
+      case EAST_ISLAMIC:
+        shift = 15;
+        break;
     }
+    return ((((year*11)+shift) % 30) < 11);
   }
 
   /**
@@ -306,6 +339,8 @@ public class IslamicCalendar extends Almanac {
    * @param leapYearRule a leap year rule.
    */
   public void setLeapYearRule(LeapYearRule leapYearRule) {
+    if (this.leapYearRule != leapYearRule) {
+    }
     this.leapYearRule = leapYearRule;
   }
 
