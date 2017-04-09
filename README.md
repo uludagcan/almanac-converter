@@ -4,12 +4,12 @@ Almanac Converter
 
 An easy-to-use Java-based calendar converter - able to convert between various known calendars.
 
-###Requirements
+### Requirements
 
 * Java Development Kit (JDK) 1.7.0 +
 * Gradle 2.6+
 
-###Installation
+### Installation
 
 To install, you will need [Gradle](https://gradle.org/) or [Apache Ant](http://ant.apache.org/).
 
@@ -18,10 +18,6 @@ To install, you will need [Gradle](https://gradle.org/) or [Apache Ant](http://a
 3. Impress your friends with some date conversions.
 
 See the wiki for examples.
-
-###Inspiration
-
-While there exists other Java-based date-time handlers, Almanac converter's central focus is around converting between historical dates. As such, its design approach is different. First, it uses the Julian Day as the backbone behind the conversions. Secondly, constructing and converting is very simple and direct. 
 
 ## Supported Calendars
 
