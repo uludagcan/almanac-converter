@@ -1,6 +1,25 @@
 language: java
+
+branches:
+  only:
+    - master
+
+install: true
+
 jdk:
+  - oraclejdk7
   - oraclejdk8
-addons:
-    code_climate:
-        repo_token: 505af12ea5d563a0ea6faf39887d72d19872945bbe58d8b4d1fee25ecf5766ee
+
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+  
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
+script: ./gradlew build
+
+after_success:
+  -bash <(curl -s https://codecov.io/bash)
