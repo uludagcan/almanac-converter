@@ -4,21 +4,10 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'jacoco'
 
-defaultTasks 'jar'
-
-// tag::repositories[]
 repositories {
   mavenCentral()
 }
-// end::repositories[]
 
-// tag::wrapper[]
-task wrapper(type: Wrapper) {
-  gradleVersion = '3.3'
-}
-// end::wrapper[]
-
-// tag::jacocoTestReport[]
 jacocoTestReport {
   reports {
     xml.enabled = true
@@ -26,9 +15,7 @@ jacocoTestReport {
   }
 }
 check.dependsOn jacocoTestReport
-// end::jacocoTestReport[]
 
-// tag::test[]
 test {
   useTestNG() {
     options {
@@ -37,9 +24,11 @@ test {
     }
   }
 }
-// end::test[]
 
-// tag::jar[]
+compileJava {
+  options.encoding = "UTF-8"
+}
+
 jar {
   baseName 'almanac-converter'
   duplicatesStrategy = 'exclude'
@@ -48,17 +37,15 @@ jar {
   }
   from sourceSets.test.output
 }
-// end::jar[]
 
-// tag::javadoc[]
+task wrapper(type: Wrapper) {
+  gradleVersion = '3.3'
+}
+
 javadoc {
   title = project.description
 }
-// end::javadoc[]
 
-
-
-// tag::dependencies[]
 dependencies {
   compile 'org.apache.commons:commons-lang3:3.5',
           'org.hamcrest:hamcrest-core:1.3',
@@ -66,4 +53,3 @@ dependencies {
 
   testCompile 'org.testng:testng:6.11'
 }
-// end::dependencies[]
