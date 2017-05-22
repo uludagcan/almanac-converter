@@ -630,7 +630,7 @@ public class Meeus {
     return quarters;
   }
 
-  private static double[] computeLunarCoefficients(
+  protected static double[] computeLunarCoefficients(
     int quarter, double m, double mp, double f, double omega, double e) {
     double c01 = dsin(mp);
     double c02 = dsin(m);
@@ -665,7 +665,7 @@ public class Meeus {
       };
   }
 
-  private static double calculateJdeo(double[] series, double y) {
+  protected static double calculateJdeo(double[] series, double y) {
     double y2 = y * y;
     double y3 = y2 * y;
     double y4 = y3 * y;
@@ -676,7 +676,7 @@ public class Meeus {
       (series[4] * y4));
   }
 
-  private static double mean(int year, Season season) {
+  protected static double mean(int year, Season season) {
     double y, jde0;
     if (year < 1000) {
       y = year / 1000.0;
@@ -689,7 +689,4 @@ public class Meeus {
     return jde0;
   }
 
-  private static void print(Object o) {
-    System.out.println(o);
-  }
 }
