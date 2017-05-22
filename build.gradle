@@ -39,7 +39,7 @@ jar {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '3.3'
+  gradleVersion = '2.6'
 }
 
 javadoc {
