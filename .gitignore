@@ -38,3 +38,5 @@ build/*
 *.bak
 *.gradle
 gradle/wrapper/*
+.idea/
+*.iml
