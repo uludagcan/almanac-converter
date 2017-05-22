@@ -17,11 +17,12 @@ package com.hm.cal.date;
 
 import java.util.Random;
 
-import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertEquals;
+
 import static com.hm.cal.util.AlmanacConverter.*;
-import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
 /**
  * Tests {@link com.hm.cal.date.FrenchRepublicanCalendar}.
@@ -33,7 +34,7 @@ public class FrenchRepublicanCalendarTest {
   public void sameDatesShouldBeEqual() {
     FrenchRepublicanCalendar date1 = new FrenchRepublicanCalendar(195,6,2,9);
     FrenchRepublicanCalendar date2 = new FrenchRepublicanCalendar(195,6,2,9);
-    assertEquals(true, date1.equals(date2));
+    assertTrue(date1.equals(date2));
   }
 
   @Test(expectedExceptions = IndexOutOfBoundsException.class)
@@ -45,15 +46,12 @@ public class FrenchRepublicanCalendarTest {
   public void leapYearShouldComputeCorrectly() {
     int n = 12;
     boolean[] expected = new boolean[n];
-    boolean[] actual = new boolean[n];
 
     for (int i=0; i<n; ++i) expected[i] = false;
     expected[2] = true; expected[6] = true; expected[10] = true;
 
     for (int i=0; i<n; ++i) 
-      actual[i] = FrenchRepublicanCalendar.isLeapYear(i+1);
-
-    assertArrayEquals(expected, actual);
+      assertEquals(expected[i],FrenchRepublicanCalendar.isLeapYear(i+1));
   }
 
   @Test
