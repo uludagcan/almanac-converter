@@ -19,6 +19,9 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
+before_script:
+  - "chmod 755 gradlew"
+
 script: ./gradlew build
 
 after_success:
