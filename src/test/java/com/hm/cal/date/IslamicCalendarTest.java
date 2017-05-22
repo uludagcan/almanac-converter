@@ -6,12 +6,9 @@
 package com.hm.cal.date;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Tests {@link com.hm.cal.date.IslamicCalendar}.

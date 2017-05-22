@@ -15,8 +15,9 @@ limitations under the License.
 *****************************************************************************/
 package com.hm.cal.util;
 
-import static org.junit.Assert.assertArrayEquals;
-import org.junit.Test;
+import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
+import static org.testng.Assert.assertEquals;
+import org.testng.annotations.Test;
 
 /**
  * Tests {@link com.hm.cal.util.RomanNumeralGenerator}.
@@ -37,11 +38,9 @@ public class RomanNumeralGeneratorTest {
     for (int i=0; i<arabic.length; ++i) 
       results[i] = RomanNumeralGenerator.toRoman(arabic[i]);
     
-    assertArrayEquals("FAIL: Roman numerals should match Arabic numbers",
-                      answers,
-                      results);
+    assertArrayEquals(answers,results);
   }
-  
+
   @Test
   public void romanNumeralsToArabicShouldBeCorrect() {
     int[] answers = { 
@@ -56,12 +55,10 @@ public class RomanNumeralGeneratorTest {
     for (int i=0; i<roman.length; ++i) 
       results[i] = RomanNumeralGenerator.toArabic(roman[i]);
     
-    assertArrayEquals("FAIL: Roman numerals should match Arabic numbers",
-                      answers,
-                      results);
+    assertEquals(answers,results);
   }
   
-  @Test(expected = NumberFormatException.class)
+  @Test(expectedExceptions = NumberFormatException.class)
   public void nonRomanCharacterShouldThrowException() {
     RomanNumeralGenerator.toArabic("T");
   }

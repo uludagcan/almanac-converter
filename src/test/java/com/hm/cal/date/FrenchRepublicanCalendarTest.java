@@ -17,11 +17,11 @@ package com.hm.cal.date;
 
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
-import org.junit.Test;
+import static org.testng.Assert.assertEquals;
+import org.testng.annotations.Test;
 
 import static com.hm.cal.util.AlmanacConverter.*;
+import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
 /**
  * Tests {@link com.hm.cal.date.FrenchRepublicanCalendar}.
@@ -33,12 +33,10 @@ public class FrenchRepublicanCalendarTest {
   public void sameDatesShouldBeEqual() {
     FrenchRepublicanCalendar date1 = new FrenchRepublicanCalendar(195,6,2,9);
     FrenchRepublicanCalendar date2 = new FrenchRepublicanCalendar(195,6,2,9);
-    assertEquals( "FAIL: Dates should be equal",
-                  true,
-                  date1.equals(date2));
+    assertEquals(true, date1.equals(date2));
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expectedExceptions = IndexOutOfBoundsException.class)
   public void monthNameShouldBadMonthNumber() {
     String month = FrenchRepublicanCalendar.getMonthName(0); // No "0" month!
   }
@@ -55,9 +53,7 @@ public class FrenchRepublicanCalendarTest {
     for (int i=0; i<n; ++i) 
       actual[i] = FrenchRepublicanCalendar.isLeapYear(i+1);
 
-    assertArrayEquals("FAIL: Leap years not computing correctly",
-                      actual,
-                      expected);
+    assertArrayEquals(expected, actual);
   }
 
   @Test
@@ -72,9 +68,7 @@ public class FrenchRepublicanCalendarTest {
       FrenchRepublicanCalendar a = new FrenchRepublicanCalendar(jday1);
       JulianDay jday2 = toJulianDay(a);
       FrenchRepublicanCalendar b = toFrenchRepublicanCalendar(jday2);
-      assertEquals( "FAIL: French Republican Calendar failed round trip",
-                    a,
-                    b);
+      assertEquals(a,b);
     }
   }
   

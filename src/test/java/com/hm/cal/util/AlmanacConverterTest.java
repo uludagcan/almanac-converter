@@ -17,8 +17,10 @@ package com.hm.cal.util;
 
 import com.hm.cal.date.*;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
+import org.testng.annotations.Test;
 
 /**
  * Tests {@link AlmanacConverter}.
@@ -34,126 +36,98 @@ public class AlmanacConverterTest {
   public void julianDayShouldConvertToGregorianCalendar() {
     GregorianCalendar actual = AlmanacConverter.toGregorianCalendar(EXPECTED);
     GregorianCalendar expected = new GregorianCalendar(1987,3,10);
-    assertEquals( "FAIL: Julian Day -> Gregorian Calendar is broken",
-                  true,
-                  actual.equals(expected));
+    assertTrue(actual.equals(expected));
   }
 
   @Test
   public void gregorianCalendarShouldConvertToJulianDay() {
     JulianDay actual = AlmanacConverter.toJulianDay(new GregorianCalendar(1987,3,10));
     JulianDay expected = EXPECTED;
-    assertEquals( "FAIL: Gregorian Calendar -> Julian Day is broken",
-                  true,
-                  actual.equals(expected));
+    assertTrue(actual.equals(expected));
   }
 
   @Test
   public void julianDayShouldConvertToJulianCalendar() {
     JulianCalendar actual = AlmanacConverter.toJulianCalendar(EXPECTED);
     JulianCalendar expected = new JulianCalendar(1987,2,25);
-    assertEquals( "FAIL: Julian Day -> Julian Calendar is broken",
-                  true,
-                  actual.equals(expected));
+    assertTrue(actual.equals(expected));
   }
 
   @Test
   public void julianCalendarShouldConvertToJulianDay() {
     JulianDay actual = AlmanacConverter.toJulianDay(new JulianCalendar(1987,2,25));
     JulianDay expected = EXPECTED;
-    assertEquals( "FAIL: Julian Calendar -> Julian Day is broken",
-                  true,
-                  actual.equals(expected));
+    assertTrue(actual.equals(expected));
   }
 
   @Test
   public void julianDayShouldConvertToFrenchRepublicanCalendar() {
     FrenchRepublicanCalendar actual = AlmanacConverter.toFrenchRepublicanCalendar(EXPECTED);
     FrenchRepublicanCalendar expected = new FrenchRepublicanCalendar(195,6,2,9);
-    assertEquals( "FAIL: Julian Day -> French Republican Calendar is broken",
-                  true,
-                  actual.equals(expected));
+    assertTrue(actual.equals(expected));
   }
 
   @Test
   public void frenchRepublicanCalendarShouldConvertToJulianDay() {
     JulianDay actual = AlmanacConverter.toJulianDay(new FrenchRepublicanCalendar(195,6,2,9));
     JulianDay expected = EXPECTED;
-    assertEquals( "FAIL: French Republican Calendar -> Julian Day is broken",
-                  true,
-                  actual.equals(expected));
+    assertTrue(actual.equals(expected));
   }
 
   @Test
   public void julianDayShouldConvertToMayaCalendar() {
     MayaCalendar actual = AlmanacConverter.toMayaCalendar(EXPECTED);
     MayaCalendar expected = new MayaCalendar(12,18,13,15,2);
-    assertEquals( "FAIL: Julian Day -> Maya Calendar is broken",
-                  true,
-                  actual.equals(expected));
+    assertTrue(actual.equals(expected));
   }
 
   @Test
   public void mayaCalendarShouldConvertToJulianDay() {
     JulianDay actual = AlmanacConverter.toJulianDay(new MayaCalendar(12,18,13,15,2));
     JulianDay expected = EXPECTED;
-    assertEquals( "FAIL: Maya Calendar -> Julian Day is broken",
-                  true,
-                  actual.equals(expected));
+    assertTrue(actual.equals(expected));
   }
 
   @Test
   public void julianDayShouldConvertToIslamicCalendar() {
     IslamicCalendar actual = AlmanacConverter.toIslamicCalendar(EXPECTED);
     IslamicCalendar expected = new IslamicCalendar(1407,7,9);
-    assertEquals( "FAIL: Julian Day -> Islamic Calendar is broken",
-                  true,
-                  actual.equals(expected));
+    assertTrue(actual.equals(expected));
   }
 
   @Test
   public void islamicCalendarShouldConvertToJulianDay() {
     JulianDay actual = AlmanacConverter.toJulianDay(new IslamicCalendar(1407,7,9));
     JulianDay expected = EXPECTED;
-    assertEquals( "FAIL: Islamic Calendar -> Julian Day is broken",
-                  true,
-                  actual.equals(expected));
+    assertTrue(actual.equals(expected));
   }
 
   @Test
   public void julianDayShouldConvertToHebrewCalendar() {
     HebrewCalendar actual = AlmanacConverter.toHebrewCalendar(EXPECTED);
     HebrewCalendar expected = new HebrewCalendar(5747,12,9);
-    assertEquals( "FAIL: Julian Day -> Hebrew Calendar is broken",
-                  true,
-                  actual.equals(expected));
+    assertTrue(actual.equals(expected));
   }
 
   @Test
   public void hebrewCalendarShouldConvertToJulianDay() {
     JulianDay actual = AlmanacConverter.toJulianDay(new HebrewCalendar(5747,12,9));
     JulianDay expected = EXPECTED;
-    assertEquals( "FAIL: Julian Day -> Hebrew Calendar is broken",
-                  true,
-                  actual.equals(expected));
+    assertTrue(actual.equals(expected));
   }
 
   @Test
   public void persianCalendarShouldConvertToJulianDay() {
     JulianDay actual = AlmanacConverter.toJulianDay(new PersianCalendar(1365,12,19));
     JulianDay expected = EXPECTED;
-    assertEquals( "FAIL: Persian Calendar -> Julian Day is broken",
-                  true,
-                  actual.equals(expected));
+    assertTrue(actual.equals(expected));
   }
 
   @Test
   public void julianDayShouldConvertToPersianCalendar() {
     PersianCalendar actual = AlmanacConverter.toPersianCalendar(EXPECTED);
     PersianCalendar expected = new PersianCalendar(1365,12,19);
-    assertEquals( "FAIL: Julian Day -> Persian Calendar is broken",
-                  true,
-                  actual.equals(expected));
+    assertTrue(actual.equals(expected));
   }
 
 }

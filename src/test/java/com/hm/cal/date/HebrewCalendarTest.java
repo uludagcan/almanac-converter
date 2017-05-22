@@ -20,9 +20,8 @@ import java.util.Random;
 import com.hm.cal.util.AlmanacConverter;
 import org.joda.time.DateTime;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
-import org.junit.Test;
+import static org.testng.Assert.assertEquals;
+import org.testng.annotations.Test;
 
 import static com.hm.cal.util.AlmanacConverter.*;
 
@@ -36,9 +35,7 @@ public class HebrewCalendarTest {
   public void sameDatesShouldBeEqual() {
     HebrewCalendar date1 = new HebrewCalendar(5747,12,9);
     HebrewCalendar date2 = new HebrewCalendar(5747,12,9);
-    assertEquals( "FAIL: Dates should be equal",
-                  true,
-                  date1.equals(date2));
+    assertEquals(true,date1.equals(date2));
   }
 
   @Test
@@ -56,12 +53,10 @@ public class HebrewCalendarTest {
     HebrewCalendar date1 = 
       new HebrewCalendar(new DateTime(1987,3,10,0,1));
     HebrewCalendar date2 = new HebrewCalendar(5747,12,9);
-    assertEquals( "FAIL: Date should construct from Joda DateTime",
-                  true,
-                  date1.equals(date2));
+    assertEquals(true,date1.equals(date2));
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expectedExceptions = IndexOutOfBoundsException.class)
   public void monthNameShouldBadMonthNumber() {
     HebrewCalendar.getMonthName(0); // No "0" month!
   }

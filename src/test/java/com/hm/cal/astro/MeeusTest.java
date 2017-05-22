@@ -15,8 +15,8 @@ limitations under the License.
 *****************************************************************************/
 package com.hm.cal.astro;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+import static org.testng.Assert.assertEquals;
+import org.testng.annotations.Test;
 
 /**
  * Tests {@link com.hm.cal.astro.Meeus}.

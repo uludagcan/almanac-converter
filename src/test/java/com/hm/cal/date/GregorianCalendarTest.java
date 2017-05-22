@@ -18,9 +18,8 @@ package com.hm.cal.date;
 import java.util.Random;
 import org.joda.time.DateTime;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
-import org.junit.Test;
+import static org.testng.Assert.assertEquals;
+import org.testng.annotations.Test;
 
 import static com.hm.cal.util.AlmanacConverter.*;
 
@@ -33,45 +32,35 @@ import static com.hm.cal.util.AlmanacConverter.*;
 public class GregorianCalendarTest {
   @Test
   public void checkProperLeapYearRule() {
-    assertEquals( "FAIL: 1900 must be normal year",
-                  false,
-                  GregorianCalendar.isLeapYear(1900));
+    assertEquals(false, GregorianCalendar.isLeapYear(1900));
   }
 
   @Test
   public void sameDatesShouldBeEqual() {
     GregorianCalendar date1 = new GregorianCalendar(1986,9,3);
     GregorianCalendar date2 = new GregorianCalendar(1986,9,3);
-    assertEquals( "FAIL: Dates should be equal",
-                  true,
-                  date1.equals(date2));
+    assertEquals(true,date1.equals(date2));
   }
 
   @Test
   public void differentDatesShouldNotBeEqual() {
     GregorianCalendar date1 = new GregorianCalendar(1987,3,10);
     GregorianCalendar date2 = new GregorianCalendar(1986,9,3);
-    assertEquals( "FAIL: Dates should not be equal",
-                  false,
-                  date1.equals(date2));
+    assertEquals(false,date1.equals(date2));
   }
 
   @Test 
   public void dateOneShouldBeBeforeDateTwo() {
     GregorianCalendar date1 = new GregorianCalendar(1986,9,3);
     GregorianCalendar date2 = new GregorianCalendar(1986,9,4);
-    assertEquals( "FAIL: Dates should be in chronological order",
-                  true,
-                  date1.isBefore(date2));
+    assertEquals(true, date1.isBefore(date2));
   }
 
   @Test 
   public void dateOneShouldBeAfterDateTwo() {
     GregorianCalendar date1 = new GregorianCalendar(1986,9,3);
     GregorianCalendar date2 = new GregorianCalendar(1986,9,4);
-    assertEquals( "FAIL: Dates should be in chronological order",
-                  true,
-                  date2.isAfter(date1));
+    assertEquals(true, date2.isAfter(date1));
   }
 
   @Test
@@ -79,9 +68,7 @@ public class GregorianCalendarTest {
     int[] days = new int[] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     int year = 2015;
     int[] result = GregorianCalendar.getDaysPerMonthInYear(year);
-    assertArrayEquals("FAIL: Days of month aren't correct",
-                      days,
-                      result);
+    assertEquals(days,result);
   }
 
   @Test
@@ -89,9 +76,7 @@ public class GregorianCalendarTest {
     int[] days = new int[] { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     int year = 2000;
     int[] result = GregorianCalendar.getDaysPerMonthInYear(year);
-    assertArrayEquals("FAIL: Days of month aren't correct",
-                      days,
-                      result);
+    assertEquals(days,result);
   }
 
   @Test
@@ -99,9 +84,7 @@ public class GregorianCalendarTest {
     int year = 1500;
     boolean ypro = GregorianCalendar.isLeapYear(year,true);
     boolean npro = GregorianCalendar.isLeapYear(year,false);
-    assertEquals( "FAIL: Proleptic leap years should differ",
-                  false,
-                  ypro==npro);
+    assertEquals(false,ypro==npro);
   }
 
   @Test
@@ -109,12 +92,10 @@ public class GregorianCalendarTest {
     GregorianCalendar date1 = 
       new GregorianCalendar(new DateTime(1986,9,3,0,1));
     GregorianCalendar date2 = new GregorianCalendar(1986,9,3);
-    assertEquals( "FAIL: Date should construct from Joda DateTime",
-                  true,
-                  date1.equals(date2));
+    assertEquals(true,date1.equals(date2));
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expectedExceptions = IndexOutOfBoundsException.class)
   public void monthNameShouldBadMonthNumber() {
     String month = GregorianCalendar.getMonthName(0); // No "0" month!
   }
@@ -131,9 +112,7 @@ public class GregorianCalendarTest {
       GregorianCalendar a = new GregorianCalendar(jday1);
       JulianDay jday2 = toJulianDay(a);
       GregorianCalendar b = toGregorianCalendar(jday2);
-      assertEquals( "FAIL: Gregorian Calendar failed round trip",
-                    a,
-                    b);
+      assertEquals(a,b);
     }
   }
  

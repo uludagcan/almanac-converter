@@ -15,11 +15,10 @@ limitations under the License.
 *****************************************************************************/
 package com.hm.cal.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
+import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
 import com.hm.cal.constants.Holiday;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import com.hm.cal.date.*;
 
@@ -59,9 +58,7 @@ public class HolidayCalculatorTest {
     for (int i=0; i<n; ++i) 
       actual[i] = 
         new GregorianCalendar(HolidayCalculator.get(h,expected[i].getYear()));
-    assertArrayEquals("FAIL: "+h.toString()+" not being computed correctly",
-                      expected,
-                      actual);
+    assertArrayEquals(expected,actual);
   }
 
   final static GregorianCalendar[][] _hol = 

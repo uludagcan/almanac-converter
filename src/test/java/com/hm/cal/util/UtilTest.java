@@ -16,8 +16,9 @@ limitations under the License.
 package com.hm.cal.util;
 
 import java.lang.Math;
-import static org.junit.Assert.assertArrayEquals;
-import org.junit.Test;
+import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
+
+import org.testng.annotations. Test;
 
 /**
  * Tests {@link com.hm.cal.util.Util}.
