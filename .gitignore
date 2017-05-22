@@ -14,7 +14,6 @@ ehthumbs.db
 *.dmg
 *.gz
 *.iso
-*.jar
 *.log
 *.zip
 *.tar
@@ -37,6 +36,5 @@ build/*
 *.swp
 *.bak
 *.gradle
-gradle/
 .idea/
 *.iml
