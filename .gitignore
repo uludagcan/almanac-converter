@@ -10,22 +10,11 @@ ehthumbs.db
 
 # PACKAGES #
 ############
-*.7z
-*.dmg
-*.gz
-*.iso
 *.log
-*.zip
-*.tar
-*.rar
 
 # COMPILED SOURCE #
 ###################
 *.class
-*.dll
-*.exe
-*.o
-*.so
 build/*
 
 # OTHER ANNOYANCES #

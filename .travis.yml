@@ -6,9 +6,7 @@ branches:
 
 install: true
 
-jdk:
-  - oraclejdk7
-  - oraclejdk8
+jdk: oraclejdk8
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -19,8 +17,7 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
-before_script:
-  - "chmod 755 gradlew"
+before_script: chmod 755 gradlew
 
 script: ./gradlew build
 
