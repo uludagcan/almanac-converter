@@ -52,9 +52,6 @@ The Hebrew (Jewish) calendar is a calendar used predominantly for Jewish religio
 ### Julian Day
 The Julian Day is the continuous count of days since the beginning of the Julian Period used primarily by astronomers. The Julian Period is a chronological interval of 7980 years beginning in 4713 BC, and has been used since 1583 to convert between different calendars. The next Julian Period begins in the year 3268 AD.
 
-## Android App - Almaniac
-This library is now being implemented in the wild in [Almaniac](https://play.google.com/store/apps/details?id=com.hypotemoose.almaniac) found on the Google Play store.
-
 # Roadmap
 ```
 * Julian Day                 [100%] DONE
