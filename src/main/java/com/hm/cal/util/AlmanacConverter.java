@@ -64,6 +64,8 @@ public class AlmanacConverter {
         return _he2jd((HebrewCalendar) a);
       if (a instanceof PersianCalendar)
         return _pe2jd((PersianCalendar) a);
+      if (a instanceof IndianCivilCalendar)
+        return _in2jd((IndianCivilCalendar) a);
     }
     return (JulianDay) a;
   }
@@ -151,6 +153,13 @@ public class AlmanacConverter {
       return (PersianCalendar) a;
     else
       return _jd2pe(toJulianDay(a));
+  }
+
+  public static IndianCivilCalendar toIndianCivilCalendar(Almanac a) {
+    if (a instanceof IndianCivilCalendar)
+      return (IndianCivilCalendar) a;
+    else
+      return _jd2in(toJulianDay(a));
   }
 
   private static JulianDay _g2jd(GregorianCalendar date) {
@@ -287,6 +296,33 @@ public class AlmanacConverter {
     return new JulianDay(jd);
   }
 
+  private static JulianDay _in2jd(IndianCivilCalendar date) {
+    int year = date.getYear();
+    int month = date.getMonth();
+    int day = date.getDay();
+    int gregorianYear = year + 78;
+    boolean isLeap = GregorianCalendar.isLeapYear(gregorianYear);
+
+    GregorianCalendar cal = new GregorianCalendar(gregorianYear,3,isLeap ? 21:22);
+    double jd = _g2jd(cal).getValue();
+    int caitra = (isLeap) ? 31 : 30;
+
+    if (month==1) {
+      jd += (day-1);
+    } else {
+      jd += caitra;
+      double m = month - 2;
+      m = Math.min(m,5);
+      jd += m*31;
+      if (month >= 8) {
+        m = month - 7;
+        jd += m*30;
+      }
+      jd += (day-1);
+    }
+    return new JulianDay(jd);
+  }
+
   private static GregorianCalendar _jd2g(JulianDay jd) {
     int J = (int) (jd.getValue() + 0.5);
     int y = 4716, j = 1401, m = 2;
@@ -417,6 +453,46 @@ public class AlmanacConverter {
     return new PersianCalendar(year, month, day);
   }
 
+  private static IndianCivilCalendar _jd2in(JulianDay jd) {
+    int year, month, day;
+    int mday = 0, yday = 0;
+
+    int saka = 78;
+    int start = 80;
+
+    double jday = Math.floor(jd.getValue()) + 0.5;
+    GregorianCalendar gr = _jd2g(new JulianDay(jday));
+    boolean isLeap = gr.isLeapYear();
+
+    year = gr.getYear() - saka;
+    double gr0 = _g2jd(new GregorianCalendar(gr.getYear(),1,1)).getValue();
+    yday = (int)(jday - gr0);
+    int caitra = isLeap ? 31 : 30;
+
+    if (yday < start) {
+      --year;
+      yday += caitra + (31*5) + (30*3) + 10 + start;
+    }
+
+    yday -= start;
+
+    if(yday < caitra) {
+      month = 1;
+      day = yday + 1;
+    } else {
+      mday = yday - caitra;
+      if (mday < (31 * 5)) {
+        month = (int)(Math.floor(mday/31.0)) + 2;
+        day = (mday % 31) + 1;
+      } else {
+        mday -= (31 * 5);
+        month = (int)(Math.floor(mday/30.0)) + 7;
+        day = (mday % 30) + 1;
+      }
+    }
+
+    return new IndianCivilCalendar(year,month,day);
+  }
 
   /**
    * Delay start of new year so it doesn't fall on Sunday, Wednesday or
@@ -507,5 +583,6 @@ public class AlmanacConverter {
     eqTehran = Math.floor(eqTehran);
     return eqTehran;
   }
+
 
 }

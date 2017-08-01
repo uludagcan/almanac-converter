@@ -322,4 +322,33 @@ public final class CalendarConstants {
       };
   }
 
+  public static final class IndianCivilCalendarConstants {
+    public static final String[] weekDayNames =
+      {
+        "Raviara",
+        "Somavara",
+        "Mangalva",
+        "Budhavara",
+        "Guruvara",
+        "Skuravara",
+        "Sanivara"
+      };
+
+    public static final String[] monthNames =
+      {
+        "Chaitra",
+        "Vaisakha",
+        "Jyeshtha",
+        "Ashadha",
+        "Shravana",
+        "Bhaadra",
+        "Ashwin",
+        "Kartika",
+        "Agrahayana",
+        "Pausha",
+        "Magha",
+        "Phalguna"
+      };
+  }
+
 }

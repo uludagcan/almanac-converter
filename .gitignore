@@ -24,6 +24,5 @@ build/*
 *~
 *.swp
 *.bak
-*.gradle
 .idea/
 *.iml
