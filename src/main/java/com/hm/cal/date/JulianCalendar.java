@@ -96,7 +96,7 @@ public final class JulianCalendar extends Almanac {
 
   /**
    * Determines whether a given year is a leap year.
-   * <p>
+   *
    * A year is considered a leap year in the Julian calendar if it is
    * divisible by four.
    *

@@ -2,9 +2,9 @@ package com.hm.cal.date;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.joda.time.DateTime;
 
-import java.util.Date;
+import org.joda.time.DateTime;
+import java.util.Calendar;
 
 import static com.hm.cal.constants.CalendarConstants.IndianCivilCalendarConstants.monthNames;
 import static com.hm.cal.util.AlmanacConverter.toIndianCivilCalendar;
@@ -18,6 +18,10 @@ public class IndianCivilCalendar extends Almanac {
 
   public IndianCivilCalendar() {
     this(new DateTime());
+  }
+
+  public IndianCivilCalendar(Calendar cal) {
+    this(new GregorianCalendar(cal));
   }
 
   public IndianCivilCalendar(DateTime dt) {
@@ -38,8 +42,12 @@ public class IndianCivilCalendar extends Almanac {
     this.day = day;
   }
 
-  public boolean isLeapYear(int year) {
-    return (new GregorianCalendar(this)).isLeapYear();
+  public static boolean isLeapYear(int year) {
+    return GregorianCalendar.isLeapYear(year + 78);
+  }
+
+  public boolean isLeapYear() {
+    return isLeapYear(this.year);
   }
 
   /**
@@ -54,9 +62,13 @@ public class IndianCivilCalendar extends Almanac {
     return monthNames[month - 1];
   }
 
+  public String getMonthName() {
+    return IndianCivilCalendar.getMonthName(this.month);
+  }
+
   @Override
   public String getDate() {
-    return null;
+    return getDay() + " " + getMonthName() + ", " + getYear();
   }
 
   @Override
@@ -66,8 +78,8 @@ public class IndianCivilCalendar extends Almanac {
 
   @Override
   public int getNumberOfDaysInMonth() {
-    if (month==0) return (isLeapYear(year)) ? 31 : 30;
-    return (month >= 6) ? 30 : 31;
+    if (this.month==1) return this.isLeapYear() ? 31 : 30;
+    return (this.month >= 7) ? 30 : 31;
   }
 
   @Override
@@ -90,12 +102,12 @@ public class IndianCivilCalendar extends Almanac {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof IslamicCalendar))
+    if (!(obj instanceof IndianCivilCalendar))
       return false;
     if (obj == this)
       return true;
 
-    final IslamicCalendar date = (IslamicCalendar) obj;
+    final IndianCivilCalendar date = (IndianCivilCalendar) obj;
     return new EqualsBuilder()
       .append(this.day, date.getDay())
       .append(this.month, date.getMonth())

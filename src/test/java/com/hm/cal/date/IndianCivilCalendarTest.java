@@ -20,6 +20,8 @@ import java.util.Random;
 import com.hm.cal.util.AlmanacConverter;
 import org.joda.time.DateTime;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
 
@@ -33,19 +35,51 @@ public class IndianCivilCalendarTest {
   public void sameDatesShouldBeEqual() {
     IndianCivilCalendar date1 = new IndianCivilCalendar(1909,2,20);
     IndianCivilCalendar date2 = new IndianCivilCalendar(1909,2,20);
-    assertEquals(true,date1.equals(date2));
+    assertEquals(date1,date2);
+  }
+
+  @Test
+  public void testSimpleConversion() {
+    GregorianCalendar cal = new GregorianCalendar(79,3,22);
+    IndianCivilCalendar date1 = new IndianCivilCalendar(1,1,1);
+    IndianCivilCalendar date2 = toIndianCivilCalendar(cal);
+    assertEquals(date1,date2);
+
+    GregorianCalendar date3 = toGregorianCalendar(date2);
+    assertEquals(cal,date3);
+  }
+
+  @Test
+  public void testLeapYears() {
+    assertFalse(IndianCivilCalendar.isLeapYear(1905));
+    assertTrue( IndianCivilCalendar.isLeapYear(1906));
+    assertFalse(IndianCivilCalendar.isLeapYear(1907));
+    assertFalse(IndianCivilCalendar.isLeapYear(1908));
+    assertFalse(IndianCivilCalendar.isLeapYear(1909));
+    assertTrue( IndianCivilCalendar.isLeapYear(1910));
   }
 
   @Test
   public void daysPerMonthShouldBeCorrect() {
+    // Test with normal year
     int[] days = new int[] { 30, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 30};
-    IndianCivilCalendar indianCivilCalendar = new IndianCivilCalendar(1909,1,1);
-    for (int i=0; i<indianCivilCalendar.getNumberOfMonthsInYear(); ++i) {
-      indianCivilCalendar.setMonth(i+1);
-      assertEquals(indianCivilCalendar.getNumberOfDaysInMonth(),days[i]);
+    IndianCivilCalendar cal = new IndianCivilCalendar(1909,1,1);
+    for (int i=0; i<cal.getNumberOfMonthsInYear(); ++i) {
+      cal.setMonth(i+1);
+      assertEquals(cal.getNumberOfDaysInMonth(),days[i]);
+    }
+
+    // Test with leap year
+    days[0] = 31;
+    cal =new IndianCivilCalendar(1906,1,1);
+    for (int i=0; i<cal.getNumberOfMonthsInYear(); ++i) {
+      cal.setMonth(i+1);
+      System.out.println(i + ": " + cal.getNumberOfDaysInMonth());
+      assertEquals(cal.getNumberOfDaysInMonth(),days[i]);
     }
   }
 
+  /*
   @Test
   public void jodaDateTimeShouldConstruct() {
     IndianCivilCalendar date1 =
@@ -86,4 +120,5 @@ public class IndianCivilCalendarTest {
       assertEquals(jd.getValue(),converted.getValue(),0.00);
     }
   }
+  */
 }
