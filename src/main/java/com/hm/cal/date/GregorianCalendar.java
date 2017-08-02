@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright 2015 Hypotemoose, Inc.
+ * Copyright 2015 Chris Engelsma
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ public final class GregorianCalendar extends Almanac {
   }
 
   /**
-   * Constructs a Greogrian Calendar using a Java calendar date.
+   * Constructs a Gregrian Calendar using a Java calendar date.
    *
    * @param cal a java util calendar.
    */
@@ -123,7 +123,6 @@ public final class GregorianCalendar extends Almanac {
 
   /**
    * Determines whether a given year is a leap year.
-   * <p>
    * This method optionally determines whether the current date exists
    * before or after the creation of the Gregorian calendar, and follows
    * that calendar's leap year rule. As a result, there are "missing dates"
@@ -144,6 +143,7 @@ public final class GregorianCalendar extends Almanac {
     if (Math.abs(year) % 4 == 0) {
       if (Math.abs(year) % 400 == 0) return true;
       if (Math.abs(year) % 100 == 0) return false;
+      return true;
     }
     return false;
   }

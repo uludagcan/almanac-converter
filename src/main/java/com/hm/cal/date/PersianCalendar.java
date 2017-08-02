@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright 2016 Hypotemoose, Inc.
+ * Copyright 2016 Chris Engelsma
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ import static com.hm.cal.util.AlmanacConverter.toPersianCalendar;
  * additional day can be added to the last month on years where there is
  * discrepancy.
  *
- * @author Chris Engelsma, Hypotemoose
+ * @author Chris Engelsma
  * @since 2016.05.17
  */
 public class PersianCalendar extends Almanac {

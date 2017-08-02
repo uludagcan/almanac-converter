@@ -1,5 +1,5 @@
 /*****************************************************************************
-Copyright 2015 Hypotemoose, LLC.
+Copyright 2015 Chris Engelsma
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
 
 import static com.hm.cal.util.AlmanacConverter.*;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Tests {@link com.hm.cal.date.GregorianCalendar}.
@@ -33,6 +35,13 @@ public class GregorianCalendarTest {
   @Test
   public void checkProperLeapYearRule() {
     assertEquals(false, GregorianCalendar.isLeapYear(1900));
+  }
+
+  @Test
+  public void testJodaTimeConstructsProperly() {
+    GregorianCalendar cal1 = new GregorianCalendar(new DateTime(1987,3,10,0,1));
+    GregorianCalendar cal2 = new GregorianCalendar(1987,3,10);
+    assertTrue(cal1.equals(cal2));
   }
 
   @Test
@@ -77,6 +86,18 @@ public class GregorianCalendarTest {
     int year = 2000;
     int[] result = GregorianCalendar.getDaysPerMonthInYear(year);
     assertEquals(days,result);
+  }
+
+  @Test
+  public void testSimpleLeapYears() {
+    assertFalse(GregorianCalendar.isLeapYear(1900));
+    assertFalse(GregorianCalendar.isLeapYear(1901));
+    assertFalse(GregorianCalendar.isLeapYear(1902));
+    assertFalse(GregorianCalendar.isLeapYear(1903));
+    assertTrue(GregorianCalendar.isLeapYear(1904));
+    assertTrue(GregorianCalendar.isLeapYear(1908));
+    assertTrue(GregorianCalendar.isLeapYear(1912));
+    assertTrue(GregorianCalendar.isLeapYear(2000));
   }
 
   @Test

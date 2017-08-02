@@ -43,11 +43,11 @@ public class IndianCivilCalendar extends Almanac {
   }
 
   public static boolean isLeapYear(int year) {
-    return GregorianCalendar.isLeapYear(year + 78);
+    return GregorianCalendar.isLeapYear(year + 78, false);
   }
 
   public boolean isLeapYear() {
-    return isLeapYear(this.year);
+    return isLeapYear(year);
   }
 
   /**

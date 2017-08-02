@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright 2015 Hypotemoose, Inc.
+ * Copyright 2015 Chris Engelsma
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -300,25 +300,28 @@ public class AlmanacConverter {
     int year = date.getYear();
     int month = date.getMonth();
     int day = date.getDay();
-    int gregorianYear = year + 78;
-    boolean isLeap = GregorianCalendar.isLeapYear(gregorianYear);
+    System.out.println(year + " " + month + " " + day);
+    double jd;
+    boolean isLeap = IndianCivilCalendar.isLeapYear(year);
 
-    GregorianCalendar cal = new GregorianCalendar(gregorianYear,3,isLeap ? 21:22);
-    double jd = _g2jd(cal).getValue();
-    int caitra = (isLeap) ? 31 : 30;
+    GregorianCalendar cal = new GregorianCalendar(year + 78, 3, isLeap ? 21 : 22);
+    double start = _g2jd(cal).getValue();
+    int caitra = isLeap ? 31 : 30;
 
     if (month==1) {
-      jd += (day-1);
+      jd = start + (day - 1);
     } else {
-      jd += caitra;
-      double m = month - 2;
-      m = Math.min(m,5);
+      jd = start + caitra;
+      int m = month - 2;
+      m = Math.min(m, 5);
       jd += m*31;
+      System.out.println("1a: " + jd);
       if (month >= 8) {
         m = month - 7;
         jd += m*30;
       }
-      jd += (day-1);
+      jd += day - 1;
+      System.out.println("1b: " + jd);
     }
     return new JulianDay(jd);
   }
@@ -468,6 +471,7 @@ public class AlmanacConverter {
     double gr0 = _g2jd(new GregorianCalendar(gr.getYear(),1,1)).getValue();
     yday = (int)(jday - gr0);
     int caitra = isLeap ? 31 : 30;
+    System.out.println(yday);
 
     if (yday < start) {
       --year;

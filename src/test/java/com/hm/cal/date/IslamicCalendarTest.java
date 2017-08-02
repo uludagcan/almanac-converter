@@ -1,5 +1,5 @@
 /****************************************************************************
- * Copyright (c) 2016, Hypotemoose, Inc. - All Rights Reserved.
+ * Copyright (c) 2016, Chris Engelsma - All Rights Reserved.
  * Unauthorized copying of this file via any medium is strictly prohibited.
  * Proprietary and confidential.
  ****************************************************************************/

@@ -21,7 +21,8 @@ def basic_demo():
     MayaCalendar(),
     IslamicCalendar(),
     HebrewCalendar(),
-    PersianCalendar()
+    PersianCalendar(),
+    IndianCivilCalendar()
   ]
 
   print "Today is... "

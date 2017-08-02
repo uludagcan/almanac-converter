@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright 2015 Hypotemoose, Inc.
+ * Copyright 2015 Chris Engelsma
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
