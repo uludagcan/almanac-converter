@@ -5,9 +5,9 @@ from java.lang import *
 from javax.swing import *
 
 import org.joda.time.DateTime
-from com.hm.cal.date import *
-from com.hm.cal.util import *
-from com.hm.cal.astro.Meeus import *
+from com.hypotemoose.cal.date import *
+from com.hypotemoose.cal.util import *
+from com.hypotemoose.cal.astro.Meeus import *
 
 holidays = [
   Holiday.ASH_WEDNESDAY,

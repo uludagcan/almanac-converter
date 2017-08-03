@@ -4,8 +4,8 @@ from java.awt import *
 from java.lang import *
 from javax.swing import *
 
-from com.hm.cal.date import *
-from com.hm.cal.astro.Meeus import *
+from com.hypotemoose.cal.date import *
+from com.hypotemoose.cal.astro.Meeus import *
 
 DEG = u'\N{DEGREE SIGN}'
 
