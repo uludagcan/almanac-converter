@@ -27,6 +27,15 @@ import static com.hypotemoose.cal.util.AlmanacConverter.toIndianCivilCalendar;
 /**
  * An Indian Civil Calendar.
  * <p>
+ * While a plethora of calendars exist in India, the government adopted an
+ * official calendar in 1957 to be used for civil purposes. The calendar
+ * is comprised of 12 months. The first month, Chaitra, contains 30 days
+ * in a normal year and 31 days in a leap year, followed by five 30-day
+ * months and then six 31-day months. Leap years occur in the same year as
+ * a Gregorian year, so the two calendars are remain synchronized.
+ *
+ * The calendar begins counting from the start of the Saka era, which occurs
+ * on March 22, 79 in the Gregorian calendar.
  *
  * @author Chris Engelsma
  * @since 2017.08.03
