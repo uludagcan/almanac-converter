@@ -27,7 +27,7 @@ import static com.hypotemoose.cal.util.AlmanacConverter.*;
 /**
  * Tests {@link com.hypotemoose.cal.date.FrenchRepublicanCalendar}.
  * @author Chris Engelsma
- * @version 2015.10.09
+ * @since 2015.10.09
  */
 public class FrenchRepublicanCalendarTest {
   @Test

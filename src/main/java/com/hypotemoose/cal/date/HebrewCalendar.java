@@ -37,7 +37,7 @@ import static com.hypotemoose.cal.util.AlmanacConverter.toJulianDay;
  * <p>
  *
  * @author Chris Engelsma
- * @version 2015.12.13
+ * @since 2015.12.13
  */
 public class HebrewCalendar extends Almanac {
 

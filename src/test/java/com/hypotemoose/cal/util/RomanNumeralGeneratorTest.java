@@ -22,7 +22,7 @@ import org.testng.annotations.Test;
 /**
  * Tests {@link com.hypotemoose.cal.util.RomanNumeralGenerator}.
  * @author Chris Engelsma
- * @version 2015.09.03
+ * @since 2015.09.03
  */
 public class RomanNumeralGeneratorTest {
   @Test

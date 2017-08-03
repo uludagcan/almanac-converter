@@ -23,7 +23,7 @@ import org.testng.annotations. Test;
 /**
  * Tests {@link com.hypotemoose.cal.util.Util}.
  * @author Chris Engelsma
- * @version 2015.11.03
+ * @since 2015.11.03
  */
 public class UtilTest {
   @Test

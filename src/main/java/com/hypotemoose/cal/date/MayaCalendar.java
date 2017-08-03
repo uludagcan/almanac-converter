@@ -54,7 +54,6 @@ import static com.hypotemoose.cal.util.AlmanacConverter.toMayaCalendar;
  * words have become interchangeable.
  *
  * @author Chris Engelsma
- * @version 1.1
  * @since 2015.08.24
  */
 public class MayaCalendar extends Almanac {

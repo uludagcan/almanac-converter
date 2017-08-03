@@ -21,7 +21,7 @@ import org.testng.annotations.Test;
 /**
  * Tests {@link com.hypotemoose.cal.astro.Meeus}.
  * @author Chris Engelsma
- * @version 2015.10.01
+ * @since 2015.10.01
  */
 public class MeeusTest {
   @Test

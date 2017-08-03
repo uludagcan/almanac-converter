@@ -28,7 +28,7 @@ import static com.hypotemoose.cal.util.AlmanacConverter.*;
 /**
  * Tests {@link com.hypotemoose.cal.date.HebrewCalendar}.
  * @author Chris Engelsma
- * @version 2015.12.10
+ * @since 2015.12.10
  */
 public class HebrewCalendarTest {
   @Test

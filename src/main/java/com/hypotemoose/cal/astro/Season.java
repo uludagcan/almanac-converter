@@ -19,7 +19,7 @@ package com.hypotemoose.cal.astro;
  * An astronomical season.
  *
  * @author Chris Engelsma
- * @version 2015.08.10
+ * @since 2015.08.10
  */
 public enum Season {
   SPRING(0),

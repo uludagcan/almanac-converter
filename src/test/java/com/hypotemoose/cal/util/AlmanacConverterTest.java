@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
 /**
  * Tests {@link AlmanacConverter}.
  * @author Chris Engelsma
- * @version 2016.05.17
+ * @since 2016.05.17
  */
 public class AlmanacConverterTest {
 

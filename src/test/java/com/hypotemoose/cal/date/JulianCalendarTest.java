@@ -26,7 +26,7 @@ import static com.hypotemoose.cal.util.AlmanacConverter.*;
 /**
  * Tests {@link com.hypotemoose.cal.date.JulianCalendar}.
  * @author Chris Engelsma
- * @version 2015.10.06
+ * @since 2015.10.06
  */
 public class JulianCalendarTest {
   @Test

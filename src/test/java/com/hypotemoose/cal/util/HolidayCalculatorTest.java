@@ -26,7 +26,7 @@ import com.hypotemoose.cal.date.*;
  * Tests {@link com.hypotemoose.cal.util.HolidayCalculator}.
  * Calculations are tested against known dates.
  * @author Chris Engelsma
- * @version 2015.11.06
+ * @since 2015.11.06
  */
 public class HolidayCalculatorTest {
 

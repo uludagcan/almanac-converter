@@ -24,7 +24,7 @@ package com.hypotemoose.cal.util;
  * Arabic numbers.
  *
  * @author Chris Engelsma
- * @version 2015.09.22
+ * @since 2015.09.22
  */
 public final class RomanNumeralGenerator {
 

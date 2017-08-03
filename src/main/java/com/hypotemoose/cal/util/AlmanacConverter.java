@@ -23,7 +23,7 @@ import com.hypotemoose.cal.date.*;
  * A mechanism to convert between various calendars.
  *
  * @author Chris Engelsma
- * @version 2015.10.02
+ * @since 2015.10.02
  */
 public class AlmanacConverter {
 
@@ -148,6 +148,12 @@ public class AlmanacConverter {
       return _jd2he(toJulianDay(a));
   }
 
+  /**
+   * Converts an Almanac to a Persian date.
+   *
+   * @param a an Almanac
+   * @return the Persian date.
+   */
   public static PersianCalendar toPersianCalendar(Almanac a) {
     if (a instanceof PersianCalendar)
       return (PersianCalendar) a;
@@ -155,6 +161,12 @@ public class AlmanacConverter {
       return _jd2pe(toJulianDay(a));
   }
 
+    /**
+   * Converts an Almanac to an Indian Civil date.
+   *
+   * @param a an Almanac
+   * @return the Indian Civil date.
+   */
   public static IndianCivilCalendar toIndianCivilCalendar(Almanac a) {
     if (a instanceof IndianCivilCalendar)
       return (IndianCivilCalendar) a;
@@ -583,6 +595,5 @@ public class AlmanacConverter {
     eqTehran = Math.floor(eqTehran);
     return eqTehran;
   }
-
 
 }

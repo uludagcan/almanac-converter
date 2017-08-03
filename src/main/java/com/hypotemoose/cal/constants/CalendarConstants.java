@@ -17,7 +17,7 @@ package com.hypotemoose.cal.constants;
 
 /**
  * @author Chris Engelsma
- * @version 2016.03.14
+ * @since 2016.03.14
  */
 public final class CalendarConstants {
 

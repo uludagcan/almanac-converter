@@ -28,7 +28,7 @@ import static com.hypotemoose.cal.astro.Meeus.getMoonQuarters;
  * A holiday calculator.
  *
  * @author Chris Engelsma
- * @version 2015.11.06
+ * @since 2015.11.06
  */
 public class HolidayCalculator {
 

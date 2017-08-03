@@ -29,7 +29,7 @@ import static org.testng.Assert.assertTrue;
  * Tests {@link com.hypotemoose.cal.date.GregorianCalendar}.
  *
  * @author Chris Engelsma
- * @version 2015.09.23
+ * @since 2015.09.23
  */
 public class GregorianCalendarTest {
   @Test

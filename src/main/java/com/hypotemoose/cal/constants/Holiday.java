@@ -19,7 +19,7 @@ package com.hypotemoose.cal.constants;
  * Religious and secular holidays.
  *
  * @author Chris Engelsma
- * @version 2015.11.06
+ * @since 2015.11.06
  */
 public enum Holiday {
   // Catholic

@@ -42,7 +42,7 @@ import static com.hypotemoose.cal.util.AlmanacConverter.toGregorianCalendar;
  * years, but 2000 is a leap year.
  *
  * @author Chris Engelsma
- * @version 2015.11.05
+ * @since 2015.11.05
  */
 public final class GregorianCalendar extends Almanac {
 

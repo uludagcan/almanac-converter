@@ -18,7 +18,7 @@ package com.hypotemoose.cal.date;
 /**
  * Tests {@link com.hypotemoose.cal.date.MayaDate}
  * @author Chris Engelsma
- * @version 2015.08.24
+ * @since 2015.08.24
  */
 public class MayaDateTest {
 }

@@ -27,7 +27,7 @@ import static com.hypotemoose.cal.util.AlmanacConverter.toJulianCalendar;
  * A date in the Julian calendar.
  *
  * @author Chris Engelsma.
- * @version 2015.10.02
+ * @since 2015.10.02
  */
 public final class JulianCalendar extends Almanac {
 

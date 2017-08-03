@@ -24,7 +24,7 @@ import static java.lang.Math.floor;
  * An almanac.
  *
  * @author Chris Engelsma.
- * @version 2015.11.04
+ * @since 2015.11.04
  */
 public abstract class Almanac implements Serializable {
 

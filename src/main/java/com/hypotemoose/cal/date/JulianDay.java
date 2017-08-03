@@ -31,7 +31,7 @@ import static com.hypotemoose.cal.util.AlmanacConverter.toJulianDay;
  * Period begins in the year 3268 AD.
  *
  * @author Chris Engelsma
- * @version 2015.08.07
+ * @since 2015.08.07
  */
 public final class JulianDay extends Almanac {
 

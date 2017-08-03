@@ -19,7 +19,7 @@ package com.hypotemoose.cal.util;
  * A collection of convenience utilities.
  *
  * @author Chris Engelsma
- * @version 2015.10.07
+ * @since 2015.10.07
  */
 public final class Util {
 

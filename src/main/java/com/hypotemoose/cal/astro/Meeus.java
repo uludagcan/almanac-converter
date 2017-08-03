@@ -23,7 +23,7 @@ import static java.lang.Math.*;
  * Algorithms also inspired by Fourmilab.
  *
  * @author Chris Engelsma
- * @version 2015.11.05
+ * @since 2015.11.05
  */
 public class Meeus {
 

@@ -46,7 +46,7 @@ import static com.hypotemoose.cal.util.Util.its;
  * animals and work tools to reflect the changing of the seasons.
  *
  * @author Chris Engelsma
- * @version 2015.11.09
+ * @since 2015.11.09
  */
 public final class FrenchRepublicanCalendar extends Almanac {
 
