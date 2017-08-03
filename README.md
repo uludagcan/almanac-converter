@@ -48,7 +48,11 @@ The Islamic calendar, or Hijri calendar, is a lunar calendar currently used in m
 The Hebrew (Jewish) calendar is a calendar used predominantly for Jewish religious observances. It determines the dates for Jewish holidays and the appropriate public reading of Torah portions. In Israel, it is used for religious purposes, provides a time frame for agriculture and is an official calendar used for civil purposes.
 
 ### Persian Calendar
+The Persian calendar was officially adopted in 1925. Each year consists of 12 months. The beginning of the calendar is determined by the day on which the March equinox occurs at or after noon at with reference to Iran standard time. Because of this, leap years have no set rule, however an additional day can be added to the last month on years where there is discrepancy.
 
+### Indian Civil Calendar
+While a plethora of calendars exist in India, the government adopted an official calendar in 1957 to be used for civil purposes. The calendar is comprised of 12 months. The first month, Chaitra, contains 30 days in a normal year and 31 days in a leap year, followed by five 30-day months and then six 31-day months. Leap years occur in the same year as a Gregorian year, so the two calendars are remain synchronized. The calendar begins counting from the start of the Saka era, which occurs on March 22, 79 in the Gregorian calendar.
+ 
 ### Julian Day
 The Julian Day is the continuous count of days since the beginning of the Julian Period used primarily by astronomers. The Julian Period is a chronological interval of 7980 years beginning in 4713 BC, and has been used since 1583 to convert between different calendars. The next Julian Period begins in the year 3268 AD.
 
@@ -62,7 +66,7 @@ The Julian Day is the continuous count of days since the beginning of the Julian
 * Islamic Calendar           [100%] DONE
 * Hebrew Calendar            [100%] DONE
 * Persian Calendar           [100%] DONE
-* Indian Civil Calendar      [ 10%] IN PROGRESS
+* Indian Civil Calendar      [100%] IN PROGRESS
 * Coptic Calendar            [  0%] PLANNING
 * Chinese Calendar           [  0%] PLANNING
 * Soviet Calendar            [  0%] PLANNING
