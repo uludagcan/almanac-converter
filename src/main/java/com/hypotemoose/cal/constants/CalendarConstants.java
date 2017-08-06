@@ -351,4 +351,33 @@ public final class CalendarConstants {
       };
   }
 
+  public static final class CopticCalendarConstants {
+    public static final String[] weekDayNames =
+      {
+        "Raviara",
+        "Somavara",
+        "Mangalva",
+        "Budhavara",
+        "Guruvara",
+        "Skuravara",
+        "Sanivara"
+      };
+
+    public static final String[] monthNames =
+      {
+        "Thout",
+        "Paopi",
+        "Hathor",
+        "Koiak",
+        "Tobi",
+        "Meshir",
+        "Paremhat",
+        "Paremoude",
+        "Pashons",
+        "Paoni",
+        "Epip",
+        "Mesori",
+        "Pi Kogi Enavot"
+      };
+  }
 }

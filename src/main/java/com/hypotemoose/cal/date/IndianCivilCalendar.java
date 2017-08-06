@@ -15,6 +15,8 @@
  *****************************************************************************/
 package com.hypotemoose.cal.date;
 
+import com.hypotemoose.cal.constants.CalendarConstants;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -113,6 +115,15 @@ public class IndianCivilCalendar extends Almanac {
     return isLeapYear(year);
   }
 
+  /**
+   * Gets the months
+   *
+   * @return the months.
+   */
+  @Override
+  public String[] getMonths() {
+    return CalendarConstants.IndianCivilCalendarConstants.monthNames;
+  }
   /**
    * Gets the name of a given month.
    *
