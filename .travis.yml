@@ -19,10 +19,7 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
-before_script:
-  - "chmod 755 gradlew"
-
-script: ./gradlew build --debug
+script: gradle build --debug
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
