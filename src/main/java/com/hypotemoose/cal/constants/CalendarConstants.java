@@ -380,4 +380,51 @@ public final class CalendarConstants {
         "Pi Kogi Enavot"
       };
   }
+
+  public static final class MayaCalendarConstants {
+    private static final String[] haabMonthNames = {
+      "Pop",
+      "Wo'",
+      "Sip",
+      "Sotz'",
+      "Sek",
+      "Xul",
+      "Yaxk'in'",
+      "Mol",
+      "Ch'en",
+      "Yax",
+      "Sak'",
+      "Keh",
+      "Mak",
+      "K'ank'in",
+      "Muwan'",
+      "Pax",
+      "K'ayab",
+      "Kumk'u",
+      "Wayeb"
+    };
+
+    private static final String[] tzolkinDayNames = {
+      "Imix'",
+      "Ik'",
+      "Ak'b'al",
+      "K'an",
+      "Chikchan",
+      "Kimi",
+      "Manik'",
+      "Lamat",
+      "Muluk",
+      "Ok",
+      "Chuwen",
+      "Eb'",
+      "B'en",
+      "Ix",
+      "Men",
+      "Kib'",
+      "Kab'an",
+      "Etz'nab'",
+      "Kawak",
+      "Ajaw"
+    };
+  }
 }

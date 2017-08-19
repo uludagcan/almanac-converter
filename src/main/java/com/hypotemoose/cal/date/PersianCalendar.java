@@ -16,9 +16,8 @@
 package com.hypotemoose.cal.date;
 
 import com.hypotemoose.cal.util.AlmanacConverter;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.joda.time.DateTime;
+
+import java.util.Objects;
 
 import static com.hypotemoose.cal.constants.CalendarConstants.PersianCalendarConstants.monthNames;
 import static com.hypotemoose.cal.constants.CalendarConstants.PersianCalendarConstants.weekDayNames;
@@ -56,10 +55,6 @@ public class PersianCalendar extends Almanac {
    */
   public PersianCalendar(Almanac a) {
     this(toPersianCalendar(a));
-  }
-
-  public PersianCalendar(DateTime dateTime) {
-    this(new GregorianCalendar(dateTime));
   }
 
   /**
@@ -269,20 +264,15 @@ public class PersianCalendar extends Almanac {
       return true;
 
     final PersianCalendar date = (PersianCalendar) obj;
-    return new EqualsBuilder()
-      .append(this.day, date.getDay())
-      .append(this.month, date.getMonth())
-      .append(this.year, date.getYear())
-      .isEquals();
+
+    return this.day == date.getDay() &&
+           this.month == date.getMonth() &&
+           this.year == date.getYear();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder()
-      .append(this.day)
-      .append(this.month)
-      .append(this.year)
-      .toHashCode();
+    return Objects.hash(year,month,day);
   }
 
 }

@@ -15,11 +15,8 @@
  *****************************************************************************/
 package com.hypotemoose.cal.date;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.joda.time.DateTime;
-
 import java.util.Calendar;
+import java.util.Objects;
 
 import static com.hypotemoose.cal.constants.CalendarConstants.HebrewCalendarConstants.monthNames;
 import static com.hypotemoose.cal.constants.CalendarConstants.HebrewCalendarConstants.weekDayNames;
@@ -52,21 +49,12 @@ public class HebrewCalendar extends Almanac {
   }
 
   /**
-   * Constructs a Hebrew Calendar using a Java calendar date.
+   * Constructs a new Hebrew Calendar from a {@link java.util.Calendar}.
    *
    * @param cal a java util calendar.
    */
   public HebrewCalendar(Calendar cal) {
     this(new GregorianCalendar(cal));
-  }
-
-  /**
-   * Constructs a Hebrew Calendar given a Joda DateTime.
-   *
-   * @param dt a Joda DateTime.
-   */
-  public HebrewCalendar(DateTime dt) {
-    this(new GregorianCalendar(dt));
   }
 
   /**
@@ -329,19 +317,14 @@ public class HebrewCalendar extends Almanac {
       return true;
 
     final HebrewCalendar date = (HebrewCalendar) obj;
-    return new EqualsBuilder()
-      .append(this.year, date.getYear())
-      .append(this.month, date.getMonth())
-      .append(this.day, date.getDay())
-      .isEquals();
+
+    return this.year == date.getYear() &&
+           this.month == date.getMonth() &&
+           this.day == date.getDay();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder()
-      .append(this.year)
-      .append(this.month)
-      .append(this.day)
-      .toHashCode();
+    return Objects.hash(year,month,day);
   }
 }

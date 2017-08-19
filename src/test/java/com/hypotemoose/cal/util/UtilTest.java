@@ -16,6 +16,10 @@ limitations under the License.
 package com.hypotemoose.cal.util;
 
 import java.lang.Math;
+
+import static com.hypotemoose.cal.util.Util.arrayContains;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
 import org.testng.annotations. Test;
@@ -159,6 +163,18 @@ public class UtilTest {
                       expected,
                       actual,
                       1.0E-6);
+  }
+
+  @Test
+  public void containsShouldFindCorrectValues() {
+    int[] array = new int[] { 0, 1, 2, 3, 4 };
+    assertTrue(arrayContains(array,0));
+    assertTrue(arrayContains(array,1));
+    assertTrue(arrayContains(array,2));
+    assertTrue(arrayContains(array,3));
+    assertTrue(arrayContains(array,4));
+    assertFalse(arrayContains(array,5));
+    assertFalse(arrayContains(array,6));
   }
 
 }

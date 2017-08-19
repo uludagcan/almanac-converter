@@ -16,7 +16,6 @@ limitations under the License.
 package com.hypotemoose.cal.date;
 
 import java.util.Random;
-import org.joda.time.DateTime;
 
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
@@ -35,13 +34,6 @@ public class GregorianCalendarTest {
   @Test
   public void checkProperLeapYearRule() {
     assertEquals(false, GregorianCalendar.isLeapYear(1900));
-  }
-
-  @Test
-  public void testJodaTimeConstructsProperly() {
-    GregorianCalendar cal1 = new GregorianCalendar(new DateTime(1987,3,10,0,1));
-    GregorianCalendar cal2 = new GregorianCalendar(1987,3,10);
-    assertTrue(cal1.equals(cal2));
   }
 
   @Test
@@ -106,14 +98,6 @@ public class GregorianCalendarTest {
     boolean ypro = GregorianCalendar.isLeapYear(year,true);
     boolean npro = GregorianCalendar.isLeapYear(year,false);
     assertEquals(false,ypro==npro);
-  }
-
-  @Test
-  public void jodaDateTimeShouldConstruct() {
-    GregorianCalendar date1 = 
-      new GregorianCalendar(new DateTime(1986,9,3,0,1));
-    GregorianCalendar date2 = new GregorianCalendar(1986,9,3);
-    assertEquals(true,date1.equals(date2));
   }
 
   @Test(expectedExceptions = IndexOutOfBoundsException.class)

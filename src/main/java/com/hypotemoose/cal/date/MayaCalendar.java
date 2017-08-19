@@ -15,8 +15,7 @@
  *****************************************************************************/
 package com.hypotemoose.cal.date;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import java.util.Objects;
 
 import static com.hypotemoose.cal.util.AlmanacConverter.toMayaCalendar;
 
@@ -65,53 +64,7 @@ public class MayaCalendar extends Almanac {
   private int _tun;
   private int _katun;
   private int _baktun;
-  private int _piktun;
-  private int _kalabtun;
-  private int _kinchiltun;
-  private int _alautun;
-  private String[] _haabMonths = {
-    "Pop",
-    "Wo'",
-    "Sip",
-    "Sotz'",
-    "Sek",
-    "Xul",
-    "Yaxk'in'",
-    "Mol",
-    "Ch'en",
-    "Yax",
-    "Sak'",
-    "Keh",
-    "Mak",
-    "K'ank'in",
-    "Muwan'",
-    "Pax",
-    "K'ayab",
-    "Kumk'u",
-    "Wayeb"
-  };
-  private String[] _tzolkinDayNames = {
-    "Imix'",
-    "Ik'",
-    "Ak'b'al",
-    "K'an",
-    "Chikchan",
-    "Kimi",
-    "Manik'",
-    "Lamat",
-    "Muluk",
-    "Ok",
-    "Chuwen",
-    "Eb'",
-    "B'en",
-    "Ix",
-    "Men",
-    "Kib'",
-    "Kab'an",
-    "Etz'nab'",
-    "Kawak",
-    "Ajaw"
-  };
+
 
   /**
    * Constructs a date in the Maya calendar.
@@ -343,23 +296,16 @@ public class MayaCalendar extends Almanac {
       return true;
 
     final MayaCalendar date = (MayaCalendar) obj;
-    return new EqualsBuilder()
-      .append(_kin, date.getKin())
-      .append(_uinal, date.getUinal())
-      .append(_tun, date.getTun())
-      .append(_katun, date.getKatun())
-      .append(_baktun, date.getBaktun())
-      .isEquals();
+
+    return _kin == date.getKin() &&
+           _uinal == date.getUinal() &&
+           _tun == date.getTun() &&
+           _katun == date.getKatun() &&
+           _baktun == date.getBaktun();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder()
-      .append(_kin)
-      .append(_uinal)
-      .append(_tun)
-      .append(_katun)
-      .append(_baktun)
-      .toHashCode();
+    return Objects.hash(_kin,_uinal, _tun, _katun, _baktun);
   }
 }

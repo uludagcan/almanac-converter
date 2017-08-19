@@ -15,9 +15,8 @@
  *****************************************************************************/
 package com.hypotemoose.cal.date;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.joda.time.DateTime;
+import java.util.Calendar;
+import java.util.Objects;
 
 import static com.hypotemoose.cal.constants.CalendarConstants.IslamicCalendarConstants.monthNames;
 import static com.hypotemoose.cal.constants.CalendarConstants.IslamicCalendarConstants.weekDayNames;
@@ -96,6 +95,14 @@ public class IslamicCalendar extends Almanac {
   }
 
   /**
+   * Constructs a new Islamic Calendar from a {@link java.util.Calendar}.
+   * @param cal a {@link java.util.Calendar}.
+   */
+  public IslamicCalendar(Calendar cal) {
+    this(new GregorianCalendar(cal));
+  }
+
+  /**
    * Constructs an Islamic calendar.
    * Note: This constructs a civil calendar with a base-16 leap year rule.
    *
@@ -112,15 +119,6 @@ public class IslamicCalendar extends Almanac {
    */
   public IslamicCalendar(IslamicCalendar date) {
     this(date.getYear(), date.getMonth(), date.getDay(), date.getCalendarType(), date.getLeapYearRule());
-  }
-
-  /**
-   * Constructs an Islamic calendar.
-   *
-   * @param dt a Joda DateTime.
-   */
-  public IslamicCalendar(DateTime dt) {
-    this(toIslamicCalendar(new GregorianCalendar(dt)));
   }
 
   /**
@@ -452,14 +450,12 @@ public class IslamicCalendar extends Almanac {
    */
   @Override
   public String getDate() {
-    return new String(getDay() + " " +
-      getMonthName() + ", " +
-      getYear());
+    return getDay() + " " + getMonthName() + ", " + getYear();
   }
 
   @Override
   public String toString() {
-    return new String(CALENDAR_NAME + ": " + getDate());
+    return CALENDAR_NAME + ": " + getDate();
 
   }
 
@@ -476,24 +472,16 @@ public class IslamicCalendar extends Almanac {
       return true;
 
     final IslamicCalendar date = (IslamicCalendar) obj;
-    return new EqualsBuilder()
-      .append(this.day, date.getDay())
-      .append(this.month, date.getMonth())
-      .append(this.year, date.getYear())
-      .append(this.calendarType, date.getCalendarType())
-      .append(this.leapYearRule, date.getLeapYearRule())
-      .isEquals();
+    return this.day == date.getDay() &&
+           this.month == date.getMonth() &&
+           this.year == date.getYear() &&
+           this.calendarType == date.getCalendarType() &&
+           this.leapYearRule == date.getLeapYearRule();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder()
-      .append(this.day)
-      .append(this.month)
-      .append(this.year)
-      .append(this.calendarType)
-      .append(this.leapYearRule)
-      .toHashCode();
+    return Objects.hash(year,month,day,calendarType,leapYearRule);
   }
 
 }

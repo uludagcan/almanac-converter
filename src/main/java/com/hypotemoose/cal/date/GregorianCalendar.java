@@ -15,11 +15,8 @@
  *****************************************************************************/
 package com.hypotemoose.cal.date;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.joda.time.DateTime;
-
 import java.util.Calendar;
+import java.util.Objects;
 
 import static com.hypotemoose.cal.constants.CalendarConstants.GregorianCalendarConstants.monthNames;
 import static com.hypotemoose.cal.constants.CalendarConstants.GregorianCalendarConstants.weekDayNames;
@@ -57,9 +54,9 @@ public final class GregorianCalendar extends Almanac {
   }
 
   /**
-   * Constructs a Gregrian Calendar using a Java calendar date.
+   * Constructs a Gregrian Calendar using a {@link java.util.Calendar}.
    *
-   * @param cal a java util calendar.
+   * @param cal a {@link java.util.Calendar}.
    */
   public GregorianCalendar(Calendar cal) {
     this(cal.get(Calendar.YEAR),
@@ -85,17 +82,6 @@ public final class GregorianCalendar extends Almanac {
     this(date.getYear(),
       date.getMonth(),
       date.getDay());
-  }
-
-  /**
-   * Constructs a Gregorian Calendar given a Joda DateTime.
-   *
-   * @param dt a Joda DateTime.
-   */
-  public GregorianCalendar(DateTime dt) {
-    this(dt.getYear(),
-      dt.getMonthOfYear(),
-      dt.getDayOfMonth());
   }
 
   /**
@@ -332,14 +318,12 @@ public final class GregorianCalendar extends Almanac {
    */
   @Override
   public String getDate() {
-    return new String(getMonthName() + " " +
-      getDay() + ", " +
-      getYear());
+    return getMonthName() + " " + getDay() + ", " + getYear();
   }
 
   @Override
   public String toString() {
-    return new String(CALENDAR_NAME + ": " + getDate());
+    return CALENDAR_NAME + ": " + getDate();
   }
 
   @Override
@@ -355,19 +339,13 @@ public final class GregorianCalendar extends Almanac {
       return true;
 
     final GregorianCalendar date = (GregorianCalendar) obj;
-    return new EqualsBuilder()
-      .append(this.year, date.getYear())
-      .append(this.month, date.getMonth())
-      .append(this.day, date.getDay())
-      .isEquals();
+    return this.year == date.getYear() &&
+           this.month == date.getMonth() &&
+           this.day == date.getDay();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder()
-      .append(this.year)
-      .append(this.month)
-      .append(this.day)
-      .toHashCode();
+    return Objects.hash(year,month,day);
   }
 }

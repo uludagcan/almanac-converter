@@ -15,8 +15,8 @@
  *****************************************************************************/
 package com.hypotemoose.cal.date;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import java.util.Calendar;
+import java.util.Objects;
 
 import static com.hypotemoose.cal.constants.CalendarConstants.FrenchRepublicanCalendarConstants.*;
 import static com.hypotemoose.cal.util.AlmanacConverter.toFrenchRepublicanCalendar;
@@ -55,14 +55,21 @@ public final class FrenchRepublicanCalendar extends Almanac {
   private int _week;
 
   /**
-   * Constructs a French Republican Date for today's date.
+   * Constructs a French Republican Calendar for today's date.
    */
   public FrenchRepublicanCalendar() {
     this(new JulianDay());
   }
 
   /**
-   * Constructs a French Republican Date with given year, month and day.
+   * Constructs a new French Republican Calendar from a {@link java.util.Calendar}.
+   * @param cal a {@link java.util.Calendar}.
+   */
+  public FrenchRepublicanCalendar(Calendar cal) {
+    this(new GregorianCalendar(cal));
+  }
+  /**
+   * Constructs a French Republican Calendar with given year, month and day.
    *
    * @param year  the year
    * @param month the month
@@ -73,7 +80,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
   }
 
   /**
-   * Constructs a French Republican Date with given year, month,
+   * Constructs a French Republican Calendar with given year, month,
    * week and day.
    *
    * @param year  the year
@@ -90,17 +97,17 @@ public final class FrenchRepublicanCalendar extends Almanac {
   }
 
   /**
-   * Constructs a French Republican Date fromr a given Gregorian
+   * Constructs a French Republican Calendar fromr a given Gregorian
    * Calendar date.
    *
-   * @param date a Gregorian Calendar Date.
+   * @param date a Gregorian Calendar Calendar.
    */
-  public FrenchRepublicanCalendar(GregorianCalendar date) {
+  public FrenchRepublicanCalendar(Almanac date) {
     this(new JulianDay(date));
   }
 
   /**
-   * Constructs a French Republican Date from a given Julian Day.
+   * Constructs a French Republican Calendar from a given Julian Day.
    *
    * @param jd a Julian Day.
    */
@@ -315,13 +322,12 @@ public final class FrenchRepublicanCalendar extends Almanac {
    * Prints this date in long form.
    */
   public void printLong() {
-    String out = "French Republican Date: ";
+    String out = "French Republican Calendar: ";
     out += "Année " + its(getYear()) + " de la République\n";
     out += "  Mois de " + getMonthName() + "\n";
     out += "  Décade " + itr(getWeek());
     out += " Jour " + itr(getDay(false));
     out += " - \"" + getDayName() + "\"";
-
     System.out.println(out);
   }
 
@@ -352,7 +358,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
   @Override
   public String getDate() {
     return (this.year >= 1) ?
-      new String(getDay(true) + " " + getMonthName() + ", " + toRoman(getYear())) : "";
+      getDay(true) + " " + getMonthName() + ", " + toRoman(getYear()) : "";
   }
 
   @Override
@@ -362,7 +368,7 @@ public final class FrenchRepublicanCalendar extends Almanac {
 
   @Override
   public String toString() {
-    return new String(CALENDAR_NAME + ": " + getDate());
+    return CALENDAR_NAME + ": " + getDate();
   }
 
   @Override
@@ -374,25 +380,15 @@ public final class FrenchRepublicanCalendar extends Almanac {
 
     final FrenchRepublicanCalendar date = (FrenchRepublicanCalendar) obj;
 
-    return new EqualsBuilder()
-      .append(this.year, date.getYear())
-      .append(this.month, date.getMonth())
-      .append(_week, date.getWeek())
-      .append(this.day, date.getDay(false))
-      .isEquals();
+    return this.year == date.getYear() &&
+           this.month == date.getMonth() &&
+           this.day == date.getDay(false) &&
+           _week == date.getWeek();
   }
-
-/////////////////////////////////////////////////////////////////////////////
-// private
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder()
-      .append(this.year)
-      .append(this.month)
-      .append(_week)
-      .append(this.day)
-      .toHashCode();
+    return Objects.hash(year,month,_week,day);
   }
 
 }

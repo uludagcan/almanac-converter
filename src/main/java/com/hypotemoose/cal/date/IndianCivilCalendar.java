@@ -17,11 +17,8 @@ package com.hypotemoose.cal.date;
 
 import com.hypotemoose.cal.constants.CalendarConstants;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
-import org.joda.time.DateTime;
 import java.util.Calendar;
+import java.util.Objects;
 
 import static com.hypotemoose.cal.constants.CalendarConstants.IndianCivilCalendarConstants.monthNames;
 import static com.hypotemoose.cal.util.AlmanacConverter.toIndianCivilCalendar;
@@ -51,7 +48,7 @@ public class IndianCivilCalendar extends Almanac {
    * Constructs a new Indian Civil Calendar for today's date.
    */
   public IndianCivilCalendar() {
-    this(new DateTime());
+    this(new JulianDay());
   }
 
   /**
@@ -60,14 +57,6 @@ public class IndianCivilCalendar extends Almanac {
    */
   public IndianCivilCalendar(Calendar cal) {
     this(new GregorianCalendar(cal));
-  }
-
-  /**
-   * Constructs a new Indian Civil Calendar using a {@link org.joda.time.DateTime}.
-   * @param dt a {@link org.joda.time.DateTime}.
-   */
-  public IndianCivilCalendar(DateTime dt) {
-    this(toIndianCivilCalendar(new GregorianCalendar(dt)));
   }
 
   /**
@@ -186,20 +175,14 @@ public class IndianCivilCalendar extends Almanac {
       return true;
 
     final IndianCivilCalendar date = (IndianCivilCalendar) obj;
-    return new EqualsBuilder()
-      .append(this.day, date.getDay())
-      .append(this.month, date.getMonth())
-      .append(this.year, date.getYear())
-      .isEquals();
+    return this.day == date.getDay() &&
+           this.month == date.getMonth() &&
+           this.year == date.getYear();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder()
-      .append(this.day)
-      .append(this.month)
-      .append(this.year)
-      .toHashCode();
+    return Objects.hash(year,month,day);
   }
 
 }

@@ -16,7 +16,6 @@ limitations under the License.
 package com.hypotemoose.cal.date;
 
 import java.util.Random;
-import org.joda.time.DateTime;
 
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
@@ -68,14 +67,6 @@ public class JulianCalendarTest {
     int year = 2015;
     int[] result = JulianCalendar.getDaysPerMonthInYear(year);
     assertEquals(days,result);
-  }
-
-  @Test
-  public void jodaDateTimeShouldConstruct() {
-    JulianCalendar date1 = 
-      new JulianCalendar(new DateTime(1987,3,10,0,1));
-    JulianCalendar date2 = new JulianCalendar(1987,2,25);
-    assertEquals(true,date1.equals(date2));
   }
 
   @Test(expectedExceptions = IndexOutOfBoundsException.class)

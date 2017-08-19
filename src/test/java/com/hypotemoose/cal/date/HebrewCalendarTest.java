@@ -18,7 +18,6 @@ package com.hypotemoose.cal.date;
 import java.util.Random;
 
 import com.hypotemoose.cal.util.AlmanacConverter;
-import org.joda.time.DateTime;
 
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
@@ -46,14 +45,6 @@ public class HebrewCalendarTest {
       hebrewCalendar.setMonth(i+1);
       assertEquals(hebrewCalendar.getNumberOfDaysInMonth(),days[i]);
     }
-  }
-
-  @Test
-  public void jodaDateTimeShouldConstruct() {
-    HebrewCalendar date1 = 
-      new HebrewCalendar(new DateTime(1987,3,10,0,1));
-    HebrewCalendar date2 = new HebrewCalendar(5747,12,9);
-    assertEquals(true,date1.equals(date2));
   }
 
   @Test(expectedExceptions = IndexOutOfBoundsException.class)

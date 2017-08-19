@@ -15,9 +15,8 @@
  *****************************************************************************/
 package com.hypotemoose.cal.date;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.joda.time.DateTime;
+import java.util.Calendar;
+import java.util.Objects;
 
 import static com.hypotemoose.cal.constants.CalendarConstants.JulianCalendarConstants.monthNames;
 import static com.hypotemoose.cal.constants.CalendarConstants.JulianCalendarConstants.weekDayNames;
@@ -38,7 +37,16 @@ public final class JulianCalendar extends Almanac {
    * Constructs a Julian date using today's date.
    */
   public JulianCalendar() {
-    this(new DateTime());
+    this(new JulianDay());
+  }
+
+  /**
+   * Constructs a Julian Calendar using a {@link java.util.Calendar}.
+   *
+   * @param cal a {@link java.util.Calendar}.
+   */
+  public JulianCalendar(Calendar cal) {
+    this(new GregorianCalendar(cal));
   }
 
   /**
@@ -59,15 +67,6 @@ public final class JulianCalendar extends Almanac {
     this(date.getYear(),
       date.getMonth(),
       date.getDay());
-  }
-
-  /**
-   * Constructs a Julian date given a Joda DateTime.
-   *
-   * @param dt a Joda DateTime.
-   */
-  public JulianCalendar(DateTime dt) {
-    this(new GregorianCalendar(dt));
   }
 
   /**
@@ -318,20 +317,15 @@ public final class JulianCalendar extends Almanac {
       return true;
 
     final JulianCalendar date = (JulianCalendar) obj;
-    return new EqualsBuilder()
-      .append(this.year, date.getYear())
-      .append(this.month, date.getMonth())
-      .append(this.day, date.getDay())
-      .isEquals();
+
+    return this.year == date.getYear() &&
+           this.month == date.getMonth() &&
+           this.day == date.getDay();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder()
-      .append(this.year)
-      .append(this.month)
-      .append(this.day)
-      .toHashCode();
+    return Objects.hash(year,month,day);
   }
 
 }

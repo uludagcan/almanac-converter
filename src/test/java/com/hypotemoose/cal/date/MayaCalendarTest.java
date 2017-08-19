@@ -16,9 +16,9 @@ limitations under the License.
 package com.hypotemoose.cal.date;
 
 /**
- * Tests {@link com.hypotemoose.cal.date.MayaDate}
+ * Tests {@link com.hypotemoose.cal.date.MayaCalendar}
  * @author Chris Engelsma
- * @since 2015.08.24
+ * @since 2017.08.24
  */
-public class MayaDateTest {
+public class MayaCalendarTest {
 }

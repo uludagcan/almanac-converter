@@ -18,7 +18,6 @@ package com.hypotemoose.cal.date;
 import java.util.Random;
 
 import com.hypotemoose.cal.util.AlmanacConverter;
-import org.joda.time.DateTime;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -78,14 +77,6 @@ public class IndianCivilCalendarTest {
       cal.setMonth(i+1);
       assertEquals(cal.getNumberOfDaysInMonth(),days[i]);
     }
-  }
-
-  @Test
-  public void jodaDateTimeShouldConstruct() {
-    IndianCivilCalendar date1 =
-      new IndianCivilCalendar(new DateTime(1987,3,10,0,1));
-    IndianCivilCalendar date2 = new IndianCivilCalendar(1908,12,19);
-    assertTrue(date1.equals(date2));
   }
 
   @Test(expectedExceptions = IndexOutOfBoundsException.class)

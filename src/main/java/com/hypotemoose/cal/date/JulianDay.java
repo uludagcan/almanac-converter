@@ -15,9 +15,8 @@
  *****************************************************************************/
 package com.hypotemoose.cal.date;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.joda.time.DateTime;
+import java.util.Calendar;
+import java.util.Objects;
 
 import static com.hypotemoose.cal.util.AlmanacConverter.toJulianDay;
 
@@ -40,7 +39,7 @@ public final class JulianDay extends Almanac {
   private double _jday;
 
   /**
-   * A Julian Day.
+   * Constructs a Julian Day.
    * Day number is set using a given Julian Day.
    *
    * @param jd A Julian Day.
@@ -50,7 +49,15 @@ public final class JulianDay extends Almanac {
   }
 
   /**
-   * A Julian Day.
+   * Constructs a Julian Day from {@link java.util.Calendar}.
+   * @param cal a {@link java.util.Calendar}.
+   */
+  public JulianDay(Calendar cal) {
+    this(new GregorianCalendar(cal));
+  }
+
+  /**
+   * Constructs a Julian Day.
    * Day number is set to a given value.
    *
    * @param jd A Julian Day.
@@ -74,15 +81,6 @@ public final class JulianDay extends Almanac {
    */
   public JulianDay(int jd) {
     this((double) jd);
-  }
-
-  /**
-   * Constructs a Julian Day from a Joda DateTime.
-   *
-   * @param dt a Joda DateTime object.
-   */
-  public JulianDay(DateTime dt) {
-    this(new GregorianCalendar(dt));
   }
 
   /**
@@ -266,21 +264,17 @@ public final class JulianDay extends Almanac {
       return true;
 
     final JulianDay date = (JulianDay) obj;
-    return new EqualsBuilder()
-      .append(_jday, date.getValue())
-      .isEquals();
+    return _jday == date.getValue();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder()
-      .append(_jday)
-      .toHashCode();
+    return Objects.hash(_jday);
   }
 
   @Override
   public String toString() {
-    return (CALENDAR_NAME + ": " + getDate());
+    return CALENDAR_NAME + ": " + getDate();
   }
 
 }

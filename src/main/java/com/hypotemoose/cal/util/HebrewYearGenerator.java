@@ -1,6 +1,6 @@
 package com.hypotemoose.cal.util;
 
-import org.apache.commons.lang3.ArrayUtils;
+import java.util.Arrays;
 
 /**
  * Converts between Hebrew and standard (Arabic) years in short form, meaning
@@ -8,25 +8,25 @@ import org.apache.commons.lang3.ArrayUtils;
  */
 public class HebrewYearGenerator {
 
-  public static final String[] HEBREW_LETTERS = {
+  private static final String[] HEBREW_LETTERS = {
     "ת", "ש", "ר", "ק", "צ", "פ", "ע", "ס",
     "ן", "מ", "ל", "כ", "י", "ט", "ח",
     "ז", "ו", "ה", "ד", "ג", "ב", "א"
   };
-  public static final String[] HEBREW_END_LETTERS = {
+  private static final String[] HEBREW_END_LETTERS = {
     "ץ", "ף", "נ", "ם", "ך"
   };
-  public static final String GERSHAYIM = "״";
-  public static final String GERESH = "׳";
+  private static final String GERSHAYIM = "״";
+  private static final String GERESH = "׳";
 
-  public static int[] NUMBERS = {
+  private static int[] NUMBERS = {
     400, 300, 200, 100, 90,
     80, 70, 60, 50, 40, 30,
     20, 10, 9, 8, 7, 6,
     5, 4, 3, 2, 1
   };
 
-  public static int[] ALTERNATE_ENDINGS = {
+  private static int[] ALTERNATE_ENDINGS = {
     90, 80, 50, 40, 20
   };
 
@@ -50,7 +50,7 @@ public class HebrewYearGenerator {
       result.append(GERESH);
     }
 
-    int index = ArrayUtils.indexOf(ALTERNATE_ENDINGS, lastValue);
+    int index = Arrays.asList(ALTERNATE_ENDINGS).indexOf(lastValue);
     if (index > -1) {
       result.replace(result.length() - 1,
         result.length(),

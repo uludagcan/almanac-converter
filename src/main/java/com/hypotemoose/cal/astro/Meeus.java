@@ -282,7 +282,7 @@ public class Meeus {
    * @return The Julian Day of the equinox.
    */
   public static double equinox(int year, Season season) {
-    double jde = 0;
+    double jde;
     double jdeo, t, w, lam, s;
 
     jdeo = mean(year, season);
@@ -292,8 +292,9 @@ public class Meeus {
 
     // Sum periodic terms for time t.
     s = 0;
-    for (int i = 0; i < tblC.length; ++i)
-      s += tblC[i][0] * dcos(tblC[i][1] + (tblC[i][2] * t));
+    for (double[] aTblC : tblC) {
+      s += aTblC[0] * dcos(aTblC[1] + (aTblC[2] * t));
+    }
 
     jde = jdeo + ((0.00001 * s) / lam);
     return jde;
