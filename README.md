@@ -6,7 +6,7 @@ An easy-to-use Java-based calendar converter - able to convert between various k
 
 ### Requirements
 
-* Java Development Kit (JDK) 1.7 +
+* Java Development Kit (JDK) 1.8 +
 * Gradle 3.3 +
 
 ### Installation
