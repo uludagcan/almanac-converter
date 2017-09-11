@@ -4,20 +4,32 @@ Almanac Converter
 
 An easy-to-use Java-based calendar converter - able to convert between various known calendars.
 
-### Requirements
+## Requirements
 
 * Java Development Kit (JDK) 1.8 +
 * Gradle 3.3 +
 
-### Installation
+## Installation
 
-To install, you will need [Gradle](https://gradle.org/) or [Apache Ant](http://ant.apache.org/).
+Include the compiled jar file in the classpath of your java compiler:
 
-1. cd to the cloned repository
-2. Run ```gradlew build```
-3. Impress your friends with some date conversions.
+```bash
+$ javac -cp path/to/almanac-converter-X.X.X.jar ...
+```
 
-See the wiki for examples.
+### Option 1: Build the source
+
+After downloading the source, run
+
+```bash
+$ gradle build
+```
+
+which will build a jar and place it in `build/lib`.
+
+### Option 2: Just use the release jar
+
+Download the latest release jar from here: [Releases](https://github.com/chrisengelsma/almanac-converter/releases)
 
 ## Supported Calendars
 
