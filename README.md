@@ -66,8 +66,8 @@ The Julian Day is the continuous count of days since the beginning of the Julian
 * Islamic Calendar           [100%] DONE
 * Hebrew Calendar            [100%] DONE
 * Persian Calendar           [100%] DONE
-* Indian Civil Calendar      [100%] IN PROGRESS
-* Coptic Calendar            [  0%] PLANNING
+* Indian Civil Calendar      [100%] DONE
+* Coptic Calendar            [  0%] IN PROGRESS
 * Chinese Calendar           [  0%] PLANNING
 * Soviet Calendar            [  0%] PLANNING
 * Dangun Calendar            [  0%] PLANNING
