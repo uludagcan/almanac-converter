@@ -1,8 +1,26 @@
 Almanac Converter 
 -----------------
-[![Build Status](https://travis-ci.org/chrisengelsma/almanac-converter.svg?branch=master)](https://travis-ci.org/chrisengelsma/almanac-converter) [![Codecov](https://img.shields.io/codecov/c/github/chrisengelsma/almanac-converter.svg)](https://codecov.io/gh/chrisengelsma/almanac-converter) [![license](https://img.shields.io/github/license/chrisengelsma/almanac-converter.svg)](https://github.com/chrisengelsma/almanac-converter/blob/master/LICENSE) [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
 
 An easy-to-use Java-based calendar converter - able to convert between various known calendars.
+
+[![Build Status](https://travis-ci.org/chrisengelsma/almanac-converter.svg?branch=master)](https://travis-ci.org/chrisengelsma/almanac-converter) [![Codecov](https://img.shields.io/codecov/c/github/chrisengelsma/almanac-converter.svg)](https://codecov.io/gh/chrisengelsma/almanac-converter) [![license](https://img.shields.io/github/license/chrisengelsma/almanac-converter.svg)](https://github.com/chrisengelsma/almanac-converter/blob/master/LICENSE) [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
+
+## Table of Contents
+- [Requirements](#requirements)
+- [Installation](#installation)
+  - [Option 1: Build the source](#option-1:-build-the-source)
+  - [Option 2: Use Release Jar](#option-2:-use-release-jar)
+- [Supported Calendars](#supported-calendars)
+  - [Gregorian Calendar](#gregorian-calendar)
+  - [Julian Calendar](#julian-calendar)
+  - [French Republican Calendar](#french-republican-calendar)
+  - [Maya Calendar](#maya-calendar)
+  - [Islamic Calendar](#islamic-calendar)
+  - [Persian Calendar](#persian-calendar)
+  - [Indian Civil Calendar](#indian-civil-calendar)
+  - [Julian Day](#julian-day)
+- [Development Roadmap](#development-roadmap)
+- [Credits](#credits)
 
 ## Requirements
 
@@ -27,7 +45,7 @@ $ gradle build
 
 which will build a jar and place it in `build/lib`.
 
-### Option 2: Just use the release jar
+### Option 2: Use Release Jar
 
 Download the latest release jar from here: [Releases](https://github.com/chrisengelsma/almanac-converter/releases)
 
@@ -68,7 +86,7 @@ While a plethora of calendars exist in India, the government adopted an official
 ### Julian Day
 The Julian Day is the continuous count of days since the beginning of the Julian Period used primarily by astronomers. The Julian Period is a chronological interval of 7980 years beginning in 4713 BC, and has been used since 1583 to convert between different calendars. The next Julian Period begins in the year 3268 AD.
 
-# Roadmap
+## Roadmap
 ```
 * Julian Day                 [100%] DONE
 * Gregorian Calendar         [100%] DONE
@@ -87,6 +105,6 @@ The Julian Day is the continuous count of days since the beginning of the Julian
 * More...
 ```
 
-### Credits
+## Credits
 
 Inspired by Fourmilab's javascript-based calendar converter and astronomical equations by Jean Meeus.
