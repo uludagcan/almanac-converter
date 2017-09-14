@@ -8,8 +8,8 @@ An easy-to-use Java-based calendar converter - able to convert between various k
 ## Table of Contents
 - [Requirements](#requirements)
 - [Installation](#installation)
-  - [Option 1: Build the source](#option-1:-build-the-source)
-  - [Option 2: Use Release Jar](#option-2:-use-release-jar)
+  - [Option 1: Build the source](#option-1-build-the-source)
+  - [Option 2: Use Release Jar](#option-2-use-release-jar)
 - [Supported Calendars](#supported-calendars)
   - [Gregorian Calendar](#gregorian-calendar)
   - [Julian Calendar](#julian-calendar)
@@ -35,7 +35,7 @@ Include the compiled jar file in the classpath of your java compiler:
 $ javac -cp path/to/almanac-converter-X.X.X.jar ...
 ```
 
-### Option 1: Build the source
+### Option 1 Build the source
 
 After downloading the source, run
 
@@ -45,7 +45,7 @@ $ gradle build
 
 which will build a jar and place it in `build/lib`.
 
-### Option 2: Use Release Jar
+### Option 2 Use release jar
 
 Download the latest release jar from here: [Releases](https://github.com/chrisengelsma/almanac-converter/releases)
 
